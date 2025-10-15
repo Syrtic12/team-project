@@ -22,7 +22,7 @@ This contract sets out shared expectations and commitments for how our team will
 - Messages should be responded to within a day of sending
 - Teammate should notify others when:
       - They are finished a task and require a pull request
-      - They ere unable to attend a class or lab
+      - They are unable to attend a class or lab
       - They are unable to complete their task and require assistance
 * Respectful and inclusive behaviour are necessary for smooth and productive communication. What are some respectful and inclusive behaviours you expect when communicating with each other during lectures, labs, or outside of class? (Examples: Actively listening to each team members ideas, giving everyone a chance to meaningfully contribute, etc.)
 
