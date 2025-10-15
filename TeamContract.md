@@ -37,7 +37,7 @@ This contract sets out shared expectations and commitments for how our team will
 - Teammates should finish their projects by the agreed upon date
 - If a team member is unable to finish their portion of the project, they should inform their teammates so that a solution can be found
 
-
+---
 By signing below, we acknowledge that we have read, discussed, and agreed to these terms. We understand that this contract is binding for the duration of the course and may be revised with the agreement of all team members.
 
 Team Member Signatures:
