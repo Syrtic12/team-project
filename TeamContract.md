@@ -23,7 +23,7 @@ This contract sets out shared expectations and commitments for how our team will
 - Teammate should notify others when:
       - They are finished a task and require a pull request
       - They are unable to attend a class or lab
-      - They are unable to complete their task (midterm on same week, family emergency, etc.) and require assistance
+      - They are unable to complete their task (midterm on same week, family emergency, stuck, etc.) and require assistance
 * Respectful and inclusive behaviour are necessary for smooth and productive communication. What are some respectful and inclusive behaviours you expect when communicating with each other during lectures, labs, or outside of class? (Examples: Actively listening to each team members ideas, giving everyone a chance to meaningfully contribute, etc.)
 
 ## Decision Making
