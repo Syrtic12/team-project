@@ -23,7 +23,7 @@ This contract sets out shared expectations and commitments for how our team will
 - Teammate should notify others when:
       - They are finished a task and require a pull request
       - They are unable to attend a class or lab
-      - They are unable to complete their task and require assistance
+      - They are unable to complete their task (midterm on same week, family emergency, etc.) and require assistance
 * Respectful and inclusive behaviour are necessary for smooth and productive communication. What are some respectful and inclusive behaviours you expect when communicating with each other during lectures, labs, or outside of class? (Examples: Actively listening to each team members ideas, giving everyone a chance to meaningfully contribute, etc.)
 
 ---
@@ -36,26 +36,19 @@ This contract sets out shared expectations and commitments for how our team will
 ---
 
 ## Decision Making
-
 - Decisions will be made democratically, by majority vote
-
 ---
 ## Conflict resolution
-
-* How will your team resolve conflicts? (Example: by listening to each other's side of the issue and attempting to reach a compromise. By consulting a TA or instructor as a team, if a resolution has not yet been reached.)
-
+- In case of a conflict, both sides should get to express their side of the story in order to reduce bias
 ---
 
 ## Accountability
+- Teammates should finish their projects by the agreed upon date
+- If a team member is unable to finish their portion of the project, they should inform their teammates so that a solution can be found
 
-* Reliability and accountability are also important aspects of teamwork. What are the responsibilities of each team member? (Example: completing their share of the work in a timely manner, seeking assistance from teammates/TAs/instructors when required, etc.)
-
----
-
----
 
 By signing below, we acknowledge that we have read, discussed, and agreed to these terms. We understand that this contract is binding for the duration of the course and may be revised with the agreement of all team members.
 
 Team Member Signatures:
 
-(type names here)
+Daniel Hong
