@@ -26,15 +26,6 @@ This contract sets out shared expectations and commitments for how our team will
       - They are unable to complete their task (midterm on same week, family emergency, etc.) and require assistance
 * Respectful and inclusive behaviour are necessary for smooth and productive communication. What are some respectful and inclusive behaviours you expect when communicating with each other during lectures, labs, or outside of class? (Examples: Actively listening to each team members ideas, giving everyone a chance to meaningfully contribute, etc.)
 
----
-
-### [Other Categories of norms and expectations go here]
-
-* Based on your previous teamwork experiences, what other behaviours do you agree upon as a team?
-    - some examples of possible additional team norms and expectations are included in the sample team contract in case your team needs some help getting ideas for what else you want to include.
-
----
-
 ## Decision Making
 - Decisions will be made democratically, by majority vote
 ---
@@ -52,3 +43,5 @@ By signing below, we acknowledge that we have read, discussed, and agreed to the
 Team Member Signatures:
 
 Daniel Hong
+
+Sushaan Patel
