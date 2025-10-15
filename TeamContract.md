@@ -19,7 +19,7 @@ This contract sets out shared expectations and commitments for how our team will
 ### Communication
 
 - We as a group will use Discord to communicate
-- Messages should be responded to within a day of sending
+- Messages should be responded to within a day (24 hrs) of sending
 - Teammate should notify others when:
       - They are finished a task and require a pull request
       - They are unable to attend a class or lab
