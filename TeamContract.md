@@ -47,3 +47,5 @@ Daniel Hong
 Sushaan Patel
 
 Darren Wells
+
+Arsenii Krokhin
