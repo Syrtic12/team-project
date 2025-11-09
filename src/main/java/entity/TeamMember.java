@@ -1,4 +1,6 @@
 package entity;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonArray;
 
 public class TeamMember extends User {
 
@@ -7,6 +9,5 @@ public class TeamMember extends User {
     }
 
     public void leaveTeam() {}
-
     //add utility methods for team members here, like view all tasks assigned to them fpr some team
 }
