@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
+    private String idx;
     private String name;
     private String email;
     private String role;
@@ -15,6 +16,7 @@ public class User {
     private String password;
 
     public User(String name, String email, String role, String password) {
+        this.idx = null; // to be set when added to database
         this.name = name;
         this.email = email;
         this.role = role;
@@ -22,12 +24,33 @@ public class User {
         this.teams = new ArrayList<>();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        User other = (User) obj;
+        return this.idx != null && this.idx.equals(other.idx);
+    }
+
+    public String getIdx(){
+        return this.idx;
+    }
+
+    public void setIdx(String idx){
+        this.idx = idx;
+    }
+
     public void addTeam(Team team) {
         this.teams.add(team);
     }
 
     public void removeTeam(Team team) {
-        this.teams.remove(team);
+        for (Team t : this.teams) {
+            if (t.equals(team)) {
+                this.teams.remove(t);
+                break;
+            }
+        }
     }
 
     public JsonObject toJson() {

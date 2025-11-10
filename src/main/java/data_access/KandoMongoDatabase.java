@@ -7,13 +7,17 @@ import com.mongodb.ServerApiVersion;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import entity.Team;
+import entity.User;
 import io.github.cdimascio.dotenv.Dotenv;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonArray;
 import org.bson.Document;
 import entity.Task;
+import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class KandoMongoDatabase {
     private MongoDatabase database;
@@ -38,18 +42,68 @@ public class KandoMongoDatabase {
         }
     }
 
-    public void addUser(Document user){
-        this.database.getCollection("users").insertOne(user);
+    public User add(User user){
+        String idx = (this.database.getCollection("users").insertOne(user.toDocument())).getInsertedId().asObjectId().getValue().toString();
+        user.setIdx(idx);
+        return user;
     }
 
-    public void addTask(Document task){
-        this.database.getCollection("tasks").insertOne(task);
+    public Task add(Task task){
+        String idx = (this.database.getCollection("tasks").insertOne(task.toDocument())).getInsertedId().asObjectId().getValue().toString();
+        task.setIdx(idx);
+        return task;
+    }
+
+    public Team add(Team team){
+        String idx = (this.database.getCollection("teams").insertOne(team.toDocument())).getInsertedId().asObjectId().getValue().toString();
+        team.setIdx(idx);
+        return team;
+    }
+
+    public boolean remove(Task task){
+        Bson filter = Filters.eq("_id", new ObjectId(task.getIdx()));
+        return this.database.getCollection("tasks").deleteOne(filter).wasAcknowledged();
+    }
+
+    public boolean remove(Team team){
+        Bson filter = Filters.eq("_id", new ObjectId(team.getIdx()));
+        return this.database.getCollection("teams").deleteOne(filter).wasAcknowledged();
+    }
+
+    public boolean remove(User user){
+        Bson filter = Filters.eq("_id", new ObjectId(user.getIdx()));
+        return this.database.getCollection("users").deleteOne(filter).wasAcknowledged();
+    }
+
+    public Document getOne(String idx, String collectionName){
+        Bson filter = Filters.eq("_id", new ObjectId(idx));
+        return this.database.getCollection(collectionName).find(filter).first();
+    }
+
+    public List<Document> getMany(String collectionName){
+        List<Document> results = new ArrayList<>();
+        for (Document doc : this.database.getCollection(collectionName).find()) {
+            results.add(doc);
+        }
+        return results;
+    }
+
+    public List<Document> getMany(String collectionName, Bson filter){
+        List<Document> results = new ArrayList<>();
+        for (Document doc : this.database.getCollection(collectionName).find(filter)) {
+            results.add(doc);
+        }
+        return results;
     }
 
     public static void main(String[] args) {
         KandoMongoDatabase kandoDB = new KandoMongoDatabase();
-        Task task = new Task("Test Task", "This is a test task", 0, new ArrayList<>());
-        kandoDB.addTask(task.toDocument());
+        Task task = new Task("Test Task 6", "This is a test task", 0, new ArrayList<>());
+        task.setIdx("69124a5297f0eaf78cc49a0a");
+        System.out.println(kandoDB.remove(task));
+
+
+
     }
 
 
