@@ -4,6 +4,13 @@ import com.google.gson.JsonArray;
 
 public class TeamMember extends User {
 
+    /**
+     * @param name
+     * @param email
+     * @param role
+     * @param password
+     * Constructor for TeamMember
+     */
     public TeamMember(String name, String email, String role, String password) {
         super(name, email, role, password);
     }
