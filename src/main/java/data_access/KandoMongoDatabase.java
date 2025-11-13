@@ -21,7 +21,8 @@ import use_case.signup.SignUpDataAccessInterface;
 import java.util.ArrayList;
 import java.util.List;
 
-public class KandoMongoDatabase implements SignUpDataAccessInterface {
+
+public class KandoMongoDatabase {
     private MongoDatabase database;
 
     /**
@@ -50,7 +51,6 @@ public class KandoMongoDatabase implements SignUpDataAccessInterface {
      * @param user User to be added
      * @return User with assigned idx after being added to database
      */
-    @Override
     public User add(User user){
         String idx = (this.database.getCollection("users").insertOne(user.toDocument())).getInsertedId().asObjectId().getValue().toString();
         user.setIdx(idx);
@@ -105,13 +105,19 @@ public class KandoMongoDatabase implements SignUpDataAccessInterface {
     }
 
     /**
-     * @param idx idx of the document to be retrieved
      * @param collectionName collection from which to retrieve the document
+     * @param key key to filter by
+     * @param value value to filter by
      * @return Document with given idx from specified collection
      * Gets one document from the specified collection by its idx
      */
-    public Document getOne(String idx, String collectionName){
-        Bson filter = Filters.eq("_id", new ObjectId(idx));
+    public Document getOne(String collectionName, String key, String value){
+        Bson filter;
+        if (key.equals("_id")) {
+            filter = Filters.eq(key, new ObjectId(value));
+        } else {
+            filter = Filters.eq(key, value);
+        }
         return this.database.getCollection(collectionName).find(filter).first();
     }
 
@@ -136,7 +142,12 @@ public class KandoMongoDatabase implements SignUpDataAccessInterface {
      * Gets all documents from the specified collection matching the given filter
      */
     public List<Document> getMany(String collectionName, String key, String value){
-        Bson filter = Filters.eq(key, value);
+        Bson filter;
+        if (key.equals("_id")) {
+            filter = Filters.eq(key, new ObjectId(value));
+        } else {
+            filter = Filters.eq(key, value);
+        }
         List<Document> results = new ArrayList<>();
         for (Document doc : this.database.getCollection(collectionName).find(filter)) {
             results.add(doc);
@@ -169,7 +180,6 @@ public class KandoMongoDatabase implements SignUpDataAccessInterface {
      * @param email email to check for existence
      * @return boolean indicating if email exists in users collection
      */
-    @Override
     public boolean emailExists(String email) {
         Bson filter = Filters.eq("email", email);
         Document userDoc = this.database.getCollection("users").find(filter).first();
@@ -178,9 +188,9 @@ public class KandoMongoDatabase implements SignUpDataAccessInterface {
 
     public static void main(String[] args) {
         KandoMongoDatabase kandoDB = new KandoMongoDatabase();
-        kandoDB.update("tasks", "6911237d1102171d2e1fac90", "title", "Test Task Updated 1");
-        kandoDB.updateStatus("tasks", "6911237d1102171d2e1fac90", 2);
-        System.out.println(kandoDB.getOne("6911237d1102171d2e1fac90", "tasks"));
+//        kandoDB.update("tasks", "6911237d1102171d2e1fac90", "title", "Test Task Updated 1");
+//        kandoDB.updateStatus("tasks", "6911237d1102171d2e1fac90", 2);
+        System.out.println(kandoDB.getOne("users", "email", "sushaanpatel@gmail.com"));
 
 
     }

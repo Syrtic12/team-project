@@ -66,6 +66,11 @@ public class User {
     }
 
     /**
+     * @return password of this User
+     */
+    public String getPassword(){ return this.password;}
+
+    /**
      * @param team
      * Add a team's id to this User's list of teams
      */
@@ -94,6 +99,7 @@ public class User {
         json.addProperty("name", this.name);
         json.addProperty("email", this.email);
         json.addProperty("role", this.role);
+        json.addProperty("password", this.password);
 
         JsonArray usersJson = new JsonArray();
         for (String team : this.teams) {
@@ -109,5 +115,4 @@ public class User {
     public Document toDocument(){
         return Document.parse(this.toJson().toString());
     }
-
 }

@@ -1,6 +1,7 @@
 package use_case.signup;
 
 import data_access.KandoMongoDatabase;
+import data_access.SignUpDataAccessObject;
 import entity.UserFactory;
 import entity.User;
 import org.junit.jupiter.api.Test;
@@ -12,7 +13,7 @@ class SignUpInteractorTest {
     @Test
     void successTest() {
         SignUpInputData inputData = new SignUpInputData("test@gmail.com", "test", "Member", "password", "password");
-        SignUpDataAccessInterface userRepository = new KandoMongoDatabase();
+        SignUpDataAccessInterface userRepository = new SignUpDataAccessObject(new KandoMongoDatabase());
 
         // This creates a successPresenter that tests whether the test case is as we expect.
         SignUpOutputBoundary successPresenter = new SignUpOutputBoundary() {
@@ -41,7 +42,7 @@ class SignUpInteractorTest {
     @Test
     void failurePasswordMismatchTest() {
         SignUpInputData inputData = new SignUpInputData("test@gmail.com", "test", "Member", "password", "password2");
-        SignUpDataAccessInterface userRepository = new KandoMongoDatabase();
+        SignUpDataAccessInterface userRepository = new SignUpDataAccessObject(new KandoMongoDatabase());
 
         // This creates a presenter that tests whether the test case is as we expect.
         SignUpOutputBoundary failurePresenter = new SignUpOutputBoundary() {
@@ -69,11 +70,11 @@ class SignUpInteractorTest {
     @Test
     void failureUserExistsTest() {
         SignUpInputData inputData = new SignUpInputData("test@gmail.com", "test", "Member", "password", "password");
-        SignUpDataAccessInterface userRepository = new KandoMongoDatabase();
+        SignUpDataAccessInterface userRepository = new SignUpDataAccessObject(new KandoMongoDatabase());
 
         UserFactory factory = new UserFactory();
         User user = factory.create("test","test@gmail.com", "password", "Member");
-        userRepository.add(user);
+        userRepository.addUser(user);
 
         // This creates a presenter that tests whether the test case is as we expect.
         SignUpOutputBoundary failurePresenter = new SignUpOutputBoundary() {
