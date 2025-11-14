@@ -23,7 +23,16 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
 
     public SignupView(SignupViewModel signupViewModel) {
         this.signupViewModel = signupViewModel;
+        signupViewModel.addPropertyChangeListener(this);
 
+        final JLabel titleLabel = new JLabel(SignupViewModel.TITLE_LABEL);
+        titleLabel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+        final LabelTextPanel usernameInfo = new LabelTextPanel(
+                new JLabel(SignupViewModel.USERNAME_LABEL), usernameField);
+        final LabelTextPanel passwordInfo = new LabelTextPanel(
+                new JLabel(SignupViewModel.PASSWORD_LABEL), passwordField);
+        final LabelTextPanel repeatPasswordInfo = new LabelTextPanel(
+                new JLabel(SignupViewModel.REPEAT_PASSWORD_LABEL), repeatPasswordField);
     }
 
 
