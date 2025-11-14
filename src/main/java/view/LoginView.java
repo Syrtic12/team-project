@@ -1,6 +1,7 @@
 package view;
 
 import interface_adapter.login.LoginController;
+import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
 
 import javax.swing.*;
@@ -21,6 +22,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
     private final JButton loginButton;
     private final JButton cancel;
+    private LoginController loginController = null;
 
     public LoginView(LoginViewModel loginViewModel){
         this.loginViewModel = loginViewModel;
@@ -31,6 +33,29 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
         final LabelTextPanel emailInfo = new LabelTextPanel(
                 new JLabel("Email"), emailField);
+        final LabelTextPanel passwordInfo = new LabelTextPanel(
+                new JLabel("Password"), passwordField);
+
+        final JPanel buttons = new JPanel();
+        loginButton = new JButton("Log in");
+        buttons.add(loginButton);
+        cancel = new JButton("Cancel");
+        buttons.add(cancel);
+
+        loginButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(loginButton)) {
+                            final LoginState currentState = loginViewModel.getState();
+
+                            loginController.execute(
+                                    currentState.getEmail(),
+                                    currentState.getPassword()
+                            );
+                        }
+                    }
+                }
+        )
 
 
     }
