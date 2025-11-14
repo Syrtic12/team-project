@@ -10,8 +10,16 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
-    private final SignupViewModel signupViewModel;
     private final String viewName = "sign up";
+    private final SignupViewModel signupViewModel;
+    private final JTextField usernameField = new JTextField(20);
+    private final JTextField passwordField = new JTextField(20);
+    private final JTextField repeatPasswordField = new JTextField(20);
+    private SignupController signupController = null;
+    private final JButton signupButton;
+    private final JButton cancelButton;
+    private final JButton toLoginButton;
+
 
     public SignupView(SignupViewModel signupViewModel) {
         this.signupViewModel = signupViewModel;
