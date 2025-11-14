@@ -17,4 +17,7 @@ public class SignupViewModel {
 
     public SignupState getState() {
     }
+
+    public void setState(SignupState currentState) {
+    }
 }

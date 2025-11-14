@@ -19,4 +19,16 @@ public class SignupState {
 
     public Object getPasswordError() {
     }
+
+    public void setRepeatPassword(String s) {
+    }
+
+    public void setPassword(String s) {
+    }
+
+    public void setUsername(String text) {
+    }
+
+    public void setEmail(String text) {
+    }
 }
