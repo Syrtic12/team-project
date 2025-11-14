@@ -9,4 +9,14 @@ public class SignupState {
 
     public String getRepeatPassword() {
     }
+
+    public Object getUsernameError() {
+    }
+
+    public Object getEmailError() {
+        return null;
+    }
+
+    public Object getPasswordError() {
+    }
 }
