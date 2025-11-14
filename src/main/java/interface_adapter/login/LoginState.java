@@ -10,6 +10,6 @@ public class LoginState {
     public String getLoginError() {
     }
 
-    public void setEmail() {
+    public void setEmail(String text) {
     }
 }

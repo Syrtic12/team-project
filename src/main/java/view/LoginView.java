@@ -16,10 +16,10 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private final String viewName = "log in";
     private final LoginViewModel loginViewModel;
 
-    private final JTextField emailField = new JTextField();
+    private final JTextField emailField = new JTextField(20);
     private final JLabel emailErrorField = new JLabel();
 
-    private final JPasswordField passwordField = new JPasswordField();
+    private final JPasswordField passwordField = new JPasswordField(20);
     private final JLabel passwordErrorField = new JLabel();
 
     private final JButton loginButton;
@@ -84,7 +84,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                 documentListenerHelper();
             }
         });
-
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
         this.add(emailInfo);
         this.add(emailErrorField);
