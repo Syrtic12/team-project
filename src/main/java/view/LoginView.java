@@ -10,12 +10,28 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {
-    public final String viewName = "log in";
-    public final LoginViewModel loginViewModel;
+    private final String viewName = "log in";
+    private final LoginViewModel loginViewModel;
 
+    private final JTextField emailField = new JTextField();
+    private final JLabel emailErrorField = new JLabel();
 
+    private final JPasswordField passwordField = new JPasswordField();
+    private final JLabel passwordErrorField = new JLabel();
 
-    public LoginView(){
+    private final JButton loginButton;
+    private final JButton cancel;
+
+    public LoginView(LoginViewModel loginViewModel){
+        this.loginViewModel = loginViewModel;
+        this.loginViewModel.addPropertyChangeListener(this);
+
+        final JLabel title = new JLabel("Login");
+        title.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+
+        final LabelTextPanel emailInfo = new LabelTextPanel(
+                new JLabel("Email"), emailField);
+
 
     }
 
