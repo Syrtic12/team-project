@@ -6,4 +6,10 @@ public class LoginState {
 
     public String getPassword() {
     }
+
+    public String getLoginError() {
+    }
+
+    public void setEmail() {
+    }
 }

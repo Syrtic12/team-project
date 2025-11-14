@@ -5,6 +5,8 @@ import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -55,18 +57,56 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                         }
                     }
                 }
-        )
+        );
 
+        cancel.addActionListener(this);
 
+        emailField.getDocument().addDocumentListener(new DocumentListener() {
+
+            public void documentListenerHelper() {
+                final LoginState currentState = loginViewModel.getState();
+                currentState.setEmail(emailField.getText());
+                loginViewModel.setState(currentState);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+        });
+
+        this.add(title);
+        this.add(emailInfo);
+        this.add(emailErrorField);
+        this.add(passwordInfo);
+        this.add(passwordErrorField);
+        this.add(buttons);
     }
 
-    public void actionPerformed(ActionEvent e){
-
+    public void actionPerformed(ActionEvent evt){
+        System.out.println("Click " + evt.getActionCommand());
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt){
+        final LoginState state = (LoginState) evt.getNewValue();
+        setFields(state);
+        emailErrorField.setText(state.getLoginError());
+    }
 
+    private void setFields(LoginState state) {
+        emailField.setText(state.getEmail());
+        passwordField.setText(state.getPassword());
     }
 
     public String getViewName(){
@@ -74,6 +114,6 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     }
 
     public void setLoginController(LoginController loginController){
-
+        this.loginController = loginController;
     }
 }

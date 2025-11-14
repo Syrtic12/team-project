@@ -4,4 +4,7 @@ public class ViewModel<T> {
 
     public T getState() {
     }
+
+    public void setState() {
+    }
 }
