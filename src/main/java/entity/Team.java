@@ -1,23 +1,106 @@
 package entity;
 import java.util.List;
 import java.util.ArrayList;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonArray;
+import org.bson.Document;
 
 //essentially tasklist for a team
 public class Team {
+    private String idx;
     private List<String> users;
     private TeamLeader leader;
-    private List<Task> tasks;
+    private List<String> tasks;
 
+    /**
+     * @param leader leader of the team
+     * Constructor for Team
+     */
     public Team(TeamLeader leader){
+        this.idx = null; // to be set when added to database
         this.leader = leader;
         this.users = new ArrayList<>();
         this.tasks = new ArrayList<>();
     }
 
-    public List<Task> GetTasks(){
+    /**
+     * @param obj the reference object with which to compare.
+     * @return true if this object is the same as the obj argument; false otherwise.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Team other = (Team) obj;
+        return this.idx != null && this.idx.equals(other.idx);
+    }
+
+    /**
+     * @return idx of this Team
+     */
+    public String getIdx(){
+        return this.idx;
+    }
+
+    /**
+     * @param idx idx of this Team
+     * Set the idx of this Team
+     */
+    public void setIdx(String idx){
+        this.idx = idx;
+    }
+
+    /**
+     * @return list of ids of the team's tasks
+     */
+    public List<String> GetTasks(){
         return this.tasks;
     }
 
-    public void addTask(){}
-    public void removeTask(){}
+    /**
+     * @param task task id to be added
+     * Add a task id to the team's task list
+     */
+    public void addTask(String task){
+        this.tasks.add(task);
+    }
+
+    /**
+     * @param t
+     * Remove a task t's id from the team's task list
+     */
+    public void removeTask(Task t){
+        for (String task : this.tasks) {
+            if (task.equals(t.getIdx())) {
+                this.tasks.remove(task);
+                break;
+            }
+        }
+    }
+
+    /**
+     * @return Json representation of this Team
+     */
+    public JsonObject toJson(){
+        JsonObject json = new JsonObject();
+        json.addProperty("leader", this.leader.toJson().toString());
+        JsonArray tasksJson = new JsonArray();
+        for(String task : this.tasks){
+            tasksJson.add(task);
+        }
+        json.add("tasks", tasksJson);
+        JsonArray usersJson = new JsonArray();
+        for(String user : this.users){
+            usersJson.add(user);
+        }
+        json.add("users", usersJson);
+        return json;
+    }
+
+    /**
+     * @return Document representation of this Team
+     */
+    public Document toDocument(){
+        return Document.parse(this.toJson().toString());
+    }
 }
