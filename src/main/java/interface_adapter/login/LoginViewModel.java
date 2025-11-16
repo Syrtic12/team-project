@@ -5,6 +5,7 @@ import view.LoginView;
 
 public class LoginViewModel extends ViewModel<LoginState>{
     public LoginViewModel() {
+        super("login");
         setState(new LoginState());
     }
 

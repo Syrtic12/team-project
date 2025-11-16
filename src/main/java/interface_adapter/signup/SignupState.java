@@ -2,15 +2,15 @@ package interface_adapter.signup;
 
 public class SignupState {
     private String username = "";
-    private String usernameError;
+    private String usernameError = "";
     private String password = "";
-    private String passwordError;
+    private String passwordError = "";
     private String role = "";
-    private String roleError;
+    private String roleError = "";
     private String repeatPassword = "";
-    private String repeatPasswordError;
+    private String repeatPasswordError = "";
     private String email = "";
-    private String emailError;
+    private String emailError = "";
 
     public String getUsername() {
         return username;

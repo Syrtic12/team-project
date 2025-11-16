@@ -21,8 +21,8 @@ public class LoginState {
         this.email = email;
     }
 
-    public void setLoginError(String emailError) {
-        this.loginError = emailError;
+    public void setLoginError(String loginError) {
+        this.loginError = loginError;
     }
 
     public void setPassword(String password) {
