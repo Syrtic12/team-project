@@ -8,10 +8,4 @@ public class LoginViewModel extends ViewModel<LoginState>{
         super("login");
         setState(new LoginState());
     }
-
-    public void addPropertyChangeListener(LoginView loginView) {
-        /*
-        I dunno what to do here
-         */
-    }
 }

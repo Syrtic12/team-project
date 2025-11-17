@@ -2,9 +2,14 @@ package interface_adapter;
 
 import interface_adapter.login.LoginState;
 
+import java.beans.PropertyChangeSupport;
+import java.beans.PropertyChangeListener;
+
 public class ViewModel<T> {
 
     private final String viewName;
+
+    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     private T state;
 
@@ -22,5 +27,33 @@ public class ViewModel<T> {
 
     public void setState(T state) {
         this.state = state;
+    }
+
+    /**
+     * Fires a property changed event for the state of this ViewModel.
+     */
+    public void firePropertyChange() {
+        this.support.firePropertyChange("state", null, this.state);
+    }
+
+    /**
+     * Fires a property changed event for the state of this ViewModel, which
+     * allows the user to specify a different propertyName. This can be useful
+     * when a class is listening for multiple kinds of property changes.
+     * <p/>
+     * For example, the LoggedInView listens for two kinds of property changes;
+     * it can use the property name to distinguish which property has changed.
+     * @param propertyName the label for the property that was changed
+     */
+    public void firePropertyChange(String propertyName) {
+        this.support.firePropertyChange(propertyName, null, this.state);
+    }
+
+    /**
+     * Adds a PropertyChangeListener to this ViewModel.
+     * @param listener The PropertyChangeListener to be added
+     */
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        this.support.addPropertyChangeListener(listener);
     }
 }
