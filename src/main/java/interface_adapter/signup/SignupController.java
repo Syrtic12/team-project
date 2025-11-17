@@ -9,8 +9,8 @@ public class SignupController {
     public SignupController(SignUpInputBoundary SignUpInteractor) {
         this.SignUpInteractor = SignUpInteractor;
     }
-    public void execute(String username, String password, String repeatPassword, String email, String role) {
-        final SignUpInputData signUpInputData = new SignUpInputData(email, username, role, password, repeatPassword );
+    public void execute(String username, String password, String repeatPassword, String email) {
+        final SignUpInputData signUpInputData = new SignUpInputData(email, username, password, repeatPassword );
         SignUpInteractor.execute(signUpInputData);
     }
 
