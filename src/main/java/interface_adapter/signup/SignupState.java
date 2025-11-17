@@ -72,6 +72,26 @@ public class SignupState {
         return repeatPasswordError;
     }
 
+    public void setUsernameError(String username) {
+        this.usernameError = usernameError;
+    }
+
+    public void setEmailError(String email) {
+        this.emailError = emailError;
+    }
+
+    public void setRoleError(String role) {
+        this.roleError = roleError;
+    }
+
+    public void setPasswordError(String password) {
+        this.passwordError = passwordError;
+    }
+
+    public void setRepeatPasswordError(String repeatPassword) {
+        this.repeatPasswordError = repeatPasswordError;
+    }
+
     @Override
     public String toString() {
         return "SignupState{"

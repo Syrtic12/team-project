@@ -21,4 +21,5 @@ public interface SignUpOutputBoundary {
      * Switches to the Login View.
      */
     void switchToLoginView();
+
 }
