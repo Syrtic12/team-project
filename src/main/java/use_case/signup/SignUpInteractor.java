@@ -21,7 +21,6 @@ public class SignUpInteractor implements SignUpInputBoundary{
     @Override
     public void execute(SignUpInputData signupInputData){
         String name = signupInputData.getName();
-        String role = signupInputData.getRole();
         String email = signupInputData.getEmail();
         String password = signupInputData.getPassword();
         String repeatPassword = signupInputData.getRepeatPassword();
@@ -36,7 +35,7 @@ public class SignUpInteractor implements SignUpInputBoundary{
         } else if (email.isEmpty()){
             userPresenter.prepareFailView("Email cannot be empty");
         } else {
-            User newUser = userFactory.create(name, email, password, role);
+            User newUser = userFactory.create(name, email, password, "");
             User addedUser = userDataAccessObject.addUser(newUser);
             SignUpOutputData signupOutputData = new SignUpOutputData(addedUser.getIdx(), addedUser.getEmail());
             userPresenter.prepareSuccessView(signupOutputData);
@@ -50,7 +49,7 @@ public class SignUpInteractor implements SignUpInputBoundary{
 
     public static void main(String[] args) {
         SignUpInteractor interac = new SignUpInteractor(new SignUpDataAccessObject( new KandoMongoDatabase()), null, new UserFactory());
-        SignUpInputData data = new SignUpInputData("sushaanpatel@gmail.com", "Sushaan Patel", "Member", "password", "password");
+        SignUpInputData data = new SignUpInputData("sushaanpatel@gmail.com", "Sushaan Patel", "password", "password");
         interac.execute(data);
     }
 
