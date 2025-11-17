@@ -40,6 +40,10 @@ public class SignupState {
         this.email = email;
     }
 
+    public void setEmailError(String emailError) {
+        this.emailError = emailError;
+    }
+
     public void setRole(String role) {
         this.role = role;
     }
