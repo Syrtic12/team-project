@@ -57,7 +57,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                             final SignupState currentState = signupViewModel.getState();
 
                             signupController.execute(
+                                    currentState.getEmail(),
                                     currentState.getUsername(),
+                                    currentState.getRole(),
                                     currentState.getPassword(),
                                     currentState.getRepeatPassword()
                             );
@@ -213,6 +215,12 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         }
         if (state.getPasswordError() != null) {
             JOptionPane.showMessageDialog(this, state.getPasswordError());
+        }
+        if (state.getRoleError() != null) {
+            JOptionPane.showMessageDialog(this, state.getRoleError());
+        }
+        if (state.getRepeatPasswordError() != null) {
+            JOptionPane.showMessageDialog(this, state.getRepeatPasswordError());
         }
     }
 

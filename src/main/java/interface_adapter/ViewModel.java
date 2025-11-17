@@ -4,9 +4,23 @@ import interface_adapter.login.LoginState;
 
 public class ViewModel<T> {
 
-    public T getState() {
+    private final String viewName;
+
+    private T state;
+
+    public ViewModel(String viewName){
+        this.viewName = viewName;
     }
 
-    public void setState(LoginState currentState) {
+    public String getViewName(){
+        return this.viewName;
+    }
+
+    public T getState() {
+        return state;
+    }
+
+    public void setState(T state) {
+        this.state = state;
     }
 }
