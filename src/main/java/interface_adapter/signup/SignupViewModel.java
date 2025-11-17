@@ -1,12 +1,10 @@
 package interface_adapter.signup;
 
 import interface_adapter.ViewModel;
+import view.LoginView;
 import view.SignupView;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-
-public class SignupViewModel extends ViewModel<SignupState> {
+public class SignupViewModel extends ViewModel {
     public static final String TITLE_LABEL = "Signup";
     public static final String USERNAME_LABEL = "Username";
     public static final String PASSWORD_LABEL = "Password";
@@ -17,10 +15,10 @@ public class SignupViewModel extends ViewModel<SignupState> {
     public static final String CANCEL_BUTTON_LABEL = "Cancel";
     private SignupState signupState;
 
-    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
-
     public void addPropertyChangeListener(SignupView signupView) {
-        this.support.addPropertyChangeListener((PropertyChangeListener) signupView);
+        /*
+        I dunno what to do here
+         */
     }
 
     public SignupViewModel(){
@@ -33,7 +31,6 @@ public class SignupViewModel extends ViewModel<SignupState> {
     }
 
     public void setState(SignupState currentState) {
-    this.signupState = currentState;
-    this.support.firePropertyChange("state", null, currentState);
+        this.signupState = currentState;
     }
 }
