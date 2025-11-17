@@ -2,7 +2,6 @@ package interface_adapter.login;
 
 import use_case.login.LogInInputBoundary;
 import use_case.login.LogInInputData;
-import view.LoginView;
 
 public class LoginController {
 
@@ -13,5 +12,6 @@ public class LoginController {
 
     public void execute(String email, String password) {
         final LogInInputData logInInputData = new LogInInputData(email, password);
+    this.loginInteractor.execute(logInInputData);
     }
 }
