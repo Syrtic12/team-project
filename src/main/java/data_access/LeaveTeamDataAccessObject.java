@@ -52,5 +52,11 @@ public class LeaveTeamDataAccessObject implements LeaveTeamDataAccessInterface {
         return out;
     }
 
+    @Override
+    public boolean removeMember(Team team, User user) {
+//        this.GeneralDataAccessObject.update("team", team.getIdx(), "users", );
+        return true;
+    }
+
 
 }

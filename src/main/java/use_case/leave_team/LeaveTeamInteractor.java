@@ -6,7 +6,7 @@ import view.ManageTeamView;
 
 import java.util.Objects;
 
-public class LeaveTeamInteractor {
+public class LeaveTeamInteractor implements LeaveTeamInputBoundary{
 
     private final LeaveTeamDataAccessInterface dataAccessObject;
     private final LeaveTeamOutputBoundary leaveTeamPresenter;
@@ -25,6 +25,7 @@ public class LeaveTeamInteractor {
         if (Objects.equals(dataAccessObject.getTeamLeader(team).getIdx(), user.getIdx())) {
             leaveTeamPresenter.prepareFailView("Team leader cannot leave the team.");
         }
+
 
 
     }
