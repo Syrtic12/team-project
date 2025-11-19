@@ -25,7 +25,7 @@ import view.ViewManager;
 import javax.swing.*;
 import java.awt.*;
 
-public class Main {
+public class    Main {
     public static void main(String[] args) {
         final JPanel cardPanel = new JPanel();
         final CardLayout cardLayout = new CardLayout();

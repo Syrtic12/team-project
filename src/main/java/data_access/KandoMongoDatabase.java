@@ -10,6 +10,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import entity.Team;
+import entity.TeamLeader;
 import entity.User;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.bson.Document;
@@ -190,6 +191,10 @@ public class KandoMongoDatabase {
         KandoMongoDatabase kandoDB = new KandoMongoDatabase();
 //        kandoDB.update("tasks", "6911237d1102171d2e1fac90", "title", "Test Task Updated 1");
 //        kandoDB.updateStatus("tasks", "6911237d1102171d2e1fac90", 2);
+//        TeamLeader testleader = new TeamLeader("testleader", "leaderman@gmail.com", "Leader", "password123");
+//        Team testTeam = new Team(testleader);
+//        kandoDB.add(testleader);
+//        kandoDB.add(testTeam);
         System.out.println(kandoDB.getOne("users", "email", "sushaanpatel@gmail.com"));
 
 
