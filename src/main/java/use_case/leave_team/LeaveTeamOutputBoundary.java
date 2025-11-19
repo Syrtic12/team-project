@@ -1,17 +1,15 @@
 package use_case.leave_team;
 
-import use_case.login.LogInOutputData;
-
 public interface LeaveTeamOutputBoundary {
     /**
      * Prepares the success view.
      * @param outputData the output data
      */
-    void prepareSuccessView(LogInOutputData outputData);
+    void prepareSuccessView(LeaveTeamOutputData outputData);
 
     /**
      * Prepares the failure view.
-     * @param errorMessage the explanation of the failure
+     * @param outputData output data with an associated error message
      */
-    void prepareFailView(String errorMessage);
+    void prepareFailView(LeaveTeamOutputData outputData);
 }

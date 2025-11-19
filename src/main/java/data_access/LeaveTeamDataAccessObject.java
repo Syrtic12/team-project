@@ -7,7 +7,6 @@ import entity.UserFactory;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import use_case.leave_team.LeaveTeamDataAccessInterface;
-
 import java.util.List;
 
 public class LeaveTeamDataAccessObject implements LeaveTeamDataAccessInterface {
@@ -40,7 +39,15 @@ public class LeaveTeamDataAccessObject implements LeaveTeamDataAccessInterface {
 
     @Override
     public List<String> getTeamMembers(Team team) {
-        return List.of();
+        Document teamDoc = this.GeneralDataAccessObject.getOne("teams", "_id", team.getIdx());
+        if (teamDoc == null) {
+            return List.of();
+        }
+        List<String> out = teamDoc.getList("users", String.class);
+        if (out == null) {
+            return List.of();
+        }
+        return out;
     }
 
     @Override
@@ -54,7 +61,12 @@ public class LeaveTeamDataAccessObject implements LeaveTeamDataAccessInterface {
 
     @Override
     public boolean removeMember(Team team, User user) {
-//        this.GeneralDataAccessObject.update("team", team.getIdx(), "users", );
+        List<String> teamMembers = getTeamMembers(team);
+        if ((user.getIdx() == null) || !teamMembers.contains(user.getIdx())) {
+            return false;
+        }
+        teamMembers.remove(user.getIdx());
+        this.GeneralDataAccessObject.update("teams", "users", team.getIdx(), teamMembers);
         return true;
     }
 
