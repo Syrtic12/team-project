@@ -5,7 +5,9 @@ import data_access.LogInDataAccessObject;
 import data_access.SignUpDataAccessObject;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
+import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
@@ -32,6 +34,7 @@ public class Main {
         final KandoMongoDatabase dataAccessObject = new KandoMongoDatabase();
         SignupView signupView;
         LoginView loginView;
+        LoggedInViewModel loggedInViewModel;
         SignupViewModel signupViewModel;
         LoginViewModel loginViewModel;
         ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
@@ -42,8 +45,11 @@ public class Main {
         cardPanel.add(signupView, signupView.getViewName());
         // add login view
         loginViewModel = new LoginViewModel();
-        loginView = new LoginView(loginViewModel);
-        cardPanel.add(loginView, loginView.getViewName());
+//        loginView = new LoginView(loginViewModel);
+//        cardPanel.add(loginView, loginView.getViewName());
+        // add logged in view
+        loggedInViewModel = new LoggedInViewModel();
+
         // add signup use case
         final SignUpOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel,
                 signupViewModel, loginViewModel);
@@ -69,5 +75,9 @@ public class Main {
 
         viewManagerModel.setState(signupView.getViewName());
         viewManagerModel.firePropertyChange();
+
+        application.pack();
+        application.setLocationRelativeTo(null);
+        application.setVisible(true);
     }
 }
