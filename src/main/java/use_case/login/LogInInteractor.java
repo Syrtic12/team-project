@@ -24,7 +24,7 @@ public class LogInInteractor implements LogInInputBoundary {
         String email = loginInputData.getEmail();
         String password = loginInputData.getPassword();
         if (email.isEmpty() || password.isEmpty()) {
-            loginPresenter.prepareFailView("Email and password cannot be empty.");
+            loginPresenter.prepareFailView("Email or password cannot be empty.");
         } else if (!(dataAccessObject.emailExists(email))){
             loginPresenter.prepareFailView("Account does not exist.");
         } else {
@@ -36,6 +36,10 @@ public class LogInInteractor implements LogInInputBoundary {
                 loginPresenter.prepareFailView("Incorrect password.");
             }
         }
+    }
+
+    public void switchToSignupView(){
+        loginPresenter.switchToSignupView();
     }
 
     public static void main(String[] args) {

@@ -2,15 +2,19 @@ package interface_adapter.signup;
 
 public class SignupState {
     private String username = "";
-    private String usernameError = "";
+    private String processError = null;
     private String password = "";
-    private String passwordError = "";
     private String role = "";
-    private String roleError = "";
     private String repeatPassword = "";
-    private String repeatPasswordError = "";
     private String email = "";
-    private String emailError = "";
+
+    public void setError(String error) {
+        this.processError = error;
+    }
+
+    public String getError() {
+        return this.processError;
+    }
 
     public String getUsername() {
         return username;
@@ -40,10 +44,6 @@ public class SignupState {
         this.email = email;
     }
 
-    public void setEmailError(String emailError) {
-        this.emailError = emailError;
-    }
-
     public void setRole(String role) {
         this.role = role;
     }
@@ -54,26 +54,6 @@ public class SignupState {
 
     public void setRepeatPassword(String repeatPassword) {
         this.repeatPassword = repeatPassword;
-    }
-
-    public Object getUsernameError() {
-        return usernameError;
-    }
-
-    public Object getEmailError() {
-        return emailError;
-    }
-
-    public Object getRoleError() {
-        return roleError;
-    }
-
-    public Object getPasswordError() {
-        return passwordError;
-    }
-
-    public Object getRepeatPasswordError() {
-        return repeatPasswordError;
     }
 
     @Override
