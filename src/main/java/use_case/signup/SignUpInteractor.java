@@ -20,9 +20,6 @@ public class SignUpInteractor implements SignUpInputBoundary{
 
     @Override
     public void execute(SignUpInputData signupInputData){
-        System.out.println("interac");
-        System.out.println(signupInputData.getEmail());
-        System.out.println(signupInputData.getPassword());
         String name = signupInputData.getName();
         String email = signupInputData.getEmail();
         String password = signupInputData.getPassword();
