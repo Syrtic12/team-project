@@ -1,7 +1,5 @@
 package use_case.leave_team;
 
-import use_case.login.LogInInputData;
-
 public interface LeaveTeamInputBoundary {
     /**
      * Executes the leaveTeam use case.
