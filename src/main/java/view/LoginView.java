@@ -13,7 +13,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {
-    private final String viewName = "log in";
+    private final String viewName = "login";
     private final LoginViewModel loginViewModel;
 
     private final JTextField emailField = new JTextField(20);
@@ -41,7 +41,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         final JPanel buttons = new JPanel();
         loginButton = new JButton("Log in");
         buttons.add(loginButton);
-        cancel = new JButton("Cancel");
+        cancel = new JButton("Create An Account");
         buttons.add(cancel);
 
         loginButton.addActionListener(
@@ -59,7 +59,11 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                 }
         );
 
-        cancel.addActionListener(this);
+        cancel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                loginController.switchToSignupView();
+            }
+        });
 
         emailField.getDocument().addDocumentListener(new DocumentListener() {
 
@@ -100,8 +104,11 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     @Override
     public void propertyChange(PropertyChangeEvent evt){
         final LoginState state = (LoginState) evt.getNewValue();
-        setFields(state);
-        emailErrorField.setText(state.getLoginError());
+//        setFields(state);
+        System.out.println(state.getError());
+        if (state.getError() != null) {
+            JOptionPane.showMessageDialog(this, state.getError());
+        }
     }
 
     private void setFields(LoginState state) {

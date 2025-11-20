@@ -13,5 +13,10 @@ public class LoginController {
 
     public void execute(String email, String password) {
         final LogInInputData logInInputData = new LogInInputData(email, password);
+        loginInteractor.execute(logInInputData);
+    }
+
+    public void switchToSignupView() {
+        loginInteractor.switchToSignupView();
     }
 }

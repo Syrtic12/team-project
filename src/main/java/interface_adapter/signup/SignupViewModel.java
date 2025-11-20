@@ -4,7 +4,7 @@ import interface_adapter.ViewModel;
 import view.LoginView;
 import view.SignupView;
 
-public class SignupViewModel extends ViewModel {
+public class SignupViewModel extends ViewModel<SignupState> {
     public static final String TITLE_LABEL = "Signup";
     public static final String USERNAME_LABEL = "Username";
     public static final String PASSWORD_LABEL = "Password";
@@ -15,22 +15,16 @@ public class SignupViewModel extends ViewModel {
     public static final String CANCEL_BUTTON_LABEL = "Cancel";
     private SignupState signupState;
 
-    public void addPropertyChangeListener(SignupView signupView) {
-        /*
-        I dunno what to do here
-         */
-    }
-
     public SignupViewModel(){
         super("sign up");
         setState(new SignupState());
     }
 
-    public SignupState getState() {
-        return this.signupState;
-    }
-
-    public void setState(SignupState currentState) {
-        this.signupState = currentState;
-    }
+//    public SignupState getState() {
+//        return this.signupState;
+//    }
+//
+//    public void setState(SignupState currentState) {
+//        this.signupState = currentState;
+//    }
 }
