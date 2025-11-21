@@ -108,6 +108,9 @@ public class Task {
         this.status = newStatus;
     }
 
+    public boolean isUserAssigned(String user) {
+        return this.assignedUsers.contains(user);
+    }
 
 
 }
