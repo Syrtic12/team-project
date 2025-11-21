@@ -162,7 +162,7 @@ public class KandoMongoDatabase {
      * @param value value to set key to
      * Updates a document's key to the specified value in the given collection
      */
-    public void update(String collectionName, String idx, String key, Object value){
+    public void update(String collectionName, String idx, String key, List<?> value){
         this.database.getCollection(collectionName).updateOne(Filters.eq("_id", new ObjectId(idx)), Updates.set(key, value));
     }
 
