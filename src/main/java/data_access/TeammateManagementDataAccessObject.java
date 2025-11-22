@@ -9,14 +9,14 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 import use_case.teammateManagement.TeammateManagementDataAccessInterface;
 
-public class TeammateManagementDataDataAccessObject implements TeammateManagementDataAccessInterface {
+public class TeammateManagementDataAccessObject implements TeammateManagementDataAccessInterface {
     private KandoMongoDatabase GeneralDataAccessObject;
     private final TeamFactory teamFactory = new TeamFactory();
     private final UserFactory userFactory = new UserFactory();
     private final String USERS_COLLECTION = "users";
     private final String TEAMS_COLLECTION = "teammates";
 
-    public TeammateManagementDataDataAccessObject(KandoMongoDatabase dao){ this.GeneralDataAccessObject = dao; }
+    public TeammateManagementDataAccessObject(KandoMongoDatabase dao){ this.GeneralDataAccessObject = dao; }
 
     @Override
     public Team getTeam(String teamId) {
@@ -78,7 +78,7 @@ public class TeammateManagementDataDataAccessObject implements TeammateManagemen
             return false;
         }
         teamMembers.remove(user.getIdx());
-        this.GeneralDataAccessObject.update(TEAMS_COLLECTION USERS_COLLECTION, team.getIdx(), teamMembers);
+        this.GeneralDataAccessObject.update(TEAMS_COLLECTION, USERS_COLLECTION, team.getIdx(), teamMembers);
         return true;
     }
 }
