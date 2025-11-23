@@ -201,7 +201,7 @@ public class KandoMongoDatabase {
         KandoMongoDatabase kandoDB = new KandoMongoDatabase();
 //        kandoDB.update("tasks", "6911237d1102171d2e1fac90", "title", "Test Task Updated 1");
 //        kandoDB.updateStatus("tasks", "6911237d1102171d2e1fac90", 2);
-//        TeamLeader testleader = new TeamLeader("testleader", "leaderman@gmail.com", "Leader", "password123");
+          TeamLeader testleader = new TeamLeader("test", "test", "Leader", "test");
 //        Team testTeam = new Team(testleader);
 //        kandoDB.add(testleader);
 //        kandoDB.add(testTeam);
@@ -210,6 +210,8 @@ public class KandoMongoDatabase {
 //                "691b40b64c4f37931fa10453"
 //        );
 //        kandoDB.update("teams", "691e33af54f5b339af39ebde", "users", userIds);
+        Team testteam2 = new Team(testleader);
+        kandoDB.add(testteam2);
         System.out.println(kandoDB.getOne("users", "email", "sushaanpatel@gmail.com"));
 
 
