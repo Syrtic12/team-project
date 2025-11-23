@@ -71,6 +71,12 @@ public class User {
     public String getPassword(){ return this.password;}
 
     /**
+     * @return name of this User
+     */
+    public String getName() {
+    return this.name;}
+
+    /**
      * @param team
      * Add a team's id to this User's list of teams
      */

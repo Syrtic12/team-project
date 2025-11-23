@@ -108,6 +108,35 @@ public class Task {
         this.status = newStatus;
     }
 
+    public String getTitle() {
+    return this.title;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public Integer getStatus() {
+        return this.status;
+    }
+
+    public List<String> getAssignedUsers() {
+        return this.assignedUsers;
+    }
+
+    public boolean isAssignedUser(String invokedBy) {
+        throw new UnsupportedOperationException("Unimplemented method 'isAssignedUser'");
+    }
+
+    public void setTitle(String newTitle) {
+        throw new UnsupportedOperationException("Unimplemented method 'setTitle'");
+    }
+
+    public void setDescription(String newDescription) {
+        throw new UnsupportedOperationException("Unimplemented method 'setDescription'");
+    }
+
+
 
 
 }
