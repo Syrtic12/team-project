@@ -4,6 +4,8 @@ import entity.Task;
 import entity.TaskFactory;
 import entity.User;
 import entity.UserFactory;
+import entity.Team;
+import entity.TeamFactory;
 import use_case.assign_task.AssignTaskDataAccessInterface;
 import org.bson.Document;
 
@@ -14,6 +16,7 @@ public class AssignTaskDataAccessObject implements AssignTaskDataAccessInterface
     private final KandoMongoDatabase GeneralDataAccessObject;
     private final TaskFactory taskFactory = new TaskFactory();
     private final UserFactory userFactory = new UserFactory();
+    private final TeamFactory teamFactory = new TeamFactory();
 
     public AssignTaskDataAccessObject(KandoMongoDatabase dao) {
         this.GeneralDataAccessObject = dao;
@@ -35,6 +38,19 @@ public class AssignTaskDataAccessObject implements AssignTaskDataAccessInterface
             return null;
         }
         return userFactory.createFromDocument(userDocument);
+    }
+
+    @Override
+    public Team getTeamByTask(String taskIdx) {
+        List<Document> allTeams = GeneralDataAccessObject.getAll("teams");
+
+        for (Document teamDocument : allTeams) {
+            List<String> tasks = teamDocument.getList("tasks", String.class);
+            if (tasks != null  && tasks.contains(taskIdx)){
+                return teamFactory.createFromDocument(teamDocument);
+            }
+        }
+        return null;
     }
 
     @Override

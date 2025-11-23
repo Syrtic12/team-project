@@ -51,6 +51,11 @@ public class Team {
     }
 
     /**
+     * @return leader of this Team
+     */
+    public TeamLeader getLeader() {return this.leader;}
+
+    /**
      * @return list of ids of the team's tasks
      */
     public List<String> GetTasks(){
@@ -64,6 +69,12 @@ public class Team {
     public void addTask(String task){
         this.tasks.add(task);
     }
+
+    /**
+     * @param user user id to be added
+     * Add a user id to the team's task list
+     */
+    public void addUser(String user){this.users.add(user);}
 
     /**
      * @param t

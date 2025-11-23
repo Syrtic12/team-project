@@ -5,7 +5,6 @@ import org.bson.types.ObjectId;
 import java.util.List;
 
 public class TaskFactory {
-
     public Task create(String title, String description, Integer status) {
         return new Task(title, description, status);
     }

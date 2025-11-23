@@ -2,6 +2,7 @@ package use_case.assign_task;
 
 import entity.Task;
 import entity.User;
+import entity.Team;
 
 public class AssignTaskInteractor implements AssignTaskInputBoundary{
 
@@ -34,6 +35,16 @@ public class AssignTaskInteractor implements AssignTaskInputBoundary{
         User teamLeader = dataAccessObject.getUser(teamLeaderIdx);
         if (teamLeader == null) {
             presenter.prepareFailView("Team Leader not found");
+            return;
+        }
+
+        Team team = dataAccessObject.getTeamByTask(taskIdx);
+        if (team == null) {
+            presenter.prepareFailView("This task does not belong to any team");
+            return;
+        }
+        if (!team.getLeader().getIdx().equals(teamLeaderIdx)) {
+            presenter.prepareFailView("Only team leader can assign task members");
             return;
         }
 
