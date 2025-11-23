@@ -85,6 +85,8 @@ public class Team {
         }
     }
 
+    public void addUser(String user){this.users.add(user);}
+
     /**
      * @return Json representation of this Team
      */
