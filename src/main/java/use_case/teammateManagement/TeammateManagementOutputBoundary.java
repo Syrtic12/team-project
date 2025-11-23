@@ -14,5 +14,5 @@ public interface TeammateManagementOutputBoundary {
      * Prepares the failure view.
      * @param errorMessage the explanation of the failure
      */
-    void prepareFailView(TeammateManagementOutputData outputData);
+    void prepareFailView(String errorMessage);
 }

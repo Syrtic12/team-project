@@ -22,16 +22,16 @@ public class TeammateManagementInteractor implements TeammateManagementInputBoun
         Team team = dataAccessObject.getTeam(TeammateManagementInputData.getTeamID());
         String action = TeammateManagementInputData.getAction();
         if ((team.getIdx() == null) || (user.getIdx() == null)) {
-            TeammateManagementOutputData outputData = new TeammateManagementOutputData(false, null, null, "Team/User not found.");
-            teammateManagementPresenter.prepareFailView(outputData);
+            teammateManagementPresenter.prepareFailView("Team/User not found.");
             return;
         } else if (action.isEmpty()){
-            TeammateManagementOutputData outputData = new TeammateManagementOutputData(false, null, null, "No action has been specified.");
-            teammateManagementPresenter.prepareFailView(outputData);
+            teammateManagementPresenter.prepareFailView("No action has been specified.");
             return;
         } else if (Objects.equals(dataAccessObject.getTeamLeader(team).getIdx(), user.getIdx())) {
-            TeammateManagementOutputData outputData = new TeammateManagementOutputData(false, team.getIdx(), user.getIdx(), "You cannot "+ action+ "remove yourself.");
-            teammateManagementPresenter.prepareFailView(outputData);
+            teammateManagementPresenter.prepareFailView("You cannot "+ action+ "remove yourself.");
+            return;
+        } else if (dataAccessObject.getTeamMembers(team).contains(user.getIdx())) {
+            teammateManagementPresenter.prepareFailView("This User is not in this team");
             return;
         } else {
             boolean result = false;
@@ -42,8 +42,7 @@ public class TeammateManagementInteractor implements TeammateManagementInputBoun
                 result = this.dataAccessObject.removeUser(team, user);
             }
             if (!result){
-                TeammateManagementOutputData outputData = new TeammateManagementOutputData(false, team.getIdx(), user.getIdx(), "An error has occured");
-                teammateManagementPresenter.prepareFailView(outputData);
+                teammateManagementPresenter.prepareFailView("An error has occured");
             }
             TeammateManagementOutputData outputData = new TeammateManagementOutputData(true, team.getIdx(), user.getIdx(), "Success");
             teammateManagementPresenter.prepareSuccessView(outputData);
