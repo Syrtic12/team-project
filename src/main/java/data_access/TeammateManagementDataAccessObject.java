@@ -14,7 +14,7 @@ public class TeammateManagementDataAccessObject implements TeammateManagementDat
     private final TeamFactory teamFactory = new TeamFactory();
     private final UserFactory userFactory = new UserFactory();
     private final String USERS_COLLECTION = "users";
-    private final String TEAMS_COLLECTION = "teammates";
+    private final String TEAMS_COLLECTION = "teams";
 
     public TeammateManagementDataAccessObject(KandoMongoDatabase dao){ this.GeneralDataAccessObject = dao; }
 
@@ -37,7 +37,8 @@ public class TeammateManagementDataAccessObject implements TeammateManagementDat
 
     @Override
     public User getTeamLeader(Team team) {
-        Document leaderDoc = this.GeneralDataAccessObject.getOne(TEAMS_COLLECTION, "leader", team.getIdx());
+        String leaderId = team.getLeaderIdx();
+        Document leaderDoc = this.GeneralDataAccessObject.getOne(USERS_COLLECTION, "_id", leaderId);
         User out = this.userFactory.createFromDocument(leaderDoc);
         ObjectId idx = leaderDoc.getObjectId("_id");
         out.setIdx(idx.toString());
@@ -65,7 +66,7 @@ public class TeammateManagementDataAccessObject implements TeammateManagementDat
         }
         if (!teamMembers.contains(user.getIdx())) {
             teamMembers.add(user.getIdx());
-            this.GeneralDataAccessObject.update(TEAMS_COLLECTION, USERS_COLLECTION, team.getIdx(), teamMembers);
+            this.GeneralDataAccessObject.update(TEAMS_COLLECTION, team.getIdx(), USERS_COLLECTION, teamMembers);
             return true;
         }
         return false;
@@ -75,10 +76,12 @@ public class TeammateManagementDataAccessObject implements TeammateManagementDat
     public boolean removeUser(Team team, User user) {
         List<String> teamMembers = getTeamMembers(team);
         if ((user.getIdx() == null) || !teamMembers.contains(user.getIdx())) {
+            System.out.println("False");
             return false;
         }
         teamMembers.remove(user.getIdx());
-        this.GeneralDataAccessObject.update(TEAMS_COLLECTION, USERS_COLLECTION, team.getIdx(), teamMembers);
+        this.GeneralDataAccessObject.update(TEAMS_COLLECTION, team.getIdx(), USERS_COLLECTION, teamMembers);
+        System.out.println("True");
         return true;
     }
 }
