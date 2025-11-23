@@ -210,9 +210,9 @@ public class KandoMongoDatabase {
 //                "691b40b64c4f37931fa10453"
 //        );
 //        kandoDB.update("teams", "691e33af54f5b339af39ebde", "users", userIds);
-        Team testteam2 = new Team(testleader);
-        kandoDB.add(testteam2);
-        System.out.println(kandoDB.getOne("users", "email", "sushaanpatel@gmail.com"));
+//        Team testteam2 = new Team(testleader);
+//        kandoDB.add(testteam2);
+//        System.out.println(kandoDB.getOne("users", "email", "sushaanpatel@gmail.com"));
 
 
     }

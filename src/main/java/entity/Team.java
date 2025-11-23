@@ -64,26 +64,26 @@ public class Team {
         return this.tasks;
     }
 
-//    /**
-//     * @param task task id to be added
-//     * Add a task id to the team's task list
-//     */
-//    public void addTask(String task){
-//        this.tasks.add(task);
-//    }
-//
-//    /**
-//     * @param t
-//     * Remove a task t's id from the team's task list
-//     */
-//    public void removeTask(Task t){
-//        for (String task : this.tasks) {
-//            if (task.equals(t.getIdx())) {
-//                this.tasks.remove(task);
-//                break;
-//            }
-//        }
-//    }
+    /**
+     * @param task task id to be added
+     * Add a task id to the team's task list
+     */
+    public void addTask(String task){
+        this.tasks.add(task);
+    }
+
+    /**
+     * @param t
+     * Remove a task t's id from the team's task list
+     */
+    public void removeTask(Task t){
+        for (String task : this.tasks) {
+            if (task.equals(t.getIdx())) {
+                this.tasks.remove(task);
+                break;
+            }
+        }
+    }
 
     /**
      * @return Json representation of this Team
