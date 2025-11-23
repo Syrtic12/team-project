@@ -9,16 +9,16 @@ import org.bson.Document;
 public class Team {
     private String idx;
     private List<String> users;
-    private TeamLeader leader;
+    private String leaderIdx;
     private List<String> tasks;
 
     /**
-     * @param leader leader of the team
+     * @param leaderIdx id of leader of the team
      * Constructor for Team
      */
-    public Team(TeamLeader leader){
+    public Team(String leaderIdx){
         this.idx = null; // to be set when added to database
-        this.leader = leader;
+        this.leaderIdx = leaderIdx;
         this.users = new ArrayList<>();
         this.tasks = new ArrayList<>();
     }
@@ -51,39 +51,46 @@ public class Team {
     }
 
     /**
+     * @return id of team leader
+     */
+    public String getLeaderIdx(){
+        return this.leaderIdx;
+    }
+
+    /**
      * @return list of ids of the team's tasks
      */
     public List<String> GetTasks(){
         return this.tasks;
     }
 
-    /**
-     * @param task task id to be added
-     * Add a task id to the team's task list
-     */
-    public void addTask(String task){
-        this.tasks.add(task);
-    }
-
-    /**
-     * @param t
-     * Remove a task t's id from the team's task list
-     */
-    public void removeTask(Task t){
-        for (String task : this.tasks) {
-            if (task.equals(t.getIdx())) {
-                this.tasks.remove(task);
-                break;
-            }
-        }
-    }
+//    /**
+//     * @param task task id to be added
+//     * Add a task id to the team's task list
+//     */
+//    public void addTask(String task){
+//        this.tasks.add(task);
+//    }
+//
+//    /**
+//     * @param t
+//     * Remove a task t's id from the team's task list
+//     */
+//    public void removeTask(Task t){
+//        for (String task : this.tasks) {
+//            if (task.equals(t.getIdx())) {
+//                this.tasks.remove(task);
+//                break;
+//            }
+//        }
+//    }
 
     /**
      * @return Json representation of this Team
      */
     public JsonObject toJson(){
         JsonObject json = new JsonObject();
-        json.addProperty("leader", this.leader.toJson().toString());
+        json.addProperty("leader", this.leaderIdx);
         JsonArray tasksJson = new JsonArray();
         for(String task : this.tasks){
             tasksJson.add(task);

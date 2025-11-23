@@ -19,12 +19,4 @@ public class SignupViewModel extends ViewModel<SignupState> {
         super("sign up");
         setState(new SignupState());
     }
-
-//    public SignupState getState() {
-//        return this.signupState;
-//    }
-//
-//    public void setState(SignupState currentState) {
-//        this.signupState = currentState;
-//    }
 }
