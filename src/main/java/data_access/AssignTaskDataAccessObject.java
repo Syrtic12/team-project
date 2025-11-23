@@ -64,14 +64,14 @@ public class AssignTaskDataAccessObject implements AssignTaskDataAccessInterface
 
     @Override
     public void assignUserToTask(String taskIdx, String userIdx) {
-        Document taskDocument = GeneralDataAccessObject.getOne("users", "_id",  taskIdx);
+        Document taskDocument = GeneralDataAccessObject.getOne("tasks", "_id",  taskIdx);
         if (taskDocument == null) return;
 
         List<String> users = taskDocument.getList("users", String.class);
         if (users == null) {
             users = new ArrayList<>();
         }
-
+        System.out.println(!users.contains(userIdx));
         if (!users.contains(userIdx)) {
             users.add(userIdx);
 

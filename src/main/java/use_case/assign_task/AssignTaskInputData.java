@@ -19,9 +19,7 @@ public class AssignTaskInputData {
         return teamMemberIdx;
     }
 
-    public String getTeamLeaderIdx() {
-        return teamLeaderIdx;
-    }
+    public String getTeamLeaderIdx() {return teamLeaderIdx;}
 }
 
 

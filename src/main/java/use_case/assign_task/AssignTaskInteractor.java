@@ -1,15 +1,21 @@
 package use_case.assign_task;
 
+import data_access.AssignTaskDataAccessObject;
+import data_access.KandoMongoDatabase;
+import data_access.SignUpDataAccessObject;
 import entity.Task;
 import entity.User;
 import entity.Team;
+import entity.UserFactory;
+import use_case.signup.SignUpInputData;
+import use_case.signup.SignUpInteractor;
 
-public class AssignTaskInteractor implements AssignTaskInputBoundary{
+public class AssignTaskInteractor implements AssignTaskInputBoundary {
 
     private final AssignTaskDataAccessInterface dataAccessObject;
     private final AssignTaskOutputBoundary presenter;
 
-    public AssignTaskInteractor(AssignTaskDataAccessInterface dataAccessObject,  AssignTaskOutputBoundary presenter) {
+    public AssignTaskInteractor(AssignTaskDataAccessInterface dataAccessObject, AssignTaskOutputBoundary presenter) {
         this.dataAccessObject = dataAccessObject;
         this.presenter = presenter;
     }
@@ -43,7 +49,7 @@ public class AssignTaskInteractor implements AssignTaskInputBoundary{
             presenter.prepareFailView("This task does not belong to any team");
             return;
         }
-        if (!team.getLeader().getIdx().equals(teamLeaderIdx)) {
+        if (!team.getLeaderIdx().equals(teamLeaderIdx)) {
             presenter.prepareFailView("Only team leader can assign task members");
             return;
         }
