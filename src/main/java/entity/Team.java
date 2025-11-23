@@ -73,6 +73,12 @@ public class Team {
     }
 
     /**
+     * @param user user id to be added
+     * Add a user id to the team's task list
+     */
+    public void addUser(String user){this.users.add(user);}
+
+    /**
      * @param t
      * Remove a task t's id from the team's task list
      */
