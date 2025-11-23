@@ -5,6 +5,8 @@ import interface_adapter.edit_task.EditTaskState;
 import interface_adapter.edit_task.EditTaskViewModel;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -66,29 +68,54 @@ public class EditTaskView extends JPanel implements ActionListener, PropertyChan
  }
 
     private void addFieldListeners() {
-
+        titleField.getDocument().addDocumentListener(new DocumentListener() {
+            public void helper() {
+                EditTaskState state = editTaskViewModel.getState();
+                state.setTitle(titleField.getText());
+                editTaskViewModel.setState(state);
+            }
+            public void insertUpdate(DocumentEvent e) { helper(); }
+            public void removeUpdate(DocumentEvent e) { helper(); }
+            public void changedUpdate(DocumentEvent e) { helper(); }
+        });
+        descriptionField.getDocument().addDocumentListener(new DocumentListener() {
+            public void helper() {
+                EditTaskState state = editTaskViewModel.getState();
+                state.setDescription(descriptionField.getText());
+                editTaskViewModel.setState(state);
+            }
+            public void insertUpdate(DocumentEvent e) { helper(); }
+            public void removeUpdate(DocumentEvent e) { helper(); }
+            public void changedUpdate(DocumentEvent e) { helper(); }
+        });
     }
 
-
+    @Override
     public void actionPerformed(ActionEvent evt) {
-
+        // not needed
     }
 
 
     public void propertyChange(PropertyChangeEvent evt) {
-
+        final EditTaskState state = (EditTaskState) evt.getNewValue();
+        System.out.println(state.getError());
+        if (state.getError() != null) {
+            JOptionPane.showMessageDialog(this, state.getError());
+        }
+        setFields(state);
     }
 
     private void setFields(EditTaskState state) {
-
+        titleField.setText(state.getTitle());
+        descriptionField.setText(state.getDescription());
     }
 
 
     public String getViewName() {
-
+        return viewName;
     }
 
     public void setEditTaskController(EditTaskController controller) {
-
+        this.editTaskController = controller;
     }
 }

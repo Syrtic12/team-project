@@ -9,4 +9,7 @@ public class EditTaskViewModel {
 
     public EditTaskState getState() {
     }
+
+    public void setState(EditTaskState state) {
+    }
 }

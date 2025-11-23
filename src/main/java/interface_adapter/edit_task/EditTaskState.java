@@ -1,12 +1,23 @@
 package interface_adapter.edit_task;
 
 public class EditTaskState {
+    // Note for whoever is doing this
+    // need to get this information from the controllers or presenters or whatever
     public String getTaskId() {
     }
 
-    public Object getDescription() {
+    public String getDescription() {
     }
 
-    public Object getTitle() {
+    public String getTitle() {
+    }
+
+    public void setTitle(String text) {
+    }
+
+    public void setDescription(String text) {
+    }
+
+    public String getError() {
     }
 }
