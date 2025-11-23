@@ -26,10 +26,10 @@ public class SignUpInteractor implements SignUpInputBoundary{
         String repeatPassword = signupInputData.getRepeatPassword();
         if (userDataAccessObject.emailExists(signupInputData.getEmail())){
             userPresenter.prepareFailView("Email already exists");
+        } else if (password.isEmpty() || repeatPassword.isEmpty()) {
+            userPresenter.prepareFailView("Passwords cannot be empty");
         } else if (!password.equals(repeatPassword)) {
             userPresenter.prepareFailView("Passwords do not match");
-        } else if (password.isEmpty()) {
-            userPresenter.prepareFailView("Password cannot be empty");
         } else if (name.isEmpty()) {
             userPresenter.prepareFailView("Name cannot be empty");
         } else if (email.isEmpty()){

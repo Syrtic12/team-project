@@ -1,28 +1,24 @@
 package interface_adapter;
-
-import interface_adapter.login.LoginState;
-
 import java.beans.PropertyChangeSupport;
 import java.beans.PropertyChangeListener;
 
 public class ViewModel<T> {
-
     private final String viewName;
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     private T state;
 
-    public ViewModel(String viewName){
+    public ViewModel(String viewName) {
         this.viewName = viewName;
     }
 
-    public String getViewName(){
+    public String getViewName() {
         return this.viewName;
     }
 
     public T getState() {
-        return state;
+        return this.state;
     }
 
     public void setState(T state) {
@@ -34,6 +30,7 @@ public class ViewModel<T> {
      */
     public void firePropertyChange() {
         this.support.firePropertyChange("state", null, this.state);
+//        System.out.println(this.state);
     }
 
     /**

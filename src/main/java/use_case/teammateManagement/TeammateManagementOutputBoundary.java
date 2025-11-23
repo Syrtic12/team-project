@@ -1,20 +1,18 @@
-package use_case.login;
+package use_case.teammateManagement;
 
 /**
- * The output boundary for the LogIn Use Case.
+ * The output boundary for the teammateManagement Use Case.
  */
-public interface LogInOutputBoundary {
+public interface TeammateManagementOutputBoundary {
     /**
      * Prepares the success view.
      * @param outputData the output data
      */
-    void prepareSuccessView(LogInOutputData outputData);
+    void prepareSuccessView(TeammateManagementOutputData outputData);
 
     /**
      * Prepares the failure view.
      * @param errorMessage the explanation of the failure
      */
     void prepareFailView(String errorMessage);
-
-    void switchToSignupView();
 }

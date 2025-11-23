@@ -3,6 +3,7 @@ package use_case.login;
 import data_access.KandoMongoDatabase;
 import data_access.LogInDataAccessObject;
 import entity.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * Interactor for the LogIn use case.
@@ -10,6 +11,7 @@ import entity.User;
 public class LogInInteractor implements LogInInputBoundary {
     private final LogInDataAccessInterface dataAccessObject;
     private final LogInOutputBoundary loginPresenter;
+    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public LogInInteractor(LogInDataAccessInterface dataAccessInterface,
                            LogInOutputBoundary loginOutputBoundary) {
@@ -22,18 +24,22 @@ public class LogInInteractor implements LogInInputBoundary {
         String email = loginInputData.getEmail();
         String password = loginInputData.getPassword();
         if (email.isEmpty() || password.isEmpty()) {
-            loginPresenter.prepareFailView("Email and password cannot be empty.");
+            loginPresenter.prepareFailView("Email or password cannot be empty.");
         } else if (!(dataAccessObject.emailExists(email))){
             loginPresenter.prepareFailView("Account does not exist.");
         } else {
             User user = dataAccessObject.getUser(email);
-            if (user.getPassword().equals(password)) {
+            if (encoder.matches(password, user.getPassword())) {
                 LogInOutputData outputData = new LogInOutputData(user.getIdx(), user.getEmail());
                 loginPresenter.prepareSuccessView(outputData);
             } else {
                 loginPresenter.prepareFailView("Incorrect password.");
             }
         }
+    }
+
+    public void switchToSignupView(){
+        loginPresenter.switchToSignupView();
     }
 
     public static void main(String[] args) {
