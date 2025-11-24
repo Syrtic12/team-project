@@ -214,14 +214,4 @@ public class KandoMongoDatabase {
 
 
     }
-
-    public Team getTeam(String teamId) {
-        throw new UnsupportedOperationException("Unimplemented method 'getTeam'");
-    }
-
-    public User getUser(String userId) {
-        throw new UnsupportedOperationException("Unimplemented method 'getUser'");
-    }
-
-
 }

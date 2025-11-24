@@ -32,7 +32,7 @@ public class CreateTaskInteractor {
     // existence of user verified by getUser; user object not needed further here
 
         // ensure the creator is the team's leader by comparing ids
-    if (team.getLeader() == null || !inputData.getInvokedBy().equals(team.getLeader().getIdx())) {
+    if (team.getLeaderIdx() == null || !inputData.getInvokedBy().equals(team.getLeaderIdx())) {
             presenter.prepareFailView(new CreateTaskOutputData(false, null, "Only team leader can create tasks"));
             return;
         }

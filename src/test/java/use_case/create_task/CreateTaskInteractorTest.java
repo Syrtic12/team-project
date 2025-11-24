@@ -34,7 +34,7 @@ class CreateTaskInteractorTest {
         leaderId = leader.getIdx();
 
         // Team
-        Team team = new Team(leader);
+        Team team = new Team(leaderId);
         kandoDB.add(team);
         teamId = team.getIdx();
 
@@ -97,7 +97,7 @@ class CreateTaskInteractorTest {
         leaderId = leader.getIdx();
 
         // Team
-        Team team = new Team(leader);
+        Team team = new Team(leaderId);
         kandoDB.add(team);
         teamId = team.getIdx();
 
@@ -177,9 +177,10 @@ class CreateTaskInteractorTest {
         // Team Leader
         TeamLeader leader = new TeamLeader("Leader", "leader@mail.com", "Leader", "pw");
         kandoDB.add(leader);
+        String leaderId = leader.getIdx();
 
         // Team
-        Team team = new Team(leader);
+        Team team = new Team(leaderId);
         kandoDB.add(team);
         teamId = team.getIdx();
 

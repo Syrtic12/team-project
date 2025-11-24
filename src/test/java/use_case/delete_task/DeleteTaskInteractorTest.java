@@ -35,7 +35,7 @@ class DeleteTaskInteractorTest {
         leaderId = leader.getIdx();
 
         // Team
-        Team team = new Team(leader);
+        Team team = new Team(leaderId);
         kandoDB.add(team);
         teamId = team.getIdx();
 
@@ -89,7 +89,7 @@ class DeleteTaskInteractorTest {
         leaderId = leader.getIdx();
 
         // Team
-        Team team = new Team(leader);
+        Team team = new Team(leaderId);
         kandoDB.add(team);
         teamId = team.getIdx();
 
@@ -137,7 +137,7 @@ class DeleteTaskInteractorTest {
         leaderId = leader.getIdx();
 
         // Team
-        Team team = new Team(leader);
+        Team team = new Team(leaderId);
         kandoDB.add(team);
         teamId = team.getIdx();
 

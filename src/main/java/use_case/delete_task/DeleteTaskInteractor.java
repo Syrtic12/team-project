@@ -46,8 +46,8 @@ public class DeleteTaskInteractor implements DeleteTaskInputBoundary {
 
         // 4. CHECK LEADER AFTER TASK FOUND
         boolean isLeader =
-                team.getLeader() != null &&
-                team.getLeader().getIdx().equals(invoker.getIdx());
+                team.getLeaderIdx() != null &&
+                team.getLeaderIdx().equals(invoker.getIdx());
 
         if (!isLeader) {
             presenter.prepareFailView(new DeleteTaskOutputData(false,
