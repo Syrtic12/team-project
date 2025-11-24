@@ -1,23 +1,31 @@
 package interface_adapter.edit_task;
 
 public class EditTaskState {
-    // Note for whoever is doing this
-    // need to get this information from the controllers or presenters or whatever
-    public String getTaskId() {
-    }
 
-    public String getDescription() {
-    }
+    private String teamLeaderId;
+    private String invokedBy;
+    private String taskId;
+    private String title;
+    private String description;
+    private String error;
 
-    public String getTitle() {
-    }
+    public EditTaskState() {}
 
-    public void setTitle(String text) {
-    }
+    public String getTeamLeaderId() { return teamLeaderId; }
+    public void setTeamLeaderId(String id) { this.teamLeaderId = id; }
 
-    public void setDescription(String text) {
-    }
+    public String getInvokedBy() { return invokedBy; }
+    public void setInvokedBy(String id) { this.invokedBy = id; }
 
-    public String getError() {
-    }
+    public String getTaskId() { return taskId; }
+    public void setTaskId(String id) { this.taskId = id; }
+
+    public String getTitle() { return title; }
+    public void setTitle(String t) { this.title = t; }
+
+    public String getDescription() { return description; }
+    public void setDescription(String d) { this.description = d; }
+
+    public String getError() { return error; }
+    public void setError(String e) { this.error = e; }
 }
