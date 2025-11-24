@@ -83,7 +83,7 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
                 if (!e.getValueIsAdjusting()) {
                     String taskId = getSelectedTask(notStartedList);
                     if (taskId != null) {
-                        teamController.openTask(taskId);
+                        teamController.editTask(taskId);
                     }
                 }
             }
@@ -95,7 +95,7 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
                 if (!e.getValueIsAdjusting()) {
                     String taskId = getSelectedTask(inProgressList);
                     if (taskId != null) {
-                        teamController.openTask(taskId);
+                        teamController.editTask(taskId);
                     }
                 }
             }
@@ -107,7 +107,7 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
                 if (!e.getValueIsAdjusting()) {
                     String taskId = getSelectedTask(completedList);
                     if (taskId != null) {
-                        teamController.openTask(taskId);
+                        teamController.editTask(taskId);
                     }
                 }
             }

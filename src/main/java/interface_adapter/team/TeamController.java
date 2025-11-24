@@ -16,4 +16,7 @@ public class TeamController {
 
     public void openTask(String taskId) {
     }
+
+    public void editTask(String taskId) {
+    }
 }

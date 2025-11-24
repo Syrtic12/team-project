@@ -8,6 +8,7 @@ public class LoggedInController {
     public void logout() {
     }
 
-    public void switchToTeamView(String teamName) {
+    public void switchToTeamView(String teamId) {
+
     }
 }
