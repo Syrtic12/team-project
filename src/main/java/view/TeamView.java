@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Map;
 
 public class TeamView extends JPanel implements ActionListener, PropertyChangeListener {
     private final String viewName = "team view";
@@ -59,42 +60,114 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
 
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
+                if (teamController == null) return;
                 teamController.openLoggedInView();
             }
         });
         manageTeamButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                if (teamController == null) return;
                 teamController.openManageTeam();
             }
         });
         createTaskButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                if (teamController == null) return;
                 teamController.openCreateTask();
             }
         });
 
+        notStartedList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            @Override
+            public void valueChanged(javax.swing.event.ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    String taskId = getSelectedTask(notStartedList);
+                    if (taskId != null) {
+                        teamController.openTask(taskId);
+                    }
+                }
+            }
+        });
+
+        inProgressList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            @Override
+            public void valueChanged(javax.swing.event.ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    String taskId = getSelectedTask(inProgressList);
+                    if (taskId != null) {
+                        teamController.openTask(taskId);
+                    }
+                }
+            }
+        });
+
+        completedList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            @Override
+            public void valueChanged(javax.swing.event.ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    String taskId = getSelectedTask(completedList);
+                    if (taskId != null) {
+                        teamController.openTask(taskId);
+                    }
+                }
+            }
+        });
+
+
+
     }
 
-    private String getSelectedTask() {
+    private String getSelectedTask(JList<String> list) {
+        String selected = list.getSelectedValue();
+        if (selected == null) return null;
+
+        int start = selected.lastIndexOf("(");
+        int end = selected.lastIndexOf(")");
+
+        if (start == -1 || end == -1 || end <= start) {
+            return null;
+        }
+
+        return selected.substring(start + 1, end);
     }
 
-    private Component createTaskPanel(String notStarted, JList<String> notStartedList) {
-    }
+    private JPanel createTaskPanel(String title, JList<String> taskList) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
 
-    private void setLayout(BoxLayout boxLayout) {
+        JLabel label = new JLabel(title, SwingConstants.CENTER);
+        panel.add(label, BorderLayout.NORTH);
+
+        JScrollPane scrollPane = new JScrollPane(taskList);
+        panel.add(scrollPane, BorderLayout.CENTER);
+
+        return panel;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        // not needed
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        TeamState state = (TeamState) evt.getNewValue();
 
+        teamNameLabel.setText(state.getTeamName());
+        setTaskLists(state);
     }
 
     private void setTaskLists(TeamState state) {
+        fillModel(notStartedModel, state.getNotStartedTasks());
+        fillModel(inProgressModel, state.getInProgressTasks());
+        fillModel(completedModel, state.getCompletedTasks());
+    }
+
+    private void fillModel(DefaultListModel<String> model, Map<String, String> tasks) {
+        model.clear();
+        for (Map.Entry<String, String> entry : tasks.entrySet()) {
+            model.addElement(entry.getValue() + " (" + entry.getKey() + ")");
+        }
     }
 
     public String getViewName() {

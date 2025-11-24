@@ -13,4 +13,7 @@ public class TeamController {
 
     public void openLoggedInView() {
     }
+
+    public void openTask(String taskId) {
+    }
 }
