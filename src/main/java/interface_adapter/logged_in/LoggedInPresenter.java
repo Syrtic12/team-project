@@ -11,7 +11,7 @@ import use_case.login.LogInOutputBoundary;
 import use_case.login.LogInOutputData;
 import data_access.LoggedInDataAccessObject;
 import data_access.KandoMongoDatabase;
-
+import java.util.Map;
 
 public class LoggedInPresenter implements LoggedInOutputBoundary {
     private final LoggedInViewModel loggedInViewModel;
@@ -34,16 +34,7 @@ public class LoggedInPresenter implements LoggedInOutputBoundary {
 
     @Override
     public void prepareSuccessView(LoggedInOutputData outputData) {
-        final TeamState teamState = teamViewModel.getState();
-        //Step 1: Use ID to get task data from DB
-        //Step 2: Get Task title and status
-        //Step 3: filter by status into map, adding the ID and Title in that order
-        //Step 4: Loop repeats for each task in LoggedInOutputData tasklist
-        for (Task task:outputData.getTaskList()){
-            String taskID = "";
-            int status = 0;
 
-        }
     }
 
     @Override
@@ -52,7 +43,11 @@ public class LoggedInPresenter implements LoggedInOutputBoundary {
     }
 
     @Override
-    public void switchToTeamView(String teamID) {
+    public void switchToTeamView(LoggedInOutputData outputData) {
+        final TeamState teamState = teamViewModel.getState();
+        teamState.setNotStartedTasks(outputData.getNotStartedTasks());
+        teamState.setInProgressTasks(outputData.getInProgressTasks());
+        teamState.setCompletedTasks(outputData.getCompletedTasks());
         viewManagerModel.setState(teamViewModel.getViewName());
         viewManagerModel.firePropertyChange();
     }
