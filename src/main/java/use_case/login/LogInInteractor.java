@@ -30,7 +30,7 @@ public class LogInInteractor implements LogInInputBoundary {
         } else {
             User user = dataAccessObject.getUser(email);
             if (encoder.matches(password, user.getPassword())) {
-                LogInOutputData outputData = new LogInOutputData(user.getIdx(), user.getEmail());
+                LogInOutputData outputData = new LogInOutputData(user.getIdx(), user.getEmail(), user.getTeams());
                 loginPresenter.prepareSuccessView(outputData);
             } else {
                 loginPresenter.prepareFailView("Incorrect password.");

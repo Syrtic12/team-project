@@ -76,6 +76,10 @@ public class User {
     public String getName() {
     return this.name;}
 
+    public List<String> getTeams(){
+        return this.teams;
+    }
+
     /**
      * @param team
      * Add a team's id to this User's list of teams
