@@ -35,6 +35,7 @@ public class CreateTeamDataAccessObject implements CreateTeamDataAccessInterface
         teamsCollection.insertOne(doc);
     }
 
+
     @Override
     public String getLeaderName(String userId) {
         Document doc = teamsCollection.find(eq("userId", userId)).first();
