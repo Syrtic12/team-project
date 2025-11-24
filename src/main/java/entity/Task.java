@@ -1,20 +1,15 @@
 package entity;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
 import java.util.List;
 import java.util.ArrayList;
 import org.bson.Document;
-
-
-
 public class Task {
     private String idx;
     private String title;
     private String description;
     private Integer status;
     private List<String> assignedUsers;
-
     /**
      * @param title
      * @param description
@@ -27,7 +22,6 @@ public class Task {
         this.status = status;
         this.assignedUsers = new ArrayList<>();
     }
-
     /**
      * @param obj the reference object with which to compare.
      * @return true if this object is the same as the obj argument; false otherwise.
@@ -39,14 +33,12 @@ public class Task {
         Task other = (Task) obj;
         return this.idx != null && this.idx.equals(other.idx);
     }
-
     /**
      * @return String idx of this Task
      */
     public String getIdx(){
         return this.idx;
     }
-
     /**
      * @param idx
      * Set the idx of this Task
@@ -54,7 +46,6 @@ public class Task {
     public void setIdx(String idx){
         this.idx = idx;
     }
-
     /**
      * @return Json representation of this Task
      */
@@ -63,7 +54,6 @@ public class Task {
         json.addProperty("title", this.title);
         json.addProperty("description", this.description);
         json.addProperty("status", this.status);
-
         JsonArray usersJson = new JsonArray();
         for(String user : this.assignedUsers){
             usersJson.add(user);
@@ -71,14 +61,12 @@ public class Task {
         json.add("users", usersJson);
         return json;
     }
-
     /**
      * @return Document representation of this Task
      */
     public Document toDocument(){
         return Document.parse(this.toJson().toString());
     }
-
     /**
      * @param user
      * Assign a user to this task
@@ -86,7 +74,6 @@ public class Task {
     public void assignUser(String user){
         this.assignedUsers.add(user);
     }
-
     /**
      * @param user
      * Unassign a user from this task
@@ -99,7 +86,6 @@ public class Task {
             }
         }
     }
-
     /**
      * @param newStatus
      * Change the status of this task
@@ -107,10 +93,36 @@ public class Task {
     public void changeStatus(Integer newStatus){
         this.status = newStatus;
     }
-
-    public boolean isUserAssigned(String user) {
-        return this.assignedUsers.contains(user);
+    public String getTitle() {
+    return this.title;
     }
+    public String getDescription() {
+        return this.description;
+    }
+    public Integer getStatus() {
+        return this.status;
+    }
+    public List<String> getAssignedUsers() {
+        return this.assignedUsers;
+    }
+
+    public boolean isAssignedUser(String invokedBy) {
+        if (invokedBy == null) return false;
+        return this.assignedUsers.contains(invokedBy);
+    }
+
+    public void setTitle(String newTitle) {
+        if (newTitle == null) return;
+        this.title = newTitle;
+    }
+
+    public void setDescription(String newDescription) {
+        if (newDescription == null) return;
+        this.description = newDescription;
+    }
+
+
+
 
 
 }
