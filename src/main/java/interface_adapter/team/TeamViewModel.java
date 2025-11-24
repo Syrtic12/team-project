@@ -8,5 +8,4 @@ public class TeamViewModel extends ViewModel<TeamState> {
         super("team");
         setState(new TeamState());
     }
-
 }
