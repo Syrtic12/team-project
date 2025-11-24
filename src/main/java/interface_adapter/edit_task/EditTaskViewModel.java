@@ -4,6 +4,7 @@ import view.EditTaskView;
 
 public class EditTaskViewModel {
     public void addPropertyChangeListener(EditTaskView editTaskView) {
+
     }
 
 
