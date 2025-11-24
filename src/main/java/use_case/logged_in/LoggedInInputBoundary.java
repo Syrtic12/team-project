@@ -10,7 +10,7 @@ public interface LoggedInInputBoundary {
      */
     void execute(LoggedInInputData loggedinInputData);
 
-    void switchToTeamView();
+    void switchToTeamView(String teamId);
 
     void switchToLoginView();
 }

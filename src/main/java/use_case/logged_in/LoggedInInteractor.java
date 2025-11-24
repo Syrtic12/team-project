@@ -37,8 +37,8 @@ public class LoggedInInteractor implements LoggedInInputBoundary {
 
 
     @Override
-    public void switchToTeamView() {
-        loggedInPresenter.switchToTeamView();
+    public void switchToTeamView(String teamId) {
+        loggedInPresenter.switchToTeamView(teamId);
     }
 
     @Override

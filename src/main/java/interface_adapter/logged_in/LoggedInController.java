@@ -17,6 +17,6 @@ public class LoggedInController {
     }
 
     public void switchToTeamView(String teamId) {
-        loggedInInteractor.switchToTeamView();
+        loggedInInteractor.switchToTeamView(teamId);
     }
 }

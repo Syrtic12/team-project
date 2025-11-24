@@ -52,7 +52,7 @@ public class LoggedInPresenter implements LoggedInOutputBoundary {
     }
 
     @Override
-    public void switchToTeamView() {
+    public void switchToTeamView(String teamID) {
         viewManagerModel.setState(teamViewModel.getViewName());
         viewManagerModel.firePropertyChange();
     }
