@@ -43,6 +43,14 @@ public class Team {
     }
 
     /**
+     * @return the TeamLeader object for this Team
+     */
+    public TeamLeader getLeader() {
+        return this.leader;
+    }
+
+
+    /**
      * @param idx idx of this Team
      * Set the idx of this Team
      */
@@ -53,7 +61,7 @@ public class Team {
     /**
      * @return list of ids of the team's tasks
      */
-    public List<String> GetTasks(){
+    public List<String> getTasks(){
         return this.tasks;
     }
 

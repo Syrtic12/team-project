@@ -2,12 +2,12 @@ package use_case.create_task;
 
 public class CreateTaskInputData {
     private final String teamId;
-    private final String invokedBy; // user id or name (depends on your User impl)
+    private final String invokedBy; // user id
     private final String title;
     private final String description;
     private final Integer status;
 
-    public CreateTaskInputData(String teamId, String invokedBy, String title, String description, Integer status) {
+    public CreateTaskInputData(String teamId, String invokedBy, Integer status, String description, String title) {
         this.teamId = teamId;
         this.invokedBy = invokedBy;
         this.title = title;

@@ -3,6 +3,7 @@ package use_case.delete_task;
 import entity.Task;
 import entity.Team;
 import entity.User;
+
 import java.util.Optional;
 
 public class DeleteTaskInteractor implements DeleteTaskInputBoundary {
@@ -18,45 +19,54 @@ public class DeleteTaskInteractor implements DeleteTaskInputBoundary {
 
     @Override
     public void execute(DeleteTaskInputData inputData) {
+
+        // 1. TEAM MUST EXIST
         Optional<Team> teamOpt = dataAccess.getTeam(inputData.getTeamId());
-        if (!teamOpt.isPresent()) {
+        if (teamOpt.isEmpty()) {
             presenter.prepareFailView(new DeleteTaskOutputData(false, "Team not found"));
             return;
         }
         Team team = teamOpt.get();
 
+        // 2. USER MUST EXIST
         Optional<User> userOpt = dataAccess.getUser(inputData.getInvokedBy());
-        if (!userOpt.isPresent()) {
+        if (userOpt.isEmpty()) {
             presenter.prepareFailView(new DeleteTaskOutputData(false, "User not found"));
             return;
         }
         User invoker = userOpt.get();
 
-        // Check leader privileges (similar logic to create)
-        boolean isLeader = false;
-        try {
-            Object leaderObj = team.getClass().getMethod("getLeader").invoke(team);
-            if (leaderObj != null) isLeader = leaderObj.toString().equals(invoker.getIdx()) || leaderObj.toString().equals(invoker.getName());
-        } catch (Exception ignore) {}
-
-        if (!isLeader) {
-            presenter.prepareFailView(new DeleteTaskOutputData(false, "Only team leader may delete tasks."));
-            return;
-        }
-
-        Optional<Task> tOpt = dataAccess.getTaskByIdx(inputData.getTaskIdx());
-        if (!tOpt.isPresent()) {
+        // 3. TASK MUST EXIST (TESTS EXPECT THIS BEFORE LEADER CHECK)
+        Optional<Task> taskOpt = dataAccess.getTaskByIdx(inputData.getTaskIdx());
+        if (taskOpt.isEmpty()) {
             presenter.prepareFailView(new DeleteTaskOutputData(false, "Task not found"));
             return;
         }
-        Task t = tOpt.get();
+        Task task = taskOpt.get();
 
-        boolean removed = dataAccess.removeTask(t);
-        if (!removed) {
-            presenter.prepareFailView(new DeleteTaskOutputData(false, "Failed to delete task"));
+        // 4. CHECK LEADER AFTER TASK FOUND
+        boolean isLeader =
+                team.getLeader() != null &&
+                team.getLeader().getIdx().equals(invoker.getIdx());
+
+        if (!isLeader) {
+            presenter.prepareFailView(new DeleteTaskOutputData(false,
+                    "Only team leader may delete tasks."));
             return;
         }
-        dataAccess.detachTaskFromTeam(t, team);
-        presenter.prepareSuccessView(new DeleteTaskOutputData(true, "Task deleted"));
+
+        // 5. DELETE THE TASK
+        boolean removed = dataAccess.removeTask(task);
+        if (!removed) {
+            presenter.prepareFailView(new DeleteTaskOutputData(false,
+                    "Failed to delete task"));
+            return;
+        }
+
+        // 6. DETACH FROM TEAM
+        dataAccess.detachTaskFromTeam(task, team);
+
+        presenter.prepareSuccessView(
+                new DeleteTaskOutputData(true, "Task deleted"));
     }
 }

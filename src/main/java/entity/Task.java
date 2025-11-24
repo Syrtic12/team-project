@@ -123,18 +123,22 @@ public class Task {
     public List<String> getAssignedUsers() {
         return this.assignedUsers;
     }
-
     public boolean isAssignedUser(String invokedBy) {
-        throw new UnsupportedOperationException("Unimplemented method 'isAssignedUser'");
+        if (invokedBy == null) return false;
+        return this.assignedUsers.contains(invokedBy);
     }
 
     public void setTitle(String newTitle) {
-        throw new UnsupportedOperationException("Unimplemented method 'setTitle'");
+        if (newTitle == null) return;
+        this.title = newTitle;
     }
 
     public void setDescription(String newDescription) {
-        throw new UnsupportedOperationException("Unimplemented method 'setDescription'");
+        if (newDescription == null) return;
+        this.description = newDescription;
     }
+   
+
 
 
 
