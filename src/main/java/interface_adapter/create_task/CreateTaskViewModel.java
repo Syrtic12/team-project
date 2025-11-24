@@ -1,4 +1,10 @@
 package interface_adapter.create_task;
 
-public class CreateTaskViewModel {
+import interface_adapter.ViewModel;
+
+public class CreateTaskViewModel extends ViewModel<CreateTaskState> {
+    public CreateTaskViewModel() {
+        super("create_task");
+        setState(new CreateTaskState());
+    }
 }

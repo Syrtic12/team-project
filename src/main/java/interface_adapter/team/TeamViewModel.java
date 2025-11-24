@@ -1,9 +1,12 @@
 package interface_adapter.team;
 
-import view.TeamView;
+import interface_adapter.ViewModel;
+import interface_adapter.signup.SignupState;
 
-public class TeamViewModel {
-
-    public void addPropertyChangeListener(TeamView teamView) {
+public class TeamViewModel extends ViewModel<TeamState> {
+    public TeamViewModel() {
+        super("team");
+        setState(new TeamState());
     }
+
 }
