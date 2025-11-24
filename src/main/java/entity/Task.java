@@ -108,39 +108,9 @@ public class Task {
         this.status = newStatus;
     }
 
-    public String getTitle() {
-    return this.title;
+    public boolean isUserAssigned(String user) {
+        return this.assignedUsers.contains(user);
     }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public Integer getStatus() {
-        return this.status;
-    }
-
-    public List<String> getAssignedUsers() {
-        return this.assignedUsers;
-    }
-    public boolean isAssignedUser(String invokedBy) {
-        if (invokedBy == null) return false;
-        return this.assignedUsers.contains(invokedBy);
-    }
-
-    public void setTitle(String newTitle) {
-        if (newTitle == null) return;
-        this.title = newTitle;
-    }
-
-    public void setDescription(String newDescription) {
-        if (newDescription == null) return;
-        this.description = newDescription;
-    }
-   
-
-
-
 
 
 }

@@ -163,16 +163,6 @@ public class KandoMongoDatabase {
      * @param value value to set key to
      * Updates a document's key to the specified value in the given collection
      */
-    public void update(String collectionName, String idx, String key, String value){
-        this.database.getCollection(collectionName).updateOne(Filters.eq("_id", new ObjectId(idx)), Updates.set(key, value));
-    }
-    /**
-     * @param collectionName collection in which to update document
-     * @param idx idx of document to be updated
-     * @param key key to be updated
-     * @param value value to set key to
-     * Updates a document's key to the specified value in the given collection
-     */
     public void update(String collectionName, String idx, String key, List<?> value){
         this.database.getCollection(collectionName).updateOne(Filters.eq("_id", new ObjectId(idx)), Updates.set(key, value));
     }
@@ -201,7 +191,7 @@ public class KandoMongoDatabase {
         KandoMongoDatabase kandoDB = new KandoMongoDatabase();
 //        kandoDB.update("tasks", "6911237d1102171d2e1fac90", "title", "Test Task Updated 1");
 //        kandoDB.updateStatus("tasks", "6911237d1102171d2e1fac90", 2);
-//        TeamLeader testleader = new TeamLeader("testleader", "leaderman@gmail.com", "Leader", "password123");
+          TeamLeader testleader = new TeamLeader("test", "test", "Leader", "test");
 //        Team testTeam = new Team(testleader);
 //        kandoDB.add(testleader);
 //        kandoDB.add(testTeam);
@@ -210,7 +200,9 @@ public class KandoMongoDatabase {
 //                "691b40b64c4f37931fa10453"
 //        );
 //        kandoDB.update("teams", "691e33af54f5b339af39ebde", "users", userIds);
-        System.out.println(kandoDB.getOne("users", "email", "sushaanpatel@gmail.com"));
+//        Team testteam2 = new Team(testleader);
+//        kandoDB.add(testteam2);
+//        System.out.println(kandoDB.getOne("users", "email", "sushaanpatel@gmail.com"));
 
 
     }
