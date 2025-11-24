@@ -11,7 +11,7 @@ public interface LoggedInOutputBoundary {
      */
     void prepareFailView(String errorMessage);
 
-    void switchToTaskView();
+    void switchToTeamView();
     void switchToLoginView();
 
 }
