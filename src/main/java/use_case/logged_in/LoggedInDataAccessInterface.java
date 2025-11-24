@@ -7,5 +7,8 @@ import java.util.List;
 
 public interface LoggedInDataAccessInterface {
 
-    public List<Task> getTasks(String id);
+    public List<Task> getTeanTasks(String id);
+    public Task getTask(String id);
+
+    List<Task> getTeamTasks(String id);
 }
