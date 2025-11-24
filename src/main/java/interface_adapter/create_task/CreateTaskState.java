@@ -5,8 +5,10 @@ public class CreateTaskState {
     public String getError() { return this.processError;}
 
     public String getTitle() {
+        return "";
     }
 
     public String getDescription() {
+        return "";
     }
 }
