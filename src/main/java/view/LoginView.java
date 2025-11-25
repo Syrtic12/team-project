@@ -88,6 +88,29 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                 documentListenerHelper();
             }
         });
+        passwordField.getDocument().addDocumentListener(new DocumentListener() {
+
+            public void documentListenerHelper() {
+                final LoginState currentState = loginViewModel.getState();
+                currentState.setPassword(passwordField.getText());
+                loginViewModel.setState(currentState);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+        });
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
         this.add(emailInfo);

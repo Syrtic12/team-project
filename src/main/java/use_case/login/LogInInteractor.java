@@ -8,7 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 /**
  * Interactor for the LogIn use case.
  */
-public class LogInInteractor implements LogInInputBoundary {
+public class    LogInInteractor implements LogInInputBoundary {
     private final LogInDataAccessInterface dataAccessObject;
     private final LogInOutputBoundary loginPresenter;
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();

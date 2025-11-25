@@ -5,7 +5,7 @@ import interface_adapter.create_task.CreateTaskState;
 import view.EditTaskView;
 
 public class EditTaskViewModel extends ViewModel<EditTaskState>{
-    public EditTaskViewModel(EditTaskView editTaskView) {
+    public EditTaskViewModel() {
         super("edit_task");
         setState(new EditTaskState());
     }

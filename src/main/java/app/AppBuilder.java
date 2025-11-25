@@ -2,9 +2,13 @@ package app;
 
 import data_access.KandoMongoDatabase;
 import data_access.LogInDataAccessObject;
+import data_access.LoggedInDataAccessObject;
 import data_access.SignUpDataAccessObject;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.logged_in.LoggedInController;
+import interface_adapter.logged_in.LoggedInPresenter;
+import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
@@ -12,6 +16,10 @@ import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
+import interface_adapter.team.TeamViewModel;
+import use_case.logged_in.LoggedInInputBoundary;
+import use_case.logged_in.LoggedInInteractor;
+import use_case.logged_in.LoggedInOutputBoundary;
 import use_case.login.LogInInputBoundary;
 import use_case.login.LogInInteractor;
 import use_case.login.LogInOutputBoundary;
@@ -57,6 +65,20 @@ public class AppBuilder {
         loginViewModel = new LoginViewModel();
         loginView = new LoginView(loginViewModel);
         cardPanel.add(loginView, loginView.getViewName());
+        return this;
+    }
+
+    public AppBuilder addLoggedInViewAndUseCase() {
+        loggedInViewModel = new LoggedInViewModel();
+        LoggedInDataAccessObject loggedInDataAccessObject = new LoggedInDataAccessObject(DataAccessObject);
+        TeamViewModel teamViewModel = new  TeamViewModel();
+        final LoggedInOutputBoundary loggedInOutputBoundary = new LoggedInPresenter(loggedInViewModel,
+                new LoggedInState(), viewManagerModel, teamViewModel, loginViewModel, loggedInDataAccessObject);
+        final LoggedInInputBoundary loggedInInteractor = new LoggedInInteractor(
+                loggedInDataAccessObject, loggedInOutputBoundary);
+        LoggedInController loggedInController = new LoggedInController(loggedInInteractor);
+        loggedInView = new LoggedInView(loggedInViewModel, loggedInController);
+        cardPanel.add(loggedInView, loggedInView.getViewName());
         return this;
     }
 
