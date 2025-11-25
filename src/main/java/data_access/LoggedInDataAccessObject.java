@@ -28,7 +28,7 @@ public class LoggedInDataAccessObject implements LoggedInDataAccessInterface {
     @Override
     public Task getTask(String id) {
         Document taskDoc = GeneralDataAccessObject.getOne("tasks", "_id", id);
-        Team out = this.taskFactory.createFromDocument(taskDoc);
+        Task out = this.taskFactory.createFromDocument(taskDoc);
         ObjectId idx = taskDoc.getObjectId("_id");
         out.setIdx(idx.toString());
         return out;

@@ -15,7 +15,7 @@ public class LoggedInController {
     }
 
     public void logout() {
-
+        loggedInInteractor.switchToLoginView();
     }
 
     public void switchToTeamView(String teamId) {

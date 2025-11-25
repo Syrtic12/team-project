@@ -94,7 +94,7 @@ public class Task {
         this.status = newStatus;
     }
     public String getTitle() {
-    return this.title;
+        return this.title;
     }
     public String getDescription() {
         return this.description;
@@ -121,8 +121,7 @@ public class Task {
         this.description = newDescription;
     }
 
-
-
-
-
+    public boolean isUserAssigned(String user) {
+        return this.assignedUsers.contains(user);
+    }
 }
