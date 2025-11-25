@@ -121,8 +121,7 @@ public class Task {
         this.description = newDescription;
     }
 
-
-
-
-
+    public boolean isUserAssigned(String user) {
+        return this.assignedUsers.contains(user);
+    }
 }
