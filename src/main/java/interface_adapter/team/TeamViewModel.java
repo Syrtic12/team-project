@@ -5,7 +5,7 @@ import interface_adapter.signup.SignupState;
 
 public class TeamViewModel extends ViewModel<TeamState> {
     public TeamViewModel() {
-        super("team");
+        super("team view");
         setState(new TeamState());
     }
 }

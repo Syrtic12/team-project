@@ -14,6 +14,7 @@ import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.manage_team.ManageTeamViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
@@ -90,12 +91,13 @@ public class AppBuilder {
 
     public AppBuilder addTeamViewAndUseCase() {
         teamViewModel = new TeamViewModel();
+        ManageTeamViewModel manageTeamViewModel = new ManageTeamViewModel();
         TeamDataAccessObject teamDataAccessObject = new TeamDataAccessObject(DataAccessObject);
         final TeamOutputBoundary teamOutputBoundary = new TeamPresenter(viewManagerModel, loggedInViewModel,
-                null, teamViewModel);
+                manageTeamViewModel, teamViewModel);
         final TeamInputBoundary teamInteractor = new TeamInteractor(teamDataAccessObject, teamOutputBoundary);
         TeamController teamController = new TeamController(teamInteractor);
-        teamView = new TeamView(teamViewModel);
+        teamView = new TeamView(teamViewModel, teamController);
         cardPanel.add(teamView, teamView.getViewName());
         return this;
     }
