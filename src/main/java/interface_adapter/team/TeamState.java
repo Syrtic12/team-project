@@ -13,10 +13,7 @@ public class TeamState {
         return teamID;
     }
 
-    // the map is the title and description of the task
-    public Map<String, String> getNotStartedTasks() {
-        return notStartedTasks;
-    }
+    // the map is the ID and description of the task
 
     public void setNotStartedTasks(Map<String, String> notStartedTasks) {
         this.notStartedTasks = notStartedTasks;
@@ -30,6 +27,10 @@ public class TeamState {
         this.CompletedTasks = CompletedTasks;
     }
 
+    public Map<String, String> getNotStartedTasks() {
+        return notStartedTasks;
+    }
+
     public Map<String, String> getInProgressTasks() {
         return inProgressTasks;
     }
@@ -37,4 +38,5 @@ public class TeamState {
     public Map<String, String> getCompletedTasks() {
         return CompletedTasks;
     }
+
 }
