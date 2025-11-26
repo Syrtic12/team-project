@@ -7,6 +7,7 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 import use_case.logged_in.LoggedInDataAccessInterface;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LoggedInDataAccessObject implements LoggedInDataAccessInterface {
@@ -20,9 +21,19 @@ public class LoggedInDataAccessObject implements LoggedInDataAccessInterface {
 
     @Override
     public List<Task> getTeamTasks(String id) {
-        Document out = GeneralDataAccessObject.getOne("teams", "tasks", id);
-        List<Task> tasks = (List<Task>) out.get("tasks");
-        return tasks;
+        Document teamDoc = this.GeneralDataAccessObject.getOne("teams", "tasks", id);
+        if (teamDoc == null) {
+            return List.of();
+        }
+        List<String> out = teamDoc.getList("tasks", String.class);
+        if (out == null) {
+            return List.of();
+        }
+        List<Task> results = new ArrayList<>();
+        for (String taskId : out) {
+            results.add(getTask(taskId));
+        }
+        return results;
     }
 
     @Override
