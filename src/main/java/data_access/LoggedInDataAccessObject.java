@@ -21,7 +21,7 @@ public class LoggedInDataAccessObject implements LoggedInDataAccessInterface {
 
     @Override
     public List<Task> getTeamTasks(String id) {
-        Document teamDoc = this.GeneralDataAccessObject.getOne("teams", "tasks", id);
+        Document teamDoc = this.GeneralDataAccessObject.getOne("teams", "_id", id);
         if (teamDoc == null) {
             return List.of();
         }

@@ -13,7 +13,7 @@ public class TeamInteractor implements TeamInputBoundary{
 
     @Override
     public void execute(TeamInputData teamInputData) {
-        //IDK what to do here. Leave empty for now
+
     }
 
     @Override

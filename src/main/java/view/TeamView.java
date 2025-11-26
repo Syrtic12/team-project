@@ -158,6 +158,7 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
     }
 
     private void setTaskLists(TeamState state) {
+        System.out.println("Getting task lists");
         fillModel(notStartedModel, state.getNotStartedTasks());
         fillModel(inProgressModel, state.getInProgressTasks());
         fillModel(completedModel, state.getCompletedTasks());

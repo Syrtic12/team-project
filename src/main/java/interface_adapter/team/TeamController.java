@@ -1,4 +1,5 @@
 package interface_adapter.team;
+import use_case.signup.SignUpInputData;
 import use_case.team.TeamInputBoundary;
 import use_case.team.TeamInputData;
 
@@ -7,7 +8,9 @@ public class TeamController {
     public TeamController(TeamInputBoundary teamInteractor) {
         this.teamInteractor = teamInteractor;
     }
+    public void execute() {
 
+    }
 
     public void createTask() {
     }
