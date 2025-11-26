@@ -1,6 +1,12 @@
 package interface_adapter.team;
+import use_case.team.TeamInputBoundary;
+import use_case.team.TeamInputData;
 
 public class TeamController {
+    private final TeamInputBoundary teamInputBoundary;
+    public TeamController(TeamInputBoundary teamInputBoundary) {
+        this.teamInputBoundary = teamInputBoundary;
+    }
 
     public void createTask() {
     }
