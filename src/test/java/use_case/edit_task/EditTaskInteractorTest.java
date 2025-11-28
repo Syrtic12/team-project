@@ -63,6 +63,11 @@ class EditTaskInteractorTest {
             public void prepareFailView(EditTaskOutputData data) {
                 Assertions.fail("Unexpected failure: " + data.getMessage());
             }
+
+            @Override
+            public void switchToTeamView() {
+                // Not needed for this test
+            }
         };
 
         EditTaskInteractor interactor = new EditTaskInteractor(dao, presenter);
@@ -113,6 +118,11 @@ class EditTaskInteractorTest {
             public void prepareFailView(EditTaskOutputData data) {
                 Assertions.assertEquals("Task not found", data.getMessage());
             }
+
+            @Override
+            public void switchToTeamView() {
+                // Not needed for this test
+            }
         };
 
         EditTaskInteractor interactor = new EditTaskInteractor(dao, presenter);
@@ -161,6 +171,11 @@ class EditTaskInteractorTest {
             @Override
             public void prepareFailView(EditTaskOutputData data) {
                 Assertions.assertEquals("User not found", data.getMessage());
+            }
+
+            @Override
+            public void switchToTeamView() {
+                // Not needed for this test
             }
         };
 
@@ -218,6 +233,11 @@ class EditTaskInteractorTest {
                         "Only an assigned user or team leader may edit the task.",
                         data.getMessage()
                 );
+            }
+
+            @Override
+            public void switchToTeamView() {
+                // Not needed for this test
             }
         };
 

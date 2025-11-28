@@ -181,16 +181,6 @@ public class KandoMongoDatabase {
     /**
      * @param collectionName collection in which to update document
      * @param idx idx of document to be updated
-     * @param key key to be updated
-     * @param value value to set key to
-     * Updates a document's key to the specified value in the given collection
-     */
-    public void update(String collectionName, String idx, String key, String value){
-        this.database.getCollection(collectionName).updateOne(Filters.eq("_id", new ObjectId(idx)), Updates.set(key, value));
-    }
-    /**
-     * @param collectionName collection in which to update document
-     * @param idx idx of document to be updated
      * @param status status value to set
      * Updates a document's status to the specified value in the given collection
      */
