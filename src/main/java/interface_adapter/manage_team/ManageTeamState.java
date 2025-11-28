@@ -1,16 +1,53 @@
 package interface_adapter.manage_team;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ManageTeamState {
-    private String teamID;
-    private String processError;
-    private String action;
+    private String teamId = "";
+    private String newMemberEmail = "";
+    private List<String> members = new ArrayList<>();
+    private String error;
 
-    public String getTeamID() {return teamID;}
+    public ManageTeamState(ManageTeamState copy) {
+        teamId = copy.teamId;
+        members = new ArrayList<>(copy.members);
+        newMemberEmail = copy.newMemberEmail;
+        error = copy.error;
+    }
 
-    public void setTeamID(String teamID) {this.teamID = teamID;}
+   public ManageTeamState() {
+   }
 
-    public String getTeamError() {return this.processError;}
+   public String getTeamId() {
+        return teamId;
+   }
 
-    public void setTeamError(String processError) {this.processError = processError;}
+   public void setTeamId(String teamId) {
+        this.teamId = teamId;
+   }
 
+   public List<String> getMembers() {
+        return members;
+   }
+
+   public void setMembers(List<String> members) {
+        this.members = members;
+   }
+
+   public String getNewMemberEmail() {
+        return newMemberEmail;
+   }
+
+   public void setNewMemberEmail(String newMemberEmail) {
+        this.newMemberEmail = newMemberEmail;
+   }
+
+   public String getError() {
+        return error;
+   }
+
+   public void setError(String error) {
+        this.error = error;
+   }
 }

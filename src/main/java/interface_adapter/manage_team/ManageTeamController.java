@@ -4,10 +4,13 @@ import use_case.teammateManagement.TaskViewInputBoundary;
 import use_case.teammateManagement.TeammateManagementInputData;
 
 public class ManageTeamController {
-    private final TaskViewInputBoundary TeamManagementInteractor;
-    public ManageTeamController(TaskViewInputBoundary TeamManagementInteractor) {this.TeamManagementInteractor = TeamManagementInteractor;}
-    public void execute(String teamID, String processError, String action) {
-        final TeammateManagementInputData teammateManagementInputData = new TeammateManagementInputData(teamID, processError, action);
-        TeamManagementInteractor.execute(teammateManagementInputData);
+
+    public void addMember(String teamId, String memberEmail) {
+    }
+
+    public void removeMember(String teamId, String memberEmail) {
+    }
+
+    public void switchToTeamView() {
     }
 }
