@@ -151,6 +151,7 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        System.out.println("Property Change Detected");
         TeamState state = (TeamState) evt.getNewValue();
 
         teamNameLabel.setText(state.getTeamName());
