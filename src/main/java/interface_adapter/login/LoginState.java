@@ -1,6 +1,6 @@
 package interface_adapter.login;
 
-public class LoginState {
+public class    LoginState {
     private String email = "";
     private String processError;
     private String password = "";
