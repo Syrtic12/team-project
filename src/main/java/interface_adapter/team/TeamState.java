@@ -28,17 +28,14 @@ public class TeamState {
     }
 
     public Map<String, String> getNotStartedTasks() {
-        System.out.println(notStartedTasks);
         return notStartedTasks;
     }
 
     public Map<String, String> getInProgressTasks() {
-        System.out.println(inProgressTasks);
         return inProgressTasks;
     }
 
     public Map<String, String> getCompletedTasks() {
-        System.out.println(CompletedTasks);
         return CompletedTasks;
     }
 
