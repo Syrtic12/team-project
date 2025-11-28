@@ -30,4 +30,7 @@ public class TeamInteractor implements TeamInputBoundary{
     public void switchToCreateTaskView() {
         teamPresenter.switchToCreateTaskView();
     }
+
+    @Override
+    public void switchToEditTaskView(String taskId, String teamId, Integer status) { teamPresenter.switchToEditTaskView(taskId, teamId, status);}
 }

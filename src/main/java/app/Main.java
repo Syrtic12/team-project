@@ -11,8 +11,10 @@ public class    Main {
                 .addLoggedInViewAndUseCase()
                 .addLoginUseCase()
                 .addSignupUseCase()
+                .addEditTaskView()
                 .addTeamView()
                 .addTeamUseCase()
+                .addEditTaskUseCase()
                 .build();
 
         application.pack();

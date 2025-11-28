@@ -8,4 +8,6 @@ public interface TeamInputBoundary {
     void switchToManageTeamView();
 
     void switchToCreateTaskView();
+
+    void switchToEditTaskView(String taskId, String teamId, Integer status);
 }

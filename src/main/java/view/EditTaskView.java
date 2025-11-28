@@ -47,14 +47,15 @@ public class EditTaskView extends JPanel implements ActionListener, PropertyChan
             public void actionPerformed(ActionEvent evt) {
                 final EditTaskState state = editTaskViewModel.getState();
                 if (evt.getSource().equals(saveButton)){
-                    editTaskController.execute(state.getTaskId(), state.getDescription(), state.getTitle());
+                    editTaskController.execute(state.getTeamID(), "placeholder",  state.getTaskId(),
+                            state.getTitle(), state.getDescription(), state.getStatus());
                 }
             }
         });
 
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                editTaskController.switchToTaskView();
+                editTaskController.switchToTeamView();
             }
         });
 

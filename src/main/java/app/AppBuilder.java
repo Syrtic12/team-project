@@ -1,12 +1,11 @@
 package app;
 
-import data_access.KandoMongoDatabase;
-import data_access.LogInDataAccessObject;
-import data_access.LoggedInDataAccessObject;
-import data_access.SignUpDataAccessObject;
-import data_access.TeamDataAccessObject;
+import data_access.*;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.edit_task.EditTaskController;
+import interface_adapter.edit_task.EditTaskPresenter;
+import interface_adapter.edit_task.EditTaskViewModel;
 import interface_adapter.logged_in.LoggedInController;
 import interface_adapter.logged_in.LoggedInPresenter;
 import interface_adapter.logged_in.LoggedInState;
@@ -19,6 +18,10 @@ import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.team.TeamViewModel;
+import use_case.edit_task.EditTaskDataAccessInterface;
+import use_case.edit_task.EditTaskInputBoundary;
+import use_case.edit_task.EditTaskInteractor;
+import use_case.edit_task.EditTaskOutputBoundary;
 import use_case.logged_in.LoggedInInputBoundary;
 import use_case.logged_in.LoggedInInteractor;
 import use_case.logged_in.LoggedInOutputBoundary;
@@ -30,11 +33,7 @@ import use_case.signup.SignUpInteractor;
 import use_case.signup.SignUpOutputBoundary;
 import use_case.team.*;
 import interface_adapter.team.*;
-import view.LoggedInView;
-import view.LoginView;
-import view.SignupView;
-import view.ViewManager;
-import view.TeamView;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,6 +55,8 @@ public class AppBuilder {
     private LoginView loginView;
     private TeamView teamView;
     private TeamViewModel teamViewModel;
+    private EditTaskViewModel editTaskViewModel;
+    private EditTaskView editTaskView;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -72,6 +73,13 @@ public class AppBuilder {
         loginViewModel = new LoginViewModel();
         loginView = new LoginView(loginViewModel);
         cardPanel.add(loginView, loginView.getViewName());
+        return this;
+    }
+
+    public AppBuilder addEditTaskView() {
+        editTaskViewModel = new EditTaskViewModel();
+        editTaskView = new EditTaskView(editTaskViewModel);
+        cardPanel.add(editTaskView, editTaskView.getViewName());
         return this;
     }
 
@@ -110,7 +118,7 @@ public class AppBuilder {
     public AppBuilder addTeamUseCase() {
         ManageTeamViewModel manageTeamViewModel = new ManageTeamViewModel();
         final TeamOutputBoundary teamOutputBoundary = new TeamPresenter(viewManagerModel, loggedInViewModel,
-                manageTeamViewModel, teamViewModel);
+                manageTeamViewModel, teamViewModel, editTaskViewModel);
         final TeamInputBoundary teamInteractor = new TeamInteractor(new TeamDataAccessObject(DataAccessObject), teamOutputBoundary);
         TeamController teamController = new TeamController(teamInteractor);
         teamView.setTeamController(teamController);
@@ -125,6 +133,16 @@ public class AppBuilder {
 
         LoginController loginController = new LoginController(loginInteractor);
         loginView.setLoginController(loginController);
+        return this;
+    }
+
+    public AppBuilder addEditTaskUseCase() {
+        final EditTaskOutputBoundary editTaskOutputBoundary = new EditTaskPresenter(editTaskViewModel,
+                viewManagerModel, teamViewModel);
+        final EditTaskInputBoundary editTaskInteractor = new EditTaskInteractor(
+                new TaskDataAccessObject(DataAccessObject), editTaskOutputBoundary);
+        EditTaskController editTaskController = new EditTaskController(editTaskInteractor);
+        editTaskView.setEditTaskController(editTaskController);
         return this;
     }
 

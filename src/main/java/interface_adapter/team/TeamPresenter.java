@@ -2,6 +2,8 @@ package interface_adapter.team;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.create_task.CreateTaskViewModel;
+import interface_adapter.edit_task.EditTaskState;
+import interface_adapter.edit_task.EditTaskViewModel;
 import interface_adapter.team.TeamState;
 import interface_adapter.team.TeamViewModel;
 import interface_adapter.manage_team.ManageTeamViewModel;
@@ -18,14 +20,16 @@ public class TeamPresenter implements TeamOutputBoundary {
     private final ManageTeamViewModel manageTeamViewModel;
     private final TeamViewModel teamViewModel;
     private final CreateTaskViewModel createTaskViewModel;
+    private final EditTaskViewModel editTaskViewModel;
 
     public TeamPresenter(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel,
-                         ManageTeamViewModel manageTeamViewModel, TeamViewModel teamViewModel) {
+                         ManageTeamViewModel manageTeamViewModel, TeamViewModel teamViewModel, EditTaskViewModel editTaskViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
         this.manageTeamViewModel = manageTeamViewModel;
         this.teamViewModel = teamViewModel;
         this.createTaskViewModel = new CreateTaskViewModel();
+        this.editTaskViewModel = editTaskViewModel;
     }
 
     @Override
@@ -52,6 +56,18 @@ public class TeamPresenter implements TeamOutputBoundary {
     @Override
     public void switchToCreateTaskView() {
         viewManagerModel.setState(createTaskViewModel.getViewName());
+        viewManagerModel.firePropertyChange();
+    }
+
+    @Override
+    public void switchToEditTaskView(String taskId, String teamId, Integer status) {
+        EditTaskState state = editTaskViewModel.getState();
+        state.setTaskID(taskId);
+        state.setTeamID(teamId);
+        state.setStatus(status);
+        editTaskViewModel.firePropertyChange();
+
+        viewManagerModel.setState(editTaskViewModel.getViewName());
         viewManagerModel.firePropertyChange();
     }
 }

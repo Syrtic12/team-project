@@ -19,7 +19,7 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
     private TeamController teamController;
 
     private final JLabel teamNameLabel = new JLabel("");
-
+    private String teamId;
     private final DefaultListModel<String> notStartedModel = new DefaultListModel<>();
     private final DefaultListModel<String> inProgressModel = new DefaultListModel<>();
     private final DefaultListModel<String> completedModel = new DefaultListModel<>();
@@ -36,6 +36,7 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
     public TeamView(TeamViewModel viewModel) {
         this.teamViewModel = viewModel;
         this.teamViewModel.addPropertyChangeListener(this);
+
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -83,7 +84,7 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
                 if (!e.getValueIsAdjusting()) {
                     String taskId = getSelectedTask(notStartedList);
                     if (taskId != null) {
-                        teamController.editTask(taskId);
+                        teamController.editTask(taskId, teamId, 0);
                     }
                 }
             }
@@ -95,7 +96,7 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
                 if (!e.getValueIsAdjusting()) {
                     String taskId = getSelectedTask(inProgressList);
                     if (taskId != null) {
-                        teamController.editTask(taskId);
+                        teamController.editTask(taskId, teamId, 1);
                     }
                 }
             }
@@ -107,7 +108,7 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
                 if (!e.getValueIsAdjusting()) {
                     String taskId = getSelectedTask(completedList);
                     if (taskId != null) {
-                        teamController.editTask(taskId);
+                        teamController.editTask(taskId, teamId, 2);
                     }
                 }
             }
@@ -153,7 +154,7 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
     public void propertyChange(PropertyChangeEvent evt) {
         System.out.println("Property Change Detected");
         TeamState state = (TeamState) evt.getNewValue();
-
+        this.teamId = state.getTeamName();
         teamNameLabel.setText(state.getTeamName());
         setTaskLists(state);
     }
