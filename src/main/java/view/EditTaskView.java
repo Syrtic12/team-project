@@ -54,7 +54,7 @@ public class EditTaskView extends JPanel implements ActionListener, PropertyChan
 
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                editTaskController.switchToTaskView();
+                editTaskController.switchToTeamView();
             }
         });
 

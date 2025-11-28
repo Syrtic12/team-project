@@ -74,4 +74,9 @@ public class EditTaskInteractor implements EditTaskInputBoundary {
         presenter.prepareSuccessView(
                 new EditTaskOutputData(true, "Task updated"));
     }
+
+    @Override
+    public void switchToTeamView() {
+        presenter.switchToTeamView();
+    }
 }
