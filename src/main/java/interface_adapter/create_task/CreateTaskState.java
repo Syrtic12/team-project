@@ -6,11 +6,11 @@ public class CreateTaskState {
     private String processError;
     public String getError() { return this.processError;}
 
-    public String setTitle() {
-        return null;
+    public String getTitle() {
+        return "";
     }
 
     public String getDescription() {
-        return null;
+        return "";
     }
 }
