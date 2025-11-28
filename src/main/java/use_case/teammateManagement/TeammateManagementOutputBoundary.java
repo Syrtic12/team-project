@@ -15,4 +15,7 @@ public interface TeammateManagementOutputBoundary {
      * @param errorMessage the explanation of the failure
      */
     void prepareFailView(String errorMessage);
+
+    void switchToTeamView();
+
 }

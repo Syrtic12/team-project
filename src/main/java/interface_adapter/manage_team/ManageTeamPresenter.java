@@ -25,12 +25,22 @@ public class ManageTeamPresenter implements TeammateManagementOutputBoundary {
     public void prepareSuccessView(TeammateManagementOutputData outputData) {
         // On success, update the ManageTeamViewModel state to better reflect the new team roster
         // The ManageTeamView should stay open
-
+        final ManageTeamState manageTeamState = manageTeamViewModel.getState();
+        manageTeamState.setMembers(outputData.getMemberList());
+        this.manageTeamViewModel.firePropertyChange();
 
     }
 
     @Override
     public void prepareFailView(String errorMessage) {
+        final ManageTeamState manageTeamState = manageTeamViewModel.getState();
+        manageTeamState.setError(errorMessage);
+        manageTeamViewModel.firePropertyChange();
+    }
 
+    @Override
+    public void switchToTeamView(){
+        viewManagerModel.setState(teamViewModel.getViewName());
+        viewManagerModel.firePropertyChange();
     }
 }
