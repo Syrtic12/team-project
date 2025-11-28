@@ -75,12 +75,13 @@ public class AppBuilder {
         return this;
     }
 
+
     public AppBuilder addLoggedInViewAndUseCase() {
         loggedInViewModel = new LoggedInViewModel();
         LoggedInDataAccessObject loggedInDataAccessObject = new LoggedInDataAccessObject(DataAccessObject);
-        TeamViewModel teamViewModel = new  TeamViewModel();
+        this.teamViewModel = new TeamViewModel();
         final LoggedInOutputBoundary loggedInOutputBoundary = new LoggedInPresenter(loggedInViewModel,
-                new LoggedInState(), viewManagerModel, teamViewModel, loginViewModel, loggedInDataAccessObject);
+                new LoggedInState(), viewManagerModel, this.teamViewModel, loginViewModel, loggedInDataAccessObject);
         final LoggedInInputBoundary loggedInInteractor = new LoggedInInteractor(
                 loggedInDataAccessObject, loggedInOutputBoundary);
         LoggedInController loggedInController = new LoggedInController(loggedInInteractor);
@@ -89,15 +90,8 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder addTeamViewAndUseCase() {
-        teamViewModel = new TeamViewModel();
-        ManageTeamViewModel manageTeamViewModel = new ManageTeamViewModel();
-        TeamDataAccessObject teamDataAccessObject = new TeamDataAccessObject(DataAccessObject);
-        final TeamOutputBoundary teamOutputBoundary = new TeamPresenter(viewManagerModel, loggedInViewModel,
-                manageTeamViewModel, teamViewModel);
-        final TeamInputBoundary teamInteractor = new TeamInteractor(teamDataAccessObject, teamOutputBoundary);
-        TeamController teamController = new TeamController(teamInteractor);
-        teamView = new TeamView(teamViewModel, teamController);
+    public AppBuilder addTeamView() {
+        teamView = new TeamView(teamViewModel);
         cardPanel.add(teamView, teamView.getViewName());
         return this;
     }
@@ -110,6 +104,16 @@ public class AppBuilder {
 
         SignupController controller = new SignupController(userSignupInteractor);
         signupView.setSignupController(controller);
+        return this;
+    }
+
+    public AppBuilder addTeamUseCase() {
+        ManageTeamViewModel manageTeamViewModel = new ManageTeamViewModel();
+        final TeamOutputBoundary teamOutputBoundary = new TeamPresenter(viewManagerModel, loggedInViewModel,
+                manageTeamViewModel, teamViewModel);
+        final TeamInputBoundary teamInteractor = new TeamInteractor(new TeamDataAccessObject(DataAccessObject), teamOutputBoundary);
+        TeamController teamController = new TeamController(teamInteractor);
+        teamView.setTeamController(teamController);
         return this;
     }
 

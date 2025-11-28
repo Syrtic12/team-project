@@ -33,7 +33,7 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
     private final JButton backButton = new JButton("Back");
 
 
-    public TeamView(TeamViewModel viewModel, TeamController teamController) {
+    public TeamView(TeamViewModel viewModel) {
         this.teamViewModel = viewModel;
         this.teamViewModel.addPropertyChangeListener(this);
 

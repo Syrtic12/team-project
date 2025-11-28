@@ -11,7 +11,8 @@ public class    Main {
                 .addLoggedInViewAndUseCase()
                 .addLoginUseCase()
                 .addSignupUseCase()
-                .addTeamViewAndUseCase()
+                .addTeamView()
+                .addTeamUseCase()
                 .build();
 
         application.pack();
