@@ -51,7 +51,7 @@ public class ManageTeamView extends JPanel implements PropertyChangeListener {
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 final ManageTeamState currentState = manageTeamViewModel.getState();
-                manageTeamController.execute(currentState.getNewMemberEmail(), currentState.getTeamId(),"add");
+                manageTeamController.addMember(currentState.getTeamId(), currentState.getNewMemberEmail());
                 newMemberField.setText("");
             }
         });
@@ -59,9 +59,9 @@ public class ManageTeamView extends JPanel implements PropertyChangeListener {
         removeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String selectedMember = membersList.getSelectedValue();
-                if (selectedMember != null) {
+                if (selectedMember == null) {
                     final ManageTeamState currentState = manageTeamViewModel.getState();
-                    manageTeamController.execute(selectedMember, currentState.getTeamId(),"remove");
+                    manageTeamController.removeMember(currentState.getTeamId(), selectedMember);
                 }
             }
         });

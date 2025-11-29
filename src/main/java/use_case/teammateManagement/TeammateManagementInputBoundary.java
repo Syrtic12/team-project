@@ -10,5 +10,4 @@ public interface TeammateManagementInputBoundary {
      * @param teammateManagementInputData the input data
      */
     void execute(TeammateManagementInputData teammateManagementInputData);
-    void switchToTeamView();
 }

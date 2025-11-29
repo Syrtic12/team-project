@@ -18,7 +18,7 @@ public class TeammateManagementInteractor implements TeammateManagementInputBoun
 
     @Override
     public void execute(TeammateManagementInputData TeammateManagementInputData) {
-        User user = dataAccessObject.getUser(TeammateManagementInputData.getEmail());
+        User user = dataAccessObject.getUser(TeammateManagementInputData.getUserID());
         Team team = dataAccessObject.getTeam(TeammateManagementInputData.getTeamID());
         String action = TeammateManagementInputData.getAction();
         //Checks if team or user exists
@@ -46,13 +46,10 @@ public class TeammateManagementInteractor implements TeammateManagementInputBoun
             if (!result){
                 teammateManagementPresenter.prepareFailView("An error has occured");
             }
-            TeammateManagementOutputData outputData = new TeammateManagementOutputData(true, team.getIdx(),
-                    user.getIdx(), dataAccessObject.getTeamMembers(team));
+            TeammateManagementOutputData outputData = new TeammateManagementOutputData(true, team.getIdx(), user.getIdx(), "Success");
             teammateManagementPresenter.prepareSuccessView(outputData);
         }
-    }
-
-    public void switchToTeamView() { teammateManagementPresenter.switchToTeamView();}
+        }
 
 }
 

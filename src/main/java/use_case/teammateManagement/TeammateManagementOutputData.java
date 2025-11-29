@@ -1,23 +1,24 @@
 package use_case.teammateManagement;
 
-import java.util.List;
+import entity.Team;
+import entity.User;
 
 public class TeammateManagementOutputData {
     private final boolean success;
     private final String teamId;
     private final String userId;
-    private final List<String> memberList;
+    private final String message;
 
-    public TeammateManagementOutputData(boolean success, String teamId, String userId, List<String> memberList) {
+    public TeammateManagementOutputData(boolean success, String teamId, String userId, String message) {
         this.success = success;
         this.teamId = teamId;
         this.userId = userId;
-        this.memberList = memberList;
+        this.message = message;
     }
 
     public boolean isSuccess() { return success; }
 
-    public List<String> getMemberList() { return memberList; }
+    public String getMessage() { return message; }
 
     public String getUserId() { return userId; }
 

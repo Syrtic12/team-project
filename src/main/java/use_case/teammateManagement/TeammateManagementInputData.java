@@ -1,18 +1,18 @@
 package use_case.teammateManagement;
 
 public class TeammateManagementInputData {
-    private final String email;
+    private final String userID;
     private final String teamID;
     private final String action;
 
-    public TeammateManagementInputData(String email, String teamID, String action) {
-        this.email = email;
+    public TeammateManagementInputData(String userID, String teamID, String action) {
+        this.userID = userID;
         this.teamID = teamID;
         this.action = action;
     }
 
-    String getEmail() {
-        return email;
+    String getUserID() {
+        return userID;
     }
 
     String getTeamID() {
