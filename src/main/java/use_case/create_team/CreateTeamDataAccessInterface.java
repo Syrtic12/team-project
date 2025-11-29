@@ -22,4 +22,6 @@ public interface CreateTeamDataAccessInterface {
      * @return leader name
      */
     String getLeaderName(String userId);
+
+    void deleteTeam(String userId, String teamName);
 }
