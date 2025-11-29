@@ -94,7 +94,7 @@ public class Task {
         this.status = newStatus;
     }
     public String getTitle() {
-    return this.title;
+        return this.title;
     }
     public String getDescription() {
         return this.description;

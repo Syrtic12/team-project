@@ -30,7 +30,7 @@ public class LogInInteractor implements LogInInputBoundary {
         } else {
             User user = dataAccessObject.getUser(email);
             if (encoder.matches(password, user.getPassword())) {
-                LogInOutputData outputData = new LogInOutputData(user.getIdx(), user.getEmail(), user.getTeams());
+                LogInOutputData outputData = new LogInOutputData(user.getIdx(), user.getEmail(), dataAccessObject.getTeams(user.getIdx()));
                 loginPresenter.prepareSuccessView(outputData);
             } else {
                 loginPresenter.prepareFailView("Incorrect password.");
@@ -41,9 +41,11 @@ public class LogInInteractor implements LogInInputBoundary {
     public void switchToSignupView(){
         loginPresenter.switchToSignupView();
     }
-
+/*
     public static void main(String[] args) {
         LogInInteractor interac = new LogInInteractor(new LogInDataAccessObject(new KandoMongoDatabase()), null);
         interac.execute(new LogInInputData("sushaanpatel@gmail.com","password"));
     }
+*/
 }
+
