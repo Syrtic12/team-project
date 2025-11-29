@@ -27,8 +27,8 @@ public class TeammateManagementDataAccessObject implements TeammateManagementDat
         return out;
     }
     @Override
-    public User getUser(String userId) {
-        Document user = this.GeneralDataAccessObject.getOne(USERS_COLLECTION, "_id", userId);
+    public User getUser(String email) {
+        Document user = this.GeneralDataAccessObject.getOne(USERS_COLLECTION, "email", email);
         User out = this.userFactory.createFromDocument(user);
         ObjectId idx = user.getObjectId("_id");
         out.setIdx(idx.toString());
