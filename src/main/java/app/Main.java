@@ -8,13 +8,8 @@ public class    Main {
         JFrame application = appBuilder
                 .addSignupView()
                 .addLoginView()
-                .addLoggedInViewAndUseCase()
                 .addLoginUseCase()
                 .addSignupUseCase()
-                .addEditTaskView()
-                .addTeamView()
-                .addTeamUseCase()
-                .addEditTaskUseCase()
                 .build();
 
         application.pack();

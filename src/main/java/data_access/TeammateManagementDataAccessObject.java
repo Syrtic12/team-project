@@ -59,19 +59,6 @@ public class TeammateManagementDataAccessObject implements TeammateManagementDat
     }
 
     @Override
-    public List<String> getTeams(User user) {
-        Document userDoc = this.GeneralDataAccessObject.getOne(USERS_COLLECTION, "_id", user.getIdx());
-        if (userDoc == null) {
-            return List.of();
-        }
-        List<String> out = userDoc.getList(TEAMS_COLLECTION, String.class);
-        if (out == null) {
-            return List.of();
-        }
-        return out;
-    }
-
-    @Override
     public boolean addUser(Team team, User user) {
         List<String> teamMembers = getTeamMembers(team);
         if ((user.getIdx() == null)) {
@@ -94,33 +81,6 @@ public class TeammateManagementDataAccessObject implements TeammateManagementDat
         }
         teamMembers.remove(user.getIdx());
         this.GeneralDataAccessObject.update(TEAMS_COLLECTION, team.getIdx(), USERS_COLLECTION, teamMembers);
-        System.out.println("True");
-        return true;
-    }
-
-    @Override
-    public boolean addTeam(Team team, User user) {
-        List<String> teams = getTeams(user);
-        if ((user.getIdx() == null)) {
-            return false;
-        }
-        if (!teams.contains(team.getIdx())) {
-            teams.add(team.getIdx());
-            this.GeneralDataAccessObject.update(USERS_COLLECTION, user.getIdx(), TEAMS_COLLECTION, teams);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean removeTeam(Team team, User user) {
-        List<String> teams = getTeams(user);
-        if ((team.getIdx() == null) || !teams.contains(team.getIdx())) {
-            System.out.println("False");
-            return false;
-        }
-        teams.remove(team.getIdx());
-        this.GeneralDataAccessObject.update(USERS_COLLECTION, user.getIdx(), TEAMS_COLLECTION, teams);
         System.out.println("True");
         return true;
     }

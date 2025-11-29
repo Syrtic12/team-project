@@ -3,8 +3,6 @@ package use_case.login;
 import entity.User;
 import org.bson.Document;
 
-import java.util.List;
-
 public interface LogInDataAccessInterface {
     /**
      * @param email
@@ -13,6 +11,4 @@ public interface LogInDataAccessInterface {
     public boolean emailExists(String email);
 
     public User getUser(String email);
-
-    public List<String> getTeams(String userID);
 }
