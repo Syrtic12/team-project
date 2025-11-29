@@ -22,6 +22,7 @@ public class EditTaskView extends JPanel implements ActionListener, PropertyChan
 
     private final JButton saveButton;
     private final JButton cancelButton;
+    private final JButton deleteButton;
 
     private EditTaskController editTaskController = null;
 
@@ -40,8 +41,10 @@ public class EditTaskView extends JPanel implements ActionListener, PropertyChan
         final JPanel buttons = new JPanel();
         saveButton = new JButton("Save");
         cancelButton = new JButton("Cancel");
+        deleteButton = new JButton("Delete");
         buttons.add(saveButton);
         buttons.add(cancelButton);
+        buttons.add(deleteButton);
 
         saveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -56,6 +59,12 @@ public class EditTaskView extends JPanel implements ActionListener, PropertyChan
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 editTaskController.switchToTeamView();
+            }
+        });
+
+        deleteButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                editTaskController.deleteCurrentTask();
             }
         });
 
