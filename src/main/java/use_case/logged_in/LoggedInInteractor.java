@@ -3,6 +3,7 @@ package use_case.logged_in;
 import entity.Task;
 import entity.Team;
 import entity.TeamFactory;
+import entity.User;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import use_case.login.LogInInputBoundary;
@@ -40,14 +41,19 @@ public class LoggedInInteractor implements LoggedInInputBoundary {
         Map<String, String> inProgressTasks = new HashMap<>();
         Map<String, String> CompletedTasks = new HashMap<>();
         for (Task task : tasks) {
+            List<String> assignedUsers = task.getAssignedUsers();
+            String names = String.join(", ", assignedUsers);
+            if (assignedUsers.isEmpty()) {
+                names = "no users assigned";
+            }
             if (task.getStatus()==0){
-                notStartedTasks.put(task.getIdx(),task.getTitle());
+                notStartedTasks.put(names,task.getTitle());
             }
             else if (task.getStatus()==1){
-                inProgressTasks.put(task.getIdx(),task.getTitle());
+                inProgressTasks.put(names,task.getTitle());
             }
             else if (task.getStatus()==2){
-                CompletedTasks.put(task.getIdx(),task.getTitle());
+                CompletedTasks.put(names,task.getTitle());
             }
         }
         LoggedInOutputData outputData = new LoggedInOutputData(notStartedTasks,inProgressTasks,CompletedTasks,teamId);
