@@ -18,4 +18,8 @@ public class ManageTeamController {
     public void switchToTeamView() {
         teammateManagementInteractor.switchToTeamView();
     }
+
+    public void disbandTeam() {
+
+    }
 }
