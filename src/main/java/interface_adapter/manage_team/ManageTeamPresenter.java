@@ -28,13 +28,14 @@ public class ManageTeamPresenter implements TeammateManagementOutputBoundary {
         final ManageTeamState manageTeamState = manageTeamViewModel.getState();
         manageTeamState.setMembers(outputData.getMemberList());
         this.manageTeamViewModel.firePropertyChange();
-
     }
 
     @Override
     public void prepareFailView(String errorMessage) {
         final ManageTeamState manageTeamState = manageTeamViewModel.getState();
         manageTeamState.setError(errorMessage);
+        manageTeamViewModel.firePropertyChange();
+        manageTeamState.setError(null);
         manageTeamViewModel.firePropertyChange();
     }
 

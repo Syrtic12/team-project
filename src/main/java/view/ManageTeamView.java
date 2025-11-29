@@ -1,10 +1,13 @@
 package view;
 
+import interface_adapter.login.LoginState;
 import interface_adapter.manage_team.ManageTeamController;
 import interface_adapter.manage_team.ManageTeamState;
 import interface_adapter.manage_team.ManageTeamViewModel;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -34,6 +37,7 @@ public class ManageTeamView extends JPanel implements PropertyChangeListener {
         membersListModel = new DefaultListModel<>();
         membersList = new JList<>(membersListModel);
         JScrollPane listScrollPane = new JScrollPane(membersList);
+        listScrollPane.setPreferredSize(new java.awt.Dimension(250, 200));
         final JPanel membersPanel = new JPanel();
         membersPanel.add(new JLabel(ManageTeamViewModel.MEMBERS_LABEL));
         membersPanel.add(listScrollPane);
@@ -58,7 +62,8 @@ public class ManageTeamView extends JPanel implements PropertyChangeListener {
 
         removeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String selectedMember = membersList.getSelectedValue();
+                String selectedMember = "";
+                selectedMember = membersList.getSelectedValue();
                 if (selectedMember != null) {
                     final ManageTeamState currentState = manageTeamViewModel.getState();
                     manageTeamController.execute(selectedMember, currentState.getTeamId(),"remove");
@@ -72,12 +77,37 @@ public class ManageTeamView extends JPanel implements PropertyChangeListener {
             }
         });
 
+        newMemberField.getDocument().addDocumentListener(new DocumentListener() {
+
+            public void documentListenerHelper() {
+                final ManageTeamState currentState = manageTeamViewModel.getState();
+                currentState.setNewMemberEmail(newMemberField.getText());
+                manageTeamViewModel.setState(currentState);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+        });
+
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(titleLabel);
         this.add(addMemberInfo);
         this.add(membersPanel);
         this.add(buttons);
     }
+
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {

@@ -8,7 +8,8 @@ import java.util.List;
 public interface TeammateManagementDataAccessInterface {
 
     public Team getTeam(String teamId);
-    public User getUser(String userId);
+    public User getUser(String email);
+    public User getUserFromId(String userId);
     public List<String> getTeamMembers(Team team);
     public List<String> getTeams(User user);
     public User getTeamLeader(Team team);

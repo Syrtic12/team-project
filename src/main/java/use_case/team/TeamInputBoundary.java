@@ -1,11 +1,13 @@
 package use_case.team;
 
+import java.util.List;
+
 public interface TeamInputBoundary {
     void execute(TeamInputData teamInputData);
 
     void switchToLoggedInView();
 
-    void switchToManageTeamView();
+    void switchToManageTeamView(String teamId);
 
     void switchToCreateTaskView();
 

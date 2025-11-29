@@ -13,6 +13,8 @@ import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.manage_team.ManageTeamController;
+import interface_adapter.manage_team.ManageTeamPresenter;
 import interface_adapter.manage_team.ManageTeamViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
@@ -33,6 +35,9 @@ import use_case.signup.SignUpInteractor;
 import use_case.signup.SignUpOutputBoundary;
 import use_case.team.*;
 import interface_adapter.team.*;
+import use_case.teammateManagement.TeammateManagementInputBoundary;
+import use_case.teammateManagement.TeammateManagementInteractor;
+import use_case.teammateManagement.TeammateManagementOutputBoundary;
 import view.*;
 
 import javax.swing.*;
@@ -57,6 +62,8 @@ public class AppBuilder {
     private TeamViewModel teamViewModel;
     private EditTaskViewModel editTaskViewModel;
     private EditTaskView editTaskView;
+    private ManageTeamViewModel manageTeamViewModel;
+    private ManageTeamView manageTeamView;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -99,12 +106,6 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder addTeamView() {
-        teamView = new TeamView(teamViewModel);
-        cardPanel.add(teamView, teamView.getViewName());
-        return this;
-    }
-
     public AppBuilder addSignupUseCase() {
         final SignUpOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel,
                 signupViewModel, loginViewModel);
@@ -116,13 +117,35 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addTeamView() {
+        teamView = new TeamView(teamViewModel);
+        cardPanel.add(teamView, teamView.getViewName());
+        return this;
+    }
+
     public AppBuilder addTeamUseCase() {
-        ManageTeamViewModel manageTeamViewModel = new ManageTeamViewModel();
+        this.manageTeamViewModel = new ManageTeamViewModel();
         final TeamOutputBoundary teamOutputBoundary = new TeamPresenter(viewManagerModel, loggedInViewModel,
                 manageTeamViewModel, teamViewModel, editTaskViewModel);
         final TeamInputBoundary teamInteractor = new TeamInteractor(new TeamDataAccessObject(DataAccessObject), teamOutputBoundary);
         TeamController teamController = new TeamController(teamInteractor);
         teamView.setTeamController(teamController);
+        return this;
+    }
+
+    public AppBuilder addManageTeamView() {
+        manageTeamView = new ManageTeamView(manageTeamViewModel);
+        cardPanel.add(manageTeamView, manageTeamView.getViewName());
+        return this;
+    }
+
+    public AppBuilder addManageTeamUseCase() {
+        final TeammateManagementOutputBoundary teammateManagementOutputBoundary = new ManageTeamPresenter(
+                viewManagerModel, loggedInViewModel, manageTeamViewModel, teamViewModel);
+        final TeammateManagementInputBoundary teammateManagementInteractor = new TeammateManagementInteractor(
+                new TeammateManagementDataAccessObject(DataAccessObject), teammateManagementOutputBoundary);
+        ManageTeamController manageTeamController = new ManageTeamController(teammateManagementInteractor);
+        manageTeamView.setManageTeamController(manageTeamController);
         return this;
     }
 

@@ -15,7 +15,8 @@ public class TeamController {
     public void createTask() {
     }
 
-    public void openManageTeam() {
+    public void openManageTeam(String teamId) {
+        teamInteractor.switchToManageTeamView(teamId);
     }
 
     public void openCreateTask() {
