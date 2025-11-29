@@ -40,6 +40,7 @@ public class TeamPresenter implements TeamOutputBoundary {
     @Override
     public void prepareFailView(String errorMessage) {
         //IDK what to do here. Leave empty for now
+        //test
     }
 
     @Override
