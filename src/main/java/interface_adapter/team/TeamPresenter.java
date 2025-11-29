@@ -5,6 +5,7 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.create_task.CreateTaskViewModel;
 import interface_adapter.edit_task.EditTaskState;
 import interface_adapter.edit_task.EditTaskViewModel;
+import interface_adapter.manage_team.ManageTeamState;
 import interface_adapter.team.TeamState;
 import interface_adapter.team.TeamViewModel;
 import interface_adapter.manage_team.ManageTeamViewModel;
@@ -13,6 +14,8 @@ import interface_adapter.create_task.CreateTaskViewModel;
 import use_case.team.TeamOutputBoundary;
 import use_case.team.TeamOutputData;
 import use_case.create_task.CreateTaskOutputData;
+
+import java.util.List;
 
 
 public class TeamPresenter implements TeamOutputBoundary {
@@ -50,8 +53,14 @@ public class TeamPresenter implements TeamOutputBoundary {
     }
 
     @Override
-    public void switchToManageTeamView() {
-        //ManageTeamViewModel not yet implemented
+    public void switchToManageTeamView(List<String> teamMembers, String teamID) {
+        final ManageTeamState manageTeamState = manageTeamViewModel.getState();
+        manageTeamState.setMembers(teamMembers);
+        manageTeamState.setTeamId(teamID);
+        manageTeamState.setError(null);
+        this.manageTeamViewModel.firePropertyChange();
+        viewManagerModel.setState(manageTeamViewModel.getViewName());
+        viewManagerModel.firePropertyChange();
     }
 
     @Override

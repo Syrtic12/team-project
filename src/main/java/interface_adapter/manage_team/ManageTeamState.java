@@ -7,7 +7,7 @@ public class ManageTeamState {
     private String teamId = "";
     private String newMemberEmail = "";
     private List<String> members = new ArrayList<>();
-    private String error;
+    private String error = null;
 
     public ManageTeamState(ManageTeamState copy) {
         teamId = copy.teamId;

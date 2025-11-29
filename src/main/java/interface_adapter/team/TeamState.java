@@ -13,6 +13,8 @@ public class TeamState {
         return teamID;
     }
 
+    public void setTeamName(String teamName) {this.teamID = teamName;}
+
     // the map is the ID and description of the task
 
     public void setNotStartedTasks(Map<String, String> notStartedTasks) {

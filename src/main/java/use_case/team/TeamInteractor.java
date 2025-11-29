@@ -2,6 +2,11 @@
 package use_case.team;
 
 import data_access.TeamDataAccessObject;
+import entity.Team;
+import entity.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TeamInteractor implements TeamInputBoundary{
     private final TeamDataAccessInterface teamDataAccess;
@@ -23,8 +28,15 @@ public class TeamInteractor implements TeamInputBoundary{
     }
 
     @Override
-    public void switchToManageTeamView() {
-        teamPresenter.switchToManageTeamView();
+    public void switchToManageTeamView(String teamId) {
+        Team team = teamDataAccess.getTeam(teamId);
+        List<String> teamMembers = teamDataAccess.getTeamMembers(team);
+        List<String> teamEmails = new ArrayList<>();
+        for (String userId : teamMembers){
+            User user = teamDataAccess.getUser(userId);
+            teamEmails.add(user.getEmail());
+        }
+        teamPresenter.switchToManageTeamView(teamEmails, teamId);
     }
 
     @Override
