@@ -1,3 +1,4 @@
+
 package interface_adapter.team;
 
 import interface_adapter.ViewManagerModel;
@@ -40,7 +41,6 @@ public class TeamPresenter implements TeamOutputBoundary {
     @Override
     public void prepareFailView(String errorMessage) {
         //IDK what to do here. Leave empty for now
-        //test
     }
 
     @Override

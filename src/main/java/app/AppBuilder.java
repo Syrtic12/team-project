@@ -93,7 +93,8 @@ public class AppBuilder {
         final LoggedInInputBoundary loggedInInteractor = new LoggedInInteractor(
                 loggedInDataAccessObject, loggedInOutputBoundary);
         LoggedInController loggedInController = new LoggedInController(loggedInInteractor);
-        loggedInView = new LoggedInView(loggedInViewModel, loggedInController);
+        loggedInView = new LoggedInView(loggedInViewModel);
+        loggedInView.setLoggedInController(loggedInController);
         cardPanel.add(loggedInView, loggedInView.getViewName());
         return this;
     }
