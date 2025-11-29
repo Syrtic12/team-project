@@ -37,11 +37,10 @@ public class TeammateManagementInteractor implements TeammateManagementInputBoun
         } else {
             boolean result = false;
             if (action.equals("add")){
-                result = (this.dataAccessObject.addUser(team, user)) && (this.dataAccessObject.addTeam(team, user));
+                result = this.dataAccessObject.addUser(team, user);
             }
             else if (action.equals("remove")){
-                result = (this.dataAccessObject.removeUser(team, user)) &&
-                        (this.dataAccessObject.removeTeam(team, user));
+                result = this.dataAccessObject.removeUser(team, user);
             }
             if (!result){
                 teammateManagementPresenter.prepareFailView("An error has occured");

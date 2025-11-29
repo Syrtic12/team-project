@@ -78,6 +78,5 @@ public class AssignTaskDataAccessObject implements AssignTaskDataAccessInterface
             GeneralDataAccessObject.update("tasks", taskIdx, "users", users);
         }
     }
-
 }
 
