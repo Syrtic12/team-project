@@ -15,16 +15,15 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     public final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
-    private final LoggedInController loggedInController;
+    private LoggedInController loggedInController;
 
     private final JLabel welcomeLabel;
     private final JButton createTeamButton;
     private final JButton viewTeamsButton;
     private final JButton logOutButton;
 
-    public LoggedInView(LoggedInViewModel loggedInViewModel, LoggedInController loggedInController) {
+    public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.loggedInViewModel = loggedInViewModel;
-        this.loggedInController = loggedInController;
 
         loggedInViewModel.addPropertyChangeListener(this);
 
@@ -132,5 +131,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     public String getViewName() {
         return viewName;
+    }
+
+    public void setLoggedInController(LoggedInController loggedInController) {
+        this.loggedInController = loggedInController;
     }
 }

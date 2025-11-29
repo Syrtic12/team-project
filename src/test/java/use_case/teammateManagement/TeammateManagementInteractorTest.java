@@ -2,8 +2,6 @@ package use_case.teammateManagement;
 
 import data_access.KandoMongoDatabase;
 import data_access.TeammateManagementDataAccessObject;
-import entity.User;
-import entity.UserFactory;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,7 +29,7 @@ class TeammateManagementInteractorTest {
 
         };
 
-        TeammateManagementInputBoundary interactor = new TeammateManagementInteractor(dataRepository, successPresenter);
+        TaskViewInputBoundary interactor = new TeammateManagementInteractor(dataRepository, successPresenter);
         interactor.execute(inputData);
     }
 
@@ -56,7 +54,7 @@ class TeammateManagementInteractorTest {
 
         };
 
-        TeammateManagementInputBoundary interactor = new TeammateManagementInteractor(dataRepository, successPresenter);
+        TaskViewInputBoundary interactor = new TeammateManagementInteractor(dataRepository, successPresenter);
         interactor.execute(inputData);
     }
     }
