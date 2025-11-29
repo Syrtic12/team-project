@@ -58,17 +58,20 @@ public class EditTaskInteractor implements EditTaskInputBoundary {
             return;
         }
 
-        // 5. Apply edits
-        if (inputData.getNewTitle() != null)
+        // 5. Apply edits to the Task object
+        if (inputData.getNewTitle() != null) {
             task.setTitle(inputData.getNewTitle());
+        }
 
-        if (inputData.getNewDescription() != null)
+        if (inputData.getNewDescription() != null) {
             task.setDescription(inputData.getNewDescription());
+        }
 
-        if (inputData.getNewStatus() != null)
+        if (inputData.getNewStatus() != null) {
             task.changeStatus(inputData.getNewStatus());
+        }
 
-        // 6. Persist
+        // 6. Persist changes using the DAO's own update logic
         dataAccess.saveTask(task);
 
         presenter.prepareSuccessView(
