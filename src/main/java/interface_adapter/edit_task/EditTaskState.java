@@ -7,9 +7,6 @@ public class EditTaskState {
     private String description;
     private String title;
     private String error;
-    private Integer status;
-    private String teamId;
-    // test comment 1
 
     public String getTaskId() {
         return this.taskId;
