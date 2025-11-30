@@ -14,8 +14,8 @@ public class LoggedInOutputData {
     private final String teamId;
     private final String userId;
 
-    public LoggedInOutputData(Map<String, String> NotStartedTasks, Map<String, String> InProgressTasks,
-                              Map<String, String> CompletedTasks, String teamId, String userId) {
+    public LoggedInOutputData(Map<String, TaskInfo> NotStartedTasks, Map<String, TaskInfo> InProgressTasks,
+                              Map<String, TaskInfo> CompletedTasks, String teamId, String userId) {
         this.NotStartedTasks = NotStartedTasks;
         this.InProgressTasks = InProgressTasks;
         this.CompletedTasks = CompletedTasks;
