@@ -1,16 +1,42 @@
 package interface_adapter.create_task;
 
 public class CreateTaskState {
-    private String title;
-    private String description;
-    private String processError;
-    public String getError() { return this.processError;}
+
+    private String title = "";
+    private String description = "";
+    private String error = "";
+    private String teamId;
+    public String invokedBy;
 
     public String getTitle() {
-        return "";
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getInvokedBy() {
+        return this.invokedBy;
     }
 
     public String getDescription() {
-        return "";
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getTeamID() {
+        return this.teamId;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String errorMessage) {
+        this.error = errorMessage;
     }
 }

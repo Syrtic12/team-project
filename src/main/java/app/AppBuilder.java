@@ -6,6 +6,9 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.edit_task.EditTaskController;
 import interface_adapter.edit_task.EditTaskPresenter;
 import interface_adapter.edit_task.EditTaskViewModel;
+import interface_adapter.create_task.CreateTaskController;
+import interface_adapter.create_task.CreateTaskPresenter;
+import interface_adapter.create_task.CreateTaskViewModel;
 import interface_adapter.logged_in.LoggedInController;
 import interface_adapter.logged_in.LoggedInPresenter;
 import interface_adapter.logged_in.LoggedInState;
@@ -24,6 +27,10 @@ import use_case.edit_task.EditTaskDataAccessInterface;
 import use_case.edit_task.EditTaskInputBoundary;
 import use_case.edit_task.EditTaskInteractor;
 import use_case.edit_task.EditTaskOutputBoundary;
+import use_case.create_task.CreateTaskDataAccessInterface;
+import use_case.create_task.CreateTaskInputBoundary;
+import use_case.create_task.CreateTaskInteractor;
+import use_case.create_task.CreateTaskOutputBoundary;
 import use_case.logged_in.LoggedInInputBoundary;
 import use_case.logged_in.LoggedInInteractor;
 import use_case.logged_in.LoggedInOutputBoundary;
@@ -62,6 +69,8 @@ public class AppBuilder {
     private TeamViewModel teamViewModel;
     private EditTaskViewModel editTaskViewModel;
     private EditTaskView editTaskView;
+    private CreateTaskViewModel createTaskViewModel;
+    private CreateTaskView createTaskView;
     private ManageTeamViewModel manageTeamViewModel;
     private ManageTeamView manageTeamView;
 
@@ -90,6 +99,12 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addCreateTaskView() {
+        createTaskViewModel = new CreateTaskViewModel();
+        createTaskView = new CreateTaskView(createTaskViewModel);
+        cardPanel.add(createTaskView, createTaskView.getViewName());
+        return this;
+    }
 
     public AppBuilder addLoggedInViewAndUseCase() {
         loggedInViewModel = new LoggedInViewModel();
@@ -167,6 +182,16 @@ public class AppBuilder {
                 new TaskDataAccessObject(DataAccessObject), editTaskOutputBoundary);
         EditTaskController editTaskController = new EditTaskController(editTaskInteractor);
         editTaskView.setEditTaskController(editTaskController);
+        return this;
+    }
+
+    public AppBuilder addCreateTaskUseCase() {
+        final CreateTaskOutputBoundary createTaskOutputBoundary = new CreateTaskPresenter(createTaskViewModel,
+                viewManagerModel, teamViewModel);
+        final CreateTaskInputBoundary createTaskInteractor = new CreateTaskInteractor(
+                new TaskDataAccessObject(DataAccessObject), createTaskOutputBoundary);
+        CreateTaskController createTaskController = new CreateTaskController(createTaskInteractor);
+        createTaskView.setCreateTaskController(createTaskController);
         return this;
     }
 
