@@ -7,7 +7,7 @@ import entity.User;
 import entity.UserFactory;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-import use_case.teammateManagement.TeammateManagementDataAccessInterface;
+import use_case.teammate_management.TeammateManagementDataAccessInterface;
 
 public class TeammateManagementDataAccessObject implements TeammateManagementDataAccessInterface {
     private KandoMongoDatabase GeneralDataAccessObject;
