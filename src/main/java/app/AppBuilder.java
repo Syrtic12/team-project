@@ -34,9 +34,9 @@ import use_case.signup.SignUpInteractor;
 import use_case.signup.SignUpOutputBoundary;
 import use_case.team.*;
 import interface_adapter.team.*;
-import use_case.teammateManagement.TeammateManagementInputBoundary;
-import use_case.teammateManagement.TeammateManagementInteractor;
-import use_case.teammateManagement.TeammateManagementOutputBoundary;
+import use_case.teammate_management.TeammateManagementInputBoundary;
+import use_case.teammate_management.TeammateManagementInteractor;
+import use_case.teammate_management.TeammateManagementOutputBoundary;
 import view.*;
 
 import javax.swing.*;
