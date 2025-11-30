@@ -15,6 +15,8 @@ public class    Main {
                 .addTeamView()
                 .addTeamUseCase()
                 .addEditTaskUseCase()
+                .addManageTeamView()
+                .addManageTeamUseCase()
                 .build();
 
         application.pack();
