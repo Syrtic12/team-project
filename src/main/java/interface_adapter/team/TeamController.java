@@ -27,7 +27,7 @@ public class TeamController {
     public void openTask(String taskId) {
     }
 
-    public void editTask(String taskId, String teamId, Integer status) {
-        teamInteractor.switchToEditTaskView(taskId, teamId, status);
+    public void editTask(String taskId, String teamId, Integer status, String title, String description) {
+        teamInteractor.switchToEditTaskView(taskId, teamId, status, title, description);
     }
 }
