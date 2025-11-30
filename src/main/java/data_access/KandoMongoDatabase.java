@@ -32,7 +32,9 @@ public class KandoMongoDatabase {
     public KandoMongoDatabase(){
         try {
             Dotenv dotenv = Dotenv.load();
-            final String connectionString = String.format("mongodb+srv://sushaanpatel_db_user:%s@school.hyysls5.mongodb.net/&appName=school", dotenv.get("MONGOPASS"));
+            final String connectionString = String.format(
+                    "mongodb+srv://sushaanpatel_db_user:%s@school.hyysls5.mongodb.net/&appName=school",
+                    dotenv.get("MONGOPASS"));
             ServerApi serverApi = ServerApi.builder()
                     .version(ServerApiVersion.V1)
                     .build();
