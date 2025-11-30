@@ -12,9 +12,11 @@ public class    Main {
                 .addLoginUseCase()
                 .addSignupUseCase()
                 .addEditTaskView()
+                .addCreateTaskView()
                 .addTeamView()
                 .addTeamUseCase()
                 .addEditTaskUseCase()
+                .addCreateTaskUseCase()
                 .addManageTeamView()
                 .addManageTeamUseCase()
                 .build();

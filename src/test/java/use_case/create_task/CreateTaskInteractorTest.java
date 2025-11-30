@@ -51,6 +51,11 @@ class CreateTaskInteractorTest {
             public void prepareFailView(CreateTaskOutputData data) {
                 Assertions.fail("Unexpected failure: " + data.getMessage());
             }
+
+            @Override
+            public void switchToTeamView() {
+                // Not needed for this test
+            }
         };
 
         CreateTaskInteractor interactor = new CreateTaskInteractor(dao, presenter);
@@ -116,6 +121,11 @@ class CreateTaskInteractorTest {
             public void prepareFailView(CreateTaskOutputData data) {
                 Assertions.assertEquals("Only team leader can create tasks", data.getMessage());
             }
+
+            @Override
+            public void switchToTeamView() {
+                // Not needed for this test
+            }
         };
 
         CreateTaskInteractor interactor = new CreateTaskInteractor(dao, presenter);
@@ -151,6 +161,11 @@ class CreateTaskInteractorTest {
             @Override
             public void prepareFailView(CreateTaskOutputData data) {
                 Assertions.assertEquals("Team not found", data.getMessage());
+            }
+
+            @Override
+            public void switchToTeamView() {
+                // Not needed for this test
             }
         };
 
@@ -193,6 +208,11 @@ class CreateTaskInteractorTest {
             @Override
             public void prepareFailView(CreateTaskOutputData data) {
                 Assertions.assertEquals("User not found", data.getMessage());
+            }
+
+            @Override
+            public void switchToTeamView() {
+                // Not needed for this test
             }
         };
 

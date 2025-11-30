@@ -28,6 +28,7 @@ public class LoginPresenter implements LogInOutputBoundary{
         final LoggedInState loggedInState = loggedInViewModel.getState();
         loggedInState.setEmail(response.getEmail());
         loggedInState.setTeams(response.getTeams());
+        loggedInState.setUserId(response.getIdx());
         this.loggedInViewModel.firePropertyChange();
 
         // and clear everything from the LoginViewModel's state

@@ -6,7 +6,7 @@ import entity.User;
 
 import java.util.Optional;
 
-public class CreateTaskInteractor {
+public class CreateTaskInteractor implements CreateTaskInputBoundary{
 
     private final CreateTaskDataAccessInterface dao;
     private final CreateTaskOutputBoundary presenter;
@@ -44,5 +44,10 @@ public class CreateTaskInteractor {
 
         // on success, call the success view with the created task index
         presenter.prepareSuccessView(new CreateTaskOutputData(true, created.getIdx(), "Task created"));
+    }
+
+    @Override
+    public void switchToTeamView() {
+        presenter.switchToTeamView();
     }
 }

@@ -45,14 +45,15 @@ public class CreateTaskView extends JPanel implements ActionListener, PropertyCh
         this.add(overallPanel);
 
         createButton.addActionListener(e -> {
-
             String title = titleField.getText().trim();
             String description = descriptionField.getText().trim();
 
-            createTaskController.createTask(title, description);
+            final CreateTaskState state = createTaskViewModel.getState();
+
+            createTaskController.execute(state.getTeamID(), state.getInvokedBy(), description, title);
         });
 
-        backButton.addActionListener(e -> createTaskController.openTeamView());
+        backButton.addActionListener(e -> createTaskController.switchToTeamView());
 
     }
 

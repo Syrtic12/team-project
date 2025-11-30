@@ -33,6 +33,7 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
     private final JButton manageTeamButton = new JButton("Manage Team");
     private final JButton createTaskButton = new JButton("Create Task");
     private final JButton backButton = new JButton("Back");
+    private String userId;
 
 
     public TeamView(TeamViewModel viewModel) {
@@ -75,10 +76,19 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
         });
         createTaskButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (teamController == null) return;
-                teamController.openCreateTask();
+                String invokedBy = userId;   // ⭐ FIXED HERE ⭐
+
+                if (invokedBy == null) {
+                    System.out.println("ERROR: invokedBy/userId is NULL");
+                    return;
+                }
+
+                if (teamId != null) {
+                    teamController.createTask(teamId, invokedBy);
+                }
             }
         });
+
 
         notStartedList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             @Override
@@ -169,9 +179,12 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
     public void propertyChange(PropertyChangeEvent evt) {
         TeamState state = (TeamState) evt.getNewValue();
         this.teamId = state.getTeamName();
+        this.userId = state.getUserId();
         teamNameLabel.setText(state.getTeamName());
         clearSelections();
         setTaskLists(state);
+        System.out.println("DEBUG TeamView: userId = " + state.getUserId());
+
     }
 
     private void setTaskLists(TeamState state) {
