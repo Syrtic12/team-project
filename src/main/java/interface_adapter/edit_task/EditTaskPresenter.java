@@ -2,6 +2,7 @@
 package interface_adapter.edit_task;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.team.TeamState;
 import interface_adapter.team.TeamViewModel;
 import use_case.edit_task.EditTaskOutputBoundary;
 import use_case.edit_task.EditTaskOutputData;
@@ -39,5 +40,6 @@ public class EditTaskPresenter implements EditTaskOutputBoundary {
     public void switchToTeamView() {
         viewManagerModel.setState(teamViewModel.getViewName());
         viewManagerModel.firePropertyChange();
+        teamViewModel.firePropertyChange();
     }
 }

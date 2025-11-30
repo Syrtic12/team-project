@@ -111,7 +111,7 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
             public void valueChanged(javax.swing.event.ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
                     String taskId = getSelectedTask(completedList);
-                    TaskInfo info = teamViewModel.getState().getInProgressTasks().get(taskId);
+                    TaskInfo info = teamViewModel.getState().getCompletedTasks().get(taskId);
                     if (taskId != null) {
                         teamController.editTask(taskId, teamId, 2, info.getTitle(), info.getDescription());
                     }
@@ -122,6 +122,16 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
 
 
     }
+
+    private void clearSelections() {
+        notStartedList.clearSelection();
+        inProgressList.clearSelection();
+        completedList.clearSelection();
+        notStartedList.setSelectedIndex(-1);
+        inProgressList.setSelectedIndex(-1);
+        completedList.setSelectedIndex(-1);
+    }
+
 
     private String getSelectedTask(JList<String> list) {
         String selected = list.getSelectedValue();
@@ -157,15 +167,14 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println("Property Change Detected");
         TeamState state = (TeamState) evt.getNewValue();
         this.teamId = state.getTeamName();
         teamNameLabel.setText(state.getTeamName());
+        clearSelections();
         setTaskLists(state);
     }
 
     private void setTaskLists(TeamState state) {
-        System.out.println("Getting task lists");
         fillModel(notStartedModel, state.getNotStartedTasks());
         fillModel(inProgressModel, state.getInProgressTasks());
         fillModel(completedModel, state.getCompletedTasks());

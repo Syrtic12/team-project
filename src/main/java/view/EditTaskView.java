@@ -108,7 +108,6 @@ public class EditTaskView extends JPanel implements ActionListener, PropertyChan
 
     public void propertyChange(PropertyChangeEvent evt) {
         final EditTaskState state = (EditTaskState) evt.getNewValue();
-        System.out.println(state.getError());
         if (state.getError() != null) {
             JOptionPane.showMessageDialog(this, state.getError());
         }

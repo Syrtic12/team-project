@@ -55,7 +55,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(signupButton)) {
                             final SignupState currentState = signupViewModel.getState();
-                            System.out.println("hi");
                             signupController.execute(
                                     currentState.getEmail(),
                                     currentState.getUsername(),
@@ -206,7 +205,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     @Override
     public void propertyChange(PropertyChangeEvent evt){
         final SignupState state = (SignupState) evt.getNewValue();
-        System.out.println(state.getError());
         if (state.getError() != null) {
             JOptionPane.showMessageDialog(this, state.getError());
         }
