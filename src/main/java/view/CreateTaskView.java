@@ -33,16 +33,16 @@ public class CreateTaskView extends JPanel implements ActionListener, PropertyCh
         LabelTextPanel descriptionInfo = new LabelTextPanel(new JLabel("Description"), new JScrollPane(descriptionField));
         this.add(descriptionInfo);
 
-        JPanel buttons = new JPanel();
-        buttons.add(createButton);
-        buttons.add(backButton);
-        this.add(buttons);
-
         JPanel overallPanel = new JPanel();
         overallPanel.setLayout(new BoxLayout(overallPanel, BoxLayout.Y_AXIS));
         overallPanel.add(titleInfo);
         overallPanel.add(descriptionInfo);
         this.add(overallPanel);
+
+        JPanel buttons = new JPanel();
+        buttons.add(createButton);
+        buttons.add(backButton);
+        this.add(buttons);
 
         createButton.addActionListener(e -> {
             String title = titleField.getText().trim();

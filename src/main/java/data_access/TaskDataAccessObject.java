@@ -9,6 +9,7 @@ import entity.UserFactory;
 
 import org.bson.Document;
 
+import org.bson.types.ObjectId;
 import use_case.create_task.CreateTaskDataAccessInterface;
 import use_case.delete_task.DeleteTaskDataAccessInterface;
 import use_case.edit_task.EditTaskDataAccessInterface;
@@ -127,6 +128,32 @@ public class TaskDataAccessObject implements
         }
 
         return Optional.empty();
+    }
+
+    @Override
+    public Task getTaskFromID(String id) {
+        Document taskDoc = db.getOne("tasks", "_id", id);
+        Task out = this.taskFactory.createFromDocument(taskDoc);
+        ObjectId idx = taskDoc.getObjectId("_id");
+        out.setIdx(idx.toString());
+        return out;
+    }
+
+    @Override
+    public List<Task> getTeamTasks(String id) {
+        Document teamDoc = db.getOne("teams", "_id", id);
+        if (teamDoc == null) {
+            return List.of();
+        }
+        List<String> out = teamDoc.getList("tasks", String.class);
+        if (out == null) {
+            return List.of();
+        }
+        List<Task> results = new ArrayList<>();
+        for (String taskId : out) {
+            results.add(getTaskFromID(taskId));
+        }
+        return results;
     }
 
     @Override

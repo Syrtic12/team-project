@@ -1,8 +1,9 @@
-package use_case.teammate_management;
+package use_case.teammateManagement;
 
 import data_access.KandoMongoDatabase;
 import data_access.TeammateManagementDataAccessObject;
 import org.junit.jupiter.api.Test;
+import use_case.teammate_management.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
