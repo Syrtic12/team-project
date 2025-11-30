@@ -20,8 +20,12 @@ public class EditTaskView extends JPanel implements ActionListener, PropertyChan
     private final JTextField titleField = new JTextField(20);
     private final JTextArea descriptionField = new JTextArea(5, 20);
 
+    private final JComboBox<String> statusDropdown =
+            new JComboBox<>(new String[]{"Not Started", "In Progress", "Completed"});
+
     private final JButton saveButton;
     private final JButton cancelButton;
+    private final JButton deleteButton;
 
     private EditTaskController editTaskController = null;
 
@@ -36,12 +40,17 @@ public class EditTaskView extends JPanel implements ActionListener, PropertyChan
                 new JLabel("Title"), titleField);
         final LabelTextPanel descriptionInfo = new LabelTextPanel(
                 new JLabel("Description"), new JScrollPane(descriptionField));
+        final LabelTextPanel statusInfo = new LabelTextPanel(
+                new JLabel("Status"), statusDropdown
+        );
 
         final JPanel buttons = new JPanel();
         saveButton = new JButton("Save");
         cancelButton = new JButton("Cancel");
+        deleteButton = new JButton("Delete");
         buttons.add(saveButton);
         buttons.add(cancelButton);
+        buttons.add(deleteButton);
 
         saveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -59,12 +68,19 @@ public class EditTaskView extends JPanel implements ActionListener, PropertyChan
             }
         });
 
+        deleteButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                editTaskController.deleteCurrentTask();
+            }
+        });
+
         addFieldListeners();
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
         this.add(titleInfo);
         this.add(descriptionInfo);
         this.add(buttons);
+        this.add(statusInfo);
 
  }
 
@@ -89,6 +105,12 @@ public class EditTaskView extends JPanel implements ActionListener, PropertyChan
             public void removeUpdate(DocumentEvent e) { helper(); }
             public void changedUpdate(DocumentEvent e) { helper(); }
         });
+        statusDropdown.addActionListener(e -> {
+            EditTaskState state = editTaskViewModel.getState();
+            int selected = statusDropdown.getSelectedIndex();
+            state.setStatus(selected);
+            editTaskViewModel.setState(state);
+        });
     }
 
     @Override
@@ -99,7 +121,6 @@ public class EditTaskView extends JPanel implements ActionListener, PropertyChan
 
     public void propertyChange(PropertyChangeEvent evt) {
         final EditTaskState state = (EditTaskState) evt.getNewValue();
-        System.out.println(state.getError());
         if (state.getError() != null) {
             JOptionPane.showMessageDialog(this, state.getError());
         }
@@ -109,6 +130,7 @@ public class EditTaskView extends JPanel implements ActionListener, PropertyChan
     private void setFields(EditTaskState state) {
         titleField.setText(state.getTitle());
         descriptionField.setText(state.getDescription());
+        statusDropdown.setSelectedIndex(state.getStatus());
     }
 
 

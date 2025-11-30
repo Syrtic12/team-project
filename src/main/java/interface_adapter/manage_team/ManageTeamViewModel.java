@@ -9,6 +9,7 @@ public class ManageTeamViewModel extends ViewModel<ManageTeamState>{
     public static final String ADD_BUTTON_LABEL = "Add";
     public static final String REMOVE_BUTTON_LABEL = "Remove";
     public static final String BACK_BUTTON_LABEL = "Back";
+    public static final String DISBAND_BUTTON_LABEL = "Disband Team";
 
     public ManageTeamViewModel() {
         super("manage team");

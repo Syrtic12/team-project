@@ -2,14 +2,15 @@ package use_case.logged_in;
 
 import entity.Task;
 import interface_adapter.logged_in.LoggedInPresenter;
+import use_case.team.TaskInfo;
 
 import java.util.List;
 import java.util.Map;
 
 public class LoggedInOutputData {
-    private final Map<String, String> NotStartedTasks;
-    private final Map<String, String> InProgressTasks;
-    private final Map<String, String> CompletedTasks;
+    private final Map<String, TaskInfo> NotStartedTasks;
+    private final Map<String, TaskInfo> InProgressTasks;
+    private final Map<String, TaskInfo> CompletedTasks;
     private final String teamId;
     private final String userId;
 
@@ -22,15 +23,15 @@ public class LoggedInOutputData {
         this.userId = userId;
     }
 
-    public Map<String, String> getNotStartedTasks() {
+    public Map<String, TaskInfo> getNotStartedTasks() {
         return NotStartedTasks;
     }
 
-    public Map<String, String> getInProgressTasks() {
+    public Map<String, TaskInfo> getInProgressTasks() {
         return InProgressTasks;
     }
 
-    public Map<String, String> getCompletedTasks() {
+    public Map<String, TaskInfo> getCompletedTasks() {
         return CompletedTasks;
     }
 

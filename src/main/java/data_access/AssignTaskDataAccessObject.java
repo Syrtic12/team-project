@@ -71,7 +71,6 @@ public class AssignTaskDataAccessObject implements AssignTaskDataAccessInterface
         if (users == null) {
             users = new ArrayList<>();
         }
-        System.out.println(!users.contains(userIdx));
         if (!users.contains(userIdx)) {
             users.add(userIdx);
 

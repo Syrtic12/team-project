@@ -1,13 +1,15 @@
 package interface_adapter.team;
 
+import use_case.team.TaskInfo;
+
 import java.util.Map;
 
 public class TeamState {
     private String teamID;
     private String userId;
-    private Map<String, String> notStartedTasks;
-    private Map<String, String> inProgressTasks;
-    private Map<String, String> completedTasks;
+    private Map<String, TaskInfo> notStartedTasks;
+    private Map<String, TaskInfo> inProgressTasks;
+    private Map<String, TaskInfo> CompletedTasks;
 
     /**
      * @return the team name
@@ -34,43 +36,28 @@ public class TeamState {
     /**
      * @param notStartedTasks the not started tasks to set
      */
-    public void setNotStartedTasks(Map<String, String> notStartedTasks) {
+    public void setNotStartedTasks(Map<String, TaskInfo> notStartedTasks) {
         this.notStartedTasks = notStartedTasks;
     }
 
-    /**
-     * @param inProgressTasks the in progress tasks to set
-     */
-    public void setInProgressTasks(Map<String, String> inProgressTasks) {
+    public void setInProgressTasks(Map<String, TaskInfo> inProgressTasks) {
         this.inProgressTasks = inProgressTasks;
     }
 
-    /**
-     * @param completedTasks the completed tasks to set
-     */
-    public void setCompletedTasks(Map<String, String> completedTasks) {
-        this.completedTasks = completedTasks;
+    public void setCompletedTasks(Map<String, TaskInfo> CompletedTasks) {
+        this.CompletedTasks = CompletedTasks;
     }
 
-    /**
-     * @return the not started tasks
-     */
-    public Map<String, String> getNotStartedTasks() {
-        return this.notStartedTasks;
+    public Map<String, TaskInfo> getNotStartedTasks() {
+        return notStartedTasks;
     }
 
-    /**
-     * @return the in progress tasks
-     */
-    public Map<String, String> getInProgressTasks() {
-        return this.inProgressTasks;
+    public Map<String, TaskInfo> getInProgressTasks() {
+        return inProgressTasks;
     }
 
-    /**
-     * @return the completed tasks
-     */
-    public Map<String, String> getCompletedTasks() {
-        return this.completedTasks;
+    public Map<String, TaskInfo> getCompletedTasks() {
+        return CompletedTasks;
     }
 
 }

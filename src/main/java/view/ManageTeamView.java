@@ -23,6 +23,7 @@ public class ManageTeamView extends JPanel implements PropertyChangeListener {
     private final JButton addButton;
     private final JButton removeButton;
     private final JButton backButton;
+    private final JButton disbandButton;
 
     public ManageTeamView(ManageTeamViewModel manageTeamViewModel) {
         this.manageTeamViewModel = manageTeamViewModel;
@@ -52,6 +53,9 @@ public class ManageTeamView extends JPanel implements PropertyChangeListener {
         backButton = new JButton(ManageTeamViewModel.BACK_BUTTON_LABEL);
         buttons.add(backButton);
 
+        disbandButton = new JButton(ManageTeamViewModel.DISBAND_BUTTON_LABEL);
+        buttons.add(disbandButton);
+
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 final ManageTeamState currentState = manageTeamViewModel.getState();
@@ -77,27 +81,9 @@ public class ManageTeamView extends JPanel implements PropertyChangeListener {
             }
         });
 
-        newMemberField.getDocument().addDocumentListener(new DocumentListener() {
-
-            public void documentListenerHelper() {
-                final ManageTeamState currentState = manageTeamViewModel.getState();
-                currentState.setNewMemberEmail(newMemberField.getText());
-                manageTeamViewModel.setState(currentState);
-            }
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                documentListenerHelper();
+        disbandButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                manageTeamController.disbandTeam();
             }
         });
 

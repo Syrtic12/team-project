@@ -2,12 +2,11 @@
 package interface_adapter.edit_task;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.logged_in.LoggedInState;
-import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.team.TeamState;
 import interface_adapter.team.TeamViewModel;
 import use_case.edit_task.EditTaskOutputBoundary;
 import use_case.edit_task.EditTaskOutputData;
+import use_case.team.TaskInfo;
 
 public class EditTaskPresenter implements EditTaskOutputBoundary {
 
@@ -57,15 +56,17 @@ public class EditTaskPresenter implements EditTaskOutputBoundary {
             teamState.getCompletedTasks().remove(outputData.getEditedTask().getIdx());
         }
 
+        TaskInfo editedTaskInfo = new TaskInfo(outputData.getEditedTask().getIdx(), outputData.getEditedTask().getTitle(),
+                outputData.getEditedTask().getDescription());
         if (outputData.getEditedTask().getStatus() == 0) {
             teamState.getNotStartedTasks().put(outputData.getEditedTask().getIdx(),
-                    outputData.getEditedTask().getTitle());
+                    editedTaskInfo);
         } else if (outputData.getEditedTask().getStatus() == 1) {
             teamState.getInProgressTasks().put(outputData.getEditedTask().getIdx(),
-                    outputData.getEditedTask().getTitle());
+                    editedTaskInfo);
         } else if (outputData.getEditedTask().getStatus() == 2) {
             teamState.getCompletedTasks().put(outputData.getEditedTask().getIdx(),
-                    outputData.getEditedTask().getTitle());
+                    editedTaskInfo);
         }
     }
 
@@ -86,5 +87,6 @@ public class EditTaskPresenter implements EditTaskOutputBoundary {
     public void switchToTeamView() {
         viewManagerModel.setState(teamViewModel.getViewName());
         viewManagerModel.firePropertyChange();
+        teamViewModel.firePropertyChange();
     }
 }

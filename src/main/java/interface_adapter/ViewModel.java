@@ -30,7 +30,6 @@ public class ViewModel<T> {
      */
     public void firePropertyChange() {
         this.support.firePropertyChange("state", null, this.state);
-//        System.out.println(this.state);
     }
 
     /**

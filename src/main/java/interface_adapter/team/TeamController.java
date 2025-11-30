@@ -1,7 +1,5 @@
 package interface_adapter.team;
-import use_case.signup.SignUpInputData;
 import use_case.team.TeamInputBoundary;
-import use_case.team.TeamInputData;
 
 public class TeamController {
     private final TeamInputBoundary teamInteractor;
@@ -28,8 +26,8 @@ public class TeamController {
     public void openTask(String taskId) {
     }
 
-    public void editTask(String taskId, String teamId, Integer status) {
-        teamInteractor.switchToEditTaskView(taskId, teamId, status);
+    public void editTask(String taskId, String teamId, Integer status, String title, String description) {
+        teamInteractor.switchToEditTaskView(taskId, teamId, status, title, description);
     }
 
     public void createTask(String teamId, String invokedBy) {

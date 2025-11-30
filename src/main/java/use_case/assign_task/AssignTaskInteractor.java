@@ -1,14 +1,8 @@
 package use_case.assign_task;
 
-import data_access.AssignTaskDataAccessObject;
-import data_access.KandoMongoDatabase;
-import data_access.SignUpDataAccessObject;
 import entity.Task;
 import entity.User;
 import entity.Team;
-import entity.UserFactory;
-import use_case.signup.SignUpInputData;
-import use_case.signup.SignUpInteractor;
 
 public class AssignTaskInteractor implements AssignTaskInputBoundary {
 

@@ -77,8 +77,10 @@ public class TeamPresenter implements TeamOutputBoundary {
     }
 
     @Override
-    public void switchToEditTaskView(String taskId, String teamId, Integer status) {
+    public void switchToEditTaskView(String taskId, String teamId, Integer status, String title, String description) {
         EditTaskState state = editTaskViewModel.getState();
+        state.setTitle(title);
+        state.setDescription(description);
         state.setTaskID(taskId);
         state.setTeamID(teamId);
         state.setStatus(status);

@@ -11,5 +11,5 @@ public interface TeamInputBoundary {
 
     void switchToCreateTaskView(String teamId, String invokedBy);
 
-    void switchToEditTaskView(String taskId, String teamId, Integer status);
+    void switchToEditTaskView(String taskId, String teamId, Integer status, String title, String description);
 }

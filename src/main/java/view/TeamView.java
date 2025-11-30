@@ -4,6 +4,7 @@ package view;
 import interface_adapter.team.TeamController;
 import interface_adapter.team.TeamState;
 import interface_adapter.team.TeamViewModel;
+import use_case.team.TaskInfo;
 
 import javax.swing.*;
 import java.awt.*;
@@ -94,8 +95,9 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
             public void valueChanged(javax.swing.event.ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
                     String taskId = getSelectedTask(notStartedList);
+                    TaskInfo info = teamViewModel.getState().getNotStartedTasks().get(taskId);
                     if (taskId != null) {
-                        teamController.editTask(taskId, teamId, 0);
+                        teamController.editTask(taskId, teamId, 0, info.getTitle(), info.getDescription());
                     }
                 }
             }
@@ -106,8 +108,9 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
             public void valueChanged(javax.swing.event.ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
                     String taskId = getSelectedTask(inProgressList);
+                    TaskInfo info = teamViewModel.getState().getInProgressTasks().get(taskId);
                     if (taskId != null) {
-                        teamController.editTask(taskId, teamId, 1);
+                        teamController.editTask(taskId, teamId, 1, info.getTitle(), info.getDescription());
                     }
                 }
             }
@@ -118,8 +121,9 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
             public void valueChanged(javax.swing.event.ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
                     String taskId = getSelectedTask(completedList);
+                    TaskInfo info = teamViewModel.getState().getCompletedTasks().get(taskId);
                     if (taskId != null) {
-                        teamController.editTask(taskId, teamId, 2);
+                        teamController.editTask(taskId, teamId, 2, info.getTitle(), info.getDescription());
                     }
                 }
             }
@@ -128,6 +132,16 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
 
 
     }
+
+    private void clearSelections() {
+        notStartedList.clearSelection();
+        inProgressList.clearSelection();
+        completedList.clearSelection();
+        notStartedList.setSelectedIndex(-1);
+        inProgressList.setSelectedIndex(-1);
+        completedList.setSelectedIndex(-1);
+    }
+
 
     private String getSelectedTask(JList<String> list) {
         String selected = list.getSelectedValue();
@@ -163,26 +177,25 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println("Property Change Detected");
         TeamState state = (TeamState) evt.getNewValue();
         this.teamId = state.getTeamName();
         this.userId = state.getUserId();
         teamNameLabel.setText(state.getTeamName());
+        clearSelections();
         setTaskLists(state);
         System.out.println("DEBUG TeamView: userId = " + state.getUserId());
 
     }
 
     private void setTaskLists(TeamState state) {
-        System.out.println("Getting task lists");
         fillModel(notStartedModel, state.getNotStartedTasks());
         fillModel(inProgressModel, state.getInProgressTasks());
         fillModel(completedModel, state.getCompletedTasks());
     }
 
-    private void fillModel(DefaultListModel<String> model, Map<String, String> tasks) {
+    private void fillModel(DefaultListModel<String> model, Map<String, TaskInfo> tasks) {
         model.clear();
-        for (Map.Entry<String, String> entry : tasks.entrySet()) {
+        for (Map.Entry<String, TaskInfo> entry : tasks.entrySet()) {
             model.addElement(entry.getValue() + " (" + entry.getKey() + ")");
         }
     }
