@@ -1,8 +1,7 @@
 package interface_adapter.manage_team;
 
-import use_case.teammateManagement.TeammateManagementInputBoundary;
-import use_case.teammateManagement.TeammateManagementInputBoundary;
-import use_case.teammateManagement.TeammateManagementInputData;
+import use_case.teammate_management.TeammateManagementInputBoundary;
+import use_case.teammate_management.TeammateManagementInputData;
 
 public class ManageTeamController {
     private final TeammateManagementInputBoundary teammateManagementInteractor;
