@@ -51,12 +51,11 @@ public class LeaveTeamDataAccessObject implements LeaveTeamDataAccessInterface {
     }
 
     @Override
-    public User getTeamLeader(Team team) {
-        Document leaderDoc = this.GeneralDataAccessObject.getOne("teams", "leader", team.getIdx());
-        User out = this.userFactory.createFromDocument(leaderDoc);
-        ObjectId idx = leaderDoc.getObjectId("_id");
-        out.setIdx(idx.toString());
-        return out;
+    public String getTeamLeader(String team) {
+
+        Document leaderDoc = this.GeneralDataAccessObject.getOne("teams", "_id", team);
+        String leaderId = leaderDoc.getString("leader");
+        return leaderId;
     }
 
     @Override

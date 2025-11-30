@@ -13,6 +13,8 @@ import use_case.leave_team.LeaveTeamInputData;
 
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 public class LeaveTeamInteractorTest {
     KandoMongoDatabase kandoDB =new KandoMongoDatabase();
     LeaveTeamDataAccessInterface userRepository = new LeaveTeamDataAccessObject(kandoDB);
@@ -59,5 +61,33 @@ public class LeaveTeamInteractorTest {
 
         System.out.println(userRepository.getTeamMembers(userRepository.getTeam(teamId)));
         Assertions.assertFalse(userRepository.getTeamMembers(userRepository.getTeam(teamId)).contains(userId));
+    }
+    @Test
+    void FailLeaderLeaveTeamTest() {
+
+        TeamLeader leader = new TeamLeader("usecasetestman", "testfellow@gmail.com", "Leader", "pass");
+        kandoDB.add(leader);
+        String leaderId = leader.getIdx();
+
+        Team team = new Team(leaderId);
+        kandoDB.add(team);
+        String teamId = team.getIdx();
+
+        LeaveTeamOutputBoundary successPresenter = new LeaveTeamOutputBoundary() {
+
+            @Override
+            public void prepareSuccessView(LeaveTeamOutputData data) {
+                fail("Use case success is unexpected.");
+            }
+
+            @Override
+            public void prepareFailView(LeaveTeamOutputData outputData) {
+            }
+        };
+
+        LeaveTeamInputData input = new LeaveTeamInputData(teamId, leaderId);
+        LeaveTeamInteractor interactor = new LeaveTeamInteractor(userRepository, successPresenter);
+        interactor.execute(input);
+        Assertions.assertTrue(userRepository.getTeamLeader(teamId).equals(leaderId));
     }
 }
