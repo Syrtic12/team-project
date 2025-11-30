@@ -3,9 +3,8 @@ package interface_adapter.manage_team;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.team.TeamViewModel;
-import use_case.teammateManagement.TeammateManagementOutputBoundary;
-import use_case.teammateManagement.TeammateManagementOutputData;
-import view.ManageTeamView;
+import use_case.teammate_management.TeammateManagementOutputBoundary;
+import use_case.teammate_management.TeammateManagementOutputData;
 
 public class ManageTeamPresenter implements TeammateManagementOutputBoundary {
     private final ManageTeamViewModel manageTeamViewModel;

@@ -1,4 +1,4 @@
-package use_case.teammateManagement;
+package use_case.teammate_management;
 
 /**
  * Input Boundary for actions which are related to logging in.

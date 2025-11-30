@@ -1,7 +1,5 @@
 package use_case.team;
 
-import use_case.teammateManagement.TeammateManagementOutputData;
-
 import java.util.List;
 
 public interface TeamOutputBoundary {
