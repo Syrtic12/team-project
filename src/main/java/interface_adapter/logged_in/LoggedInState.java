@@ -4,20 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoggedInState {
+
     private String email = "";
     private String password = "";
     private String passwordError;
-    private List<String> teams =  new ArrayList<>();
+    private List<String> teams = new ArrayList<>();
+    private String userId;
 
-    public LoggedInState (LoggedInState copy) {
-        email = copy.email;
-        password = copy.password;
-        passwordError = copy.passwordError;
-        teams = new ArrayList<>(copy.teams);
+    public LoggedInState(LoggedInState copy) {
+        this.email = copy.email;
+        this.password = copy.password;
+        this.passwordError = copy.passwordError;
+        this.teams = new ArrayList<>(copy.teams);
+        this.userId = copy.userId;
     }
 
-    public LoggedInState() {
-    }
+    public LoggedInState() {}
 
     public String getEmail() {
         return email;
@@ -53,5 +55,13 @@ public class LoggedInState {
 
     public void addTeam(String teamName) {
         teams.add(teamName);
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

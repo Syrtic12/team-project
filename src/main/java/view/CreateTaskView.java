@@ -3,7 +3,6 @@ package view;
 import interface_adapter.create_task.CreateTaskController;
 import interface_adapter.create_task.CreateTaskState;
 import interface_adapter.create_task.CreateTaskViewModel;
-import interface_adapter.edit_task.EditTaskState;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -46,7 +45,6 @@ public class CreateTaskView extends JPanel implements ActionListener, PropertyCh
         this.add(overallPanel);
 
         createButton.addActionListener(e -> {
-
             String title = titleField.getText().trim();
             String description = descriptionField.getText().trim();
 

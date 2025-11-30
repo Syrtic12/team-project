@@ -22,7 +22,6 @@ import interface_adapter.manage_team.ManageTeamViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
-import interface_adapter.team.TeamViewModel;
 import use_case.edit_task.EditTaskDataAccessInterface;
 import use_case.edit_task.EditTaskInputBoundary;
 import use_case.edit_task.EditTaskInteractor;
@@ -107,19 +106,40 @@ public class AppBuilder {
     }
 
     public AppBuilder addLoggedInViewAndUseCase() {
-        loggedInViewModel = new LoggedInViewModel();
-        LoggedInDataAccessObject loggedInDataAccessObject = new LoggedInDataAccessObject(DataAccessObject);
+
+        // 1. Create shared state ONCE
+        LoggedInState sharedState = new LoggedInState();
+        this.loggedInViewModel = new LoggedInViewModel(sharedState);
+
+        LoggedInDataAccessObject dao = new LoggedInDataAccessObject(DataAccessObject);
         this.teamViewModel = new TeamViewModel();
-        final LoggedInOutputBoundary loggedInOutputBoundary = new LoggedInPresenter(loggedInViewModel,
-                new LoggedInState(), viewManagerModel, this.teamViewModel, loginViewModel, loggedInDataAccessObject);
-        final LoggedInInputBoundary loggedInInteractor = new LoggedInInteractor(
-                loggedInDataAccessObject, loggedInOutputBoundary);
-        LoggedInController loggedInController = new LoggedInController(loggedInInteractor);
+
+        // 2. Pass sharedState into presenter
+        LoggedInOutputBoundary outputBoundary = new LoggedInPresenter(
+                loggedInViewModel,
+                sharedState,
+                viewManagerModel,
+                teamViewModel,
+                loginViewModel,
+                dao
+        );
+
+        // 3. Pass sharedState into interactor
+        LoggedInInputBoundary interactor = new LoggedInInteractor(
+                dao,
+                outputBoundary,
+                sharedState
+        );
+
+        LoggedInController controller = new LoggedInController(interactor);
+
         loggedInView = new LoggedInView(loggedInViewModel);
-        loggedInView.setLoggedInController(loggedInController);
+        loggedInView.setLoggedInController(controller);
         cardPanel.add(loggedInView, loggedInView.getViewName());
+
         return this;
     }
+
 
     public AppBuilder addSignupUseCase() {
         final SignUpOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel,
@@ -141,7 +161,7 @@ public class AppBuilder {
     public AppBuilder addTeamUseCase() {
         this.manageTeamViewModel = new ManageTeamViewModel();
         final TeamOutputBoundary teamOutputBoundary = new TeamPresenter(viewManagerModel, loggedInViewModel,
-                manageTeamViewModel, teamViewModel, editTaskViewModel);
+                manageTeamViewModel, teamViewModel, createTaskViewModel, editTaskViewModel);
         final TeamInputBoundary teamInteractor = new TeamInteractor(new TeamDataAccessObject(DataAccessObject), teamOutputBoundary);
         TeamController teamController = new TeamController(teamInteractor);
         teamView.setTeamController(teamController);

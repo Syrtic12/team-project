@@ -28,12 +28,13 @@ public class TeamPresenter implements TeamOutputBoundary {
     private final EditTaskViewModel editTaskViewModel;
 
     public TeamPresenter(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel,
-                         ManageTeamViewModel manageTeamViewModel, TeamViewModel teamViewModel, EditTaskViewModel editTaskViewModel) {
+                         ManageTeamViewModel manageTeamViewModel, TeamViewModel teamViewModel,
+                         CreateTaskViewModel createTaskViewModel, EditTaskViewModel editTaskViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
         this.manageTeamViewModel = manageTeamViewModel;
         this.teamViewModel = teamViewModel;
-        this.createTaskViewModel = new CreateTaskViewModel();
+        this.createTaskViewModel = createTaskViewModel;
         this.editTaskViewModel = editTaskViewModel;
     }
 

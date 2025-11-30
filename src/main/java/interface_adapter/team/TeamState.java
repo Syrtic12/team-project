@@ -4,6 +4,7 @@ import java.util.Map;
 
 public class TeamState {
     private String teamID;
+    private String userId;
     private Map<String, String> notStartedTasks;
     private Map<String, String> inProgressTasks;
     private Map<String, String> CompletedTasks;
@@ -16,6 +17,14 @@ public class TeamState {
     public void setTeamName(String teamName) {this.teamID = teamName;}
 
     // the map is the ID and description of the task
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public void setNotStartedTasks(Map<String, String> notStartedTasks) {
         this.notStartedTasks = notStartedTasks;

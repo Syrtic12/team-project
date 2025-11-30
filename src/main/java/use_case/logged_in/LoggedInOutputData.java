@@ -11,12 +11,15 @@ public class LoggedInOutputData {
     private final Map<String, String> InProgressTasks;
     private final Map<String, String> CompletedTasks;
     private final String teamId;
+    private final String userId;
+
     public LoggedInOutputData(Map<String, String> NotStartedTasks, Map<String, String> InProgressTasks,
-                              Map<String, String> CompletedTasks, String teamId) {
+                              Map<String, String> CompletedTasks, String teamId, String userId) {
         this.NotStartedTasks = NotStartedTasks;
         this.InProgressTasks = InProgressTasks;
         this.CompletedTasks = CompletedTasks;
         this.teamId = teamId;
+        this.userId = userId;
     }
 
     public Map<String, String> getNotStartedTasks() {
@@ -32,5 +35,7 @@ public class LoggedInOutputData {
     }
 
     public String getTeamId() {return teamId;}
+
+    public String getUserId() {return userId;}
 
 }

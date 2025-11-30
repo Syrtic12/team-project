@@ -5,7 +5,7 @@ import interface_adapter.ViewModel;
 public class CreateTaskViewModel extends ViewModel<CreateTaskState> {
 
     public CreateTaskViewModel() {
-        super("create task");
+        super("create task view");
         setState(new CreateTaskState());
     }
 
