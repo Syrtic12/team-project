@@ -9,7 +9,7 @@ public interface TeamInputBoundary {
 
     void switchToManageTeamView(String teamId);
 
-    void switchToCreateTaskView();
+    void switchToCreateTaskView(String teamId, String invokedBy);
 
     void switchToEditTaskView(String taskId, String teamId, Integer status);
 }

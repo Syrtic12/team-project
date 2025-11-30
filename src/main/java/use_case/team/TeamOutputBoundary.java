@@ -21,7 +21,7 @@ public interface TeamOutputBoundary {
 
     void switchToManageTeamView(List<String> teamMembers, String teamID);
 
-    void switchToCreateTaskView();
-
     void switchToEditTaskView(String taskId, String teamId, Integer status);
+
+    void switchToCreateTaskView(String teamId, String invokedBy);
 }

@@ -31,4 +31,8 @@ public class TeamController {
     public void editTask(String taskId, String teamId, Integer status) {
         teamInteractor.switchToEditTaskView(taskId, teamId, status);
     }
+
+    public void createTask(String teamId, String invokedBy) {
+        teamInteractor.switchToCreateTaskView(teamId, invokedBy);
+    }
 }

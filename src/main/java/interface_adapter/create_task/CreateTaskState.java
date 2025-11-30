@@ -36,6 +36,10 @@ public class CreateTaskState {
         return this.teamId;
     }
 
+    public void setTeamId(String teamId) {
+        this.teamId = teamId;
+    }
+
     public String getError() {
         return error;
     }
