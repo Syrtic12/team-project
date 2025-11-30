@@ -8,6 +8,8 @@ import use_case.edit_task.EditTaskOutputBoundary;
 import use_case.edit_task.EditTaskOutputData;
 import use_case.team.TaskInfo;
 
+import java.util.List;
+
 public class EditTaskPresenter implements EditTaskOutputBoundary {
 
     private final EditTaskViewModel editTaskViewModel;
@@ -55,18 +57,16 @@ public class EditTaskPresenter implements EditTaskOutputBoundary {
         } else if (outputData.getOldStatus() == 2) {
             teamState.getCompletedTasks().remove(outputData.getEditedTask().getIdx());
         }
+        List<String> assignedUsers = outputData.getEditedTask().getAssignedUsers();
+        String names = String.join(", ", assignedUsers);
 
-        TaskInfo editedTaskInfo = new TaskInfo(outputData.getEditedTask().getIdx(), outputData.getEditedTask().getTitle(),
-                outputData.getEditedTask().getDescription());
+        TaskInfo taskInfo = new TaskInfo(outputData.getEditedTask().getIdx(), outputData.getEditedTask().getTitle(), outputData.getEditedTask().getDescription(), names);
         if (outputData.getEditedTask().getStatus() == 0) {
-            teamState.getNotStartedTasks().put(outputData.getEditedTask().getIdx(),
-                    editedTaskInfo);
+            teamState.getNotStartedTasks().put(outputData.getEditedTask().getIdx(), taskInfo);
         } else if (outputData.getEditedTask().getStatus() == 1) {
-            teamState.getInProgressTasks().put(outputData.getEditedTask().getIdx(),
-                    editedTaskInfo);
+            teamState.getInProgressTasks().put(outputData.getEditedTask().getIdx(), taskInfo);
         } else if (outputData.getEditedTask().getStatus() == 2) {
-            teamState.getCompletedTasks().put(outputData.getEditedTask().getIdx(),
-                    editedTaskInfo);
+            teamState.getCompletedTasks().put(outputData.getEditedTask().getIdx(), taskInfo);
         }
     }
 
