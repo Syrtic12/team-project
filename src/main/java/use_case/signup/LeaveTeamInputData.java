@@ -1,12 +1,12 @@
 package use_case.signup;
 
-public class SignUpInputData {
+public class LeaveTeamInputData {
     private final String email;
     private final String name;
     private final String password;
     private final String repeatPassword;
 
-    public SignUpInputData(String email, String name, String password, String repeatPassword) {
+    public LeaveTeamInputData(String email, String name, String password, String repeatPassword) {
         this.email = email;
         this.name = name;
         this.password = password;

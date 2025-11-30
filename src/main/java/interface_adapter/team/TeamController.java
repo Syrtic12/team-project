@@ -1,7 +1,5 @@
 package interface_adapter.team;
-import use_case.signup.SignUpInputData;
 import use_case.team.TeamInputBoundary;
-import use_case.team.TeamInputData;
 
 public class TeamController {
     private final TeamInputBoundary teamInteractor;

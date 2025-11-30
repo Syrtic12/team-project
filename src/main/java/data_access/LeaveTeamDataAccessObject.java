@@ -60,13 +60,15 @@ public class LeaveTeamDataAccessObject implements LeaveTeamDataAccessInterface {
     }
 
     @Override
-    public boolean removeMember(Team team, User user) {
-        List<String> teamMembers = getTeamMembers(team);
-        if ((user.getIdx() == null) || !teamMembers.contains(user.getIdx())) {
+    public boolean removeMember(String teamId, String userId) {
+        Document teamDoc = this.GeneralDataAccessObject.getOne("teams", "_id", teamId);
+        List<String> teamMembers = teamDoc.getList("users", String.class);
+
+        if ((userId == null) || !teamMembers.contains(userId)) {
             return false;
         }
-        teamMembers.remove(user.getIdx());
-        this.GeneralDataAccessObject.update("teams", "users", team.getIdx(), teamMembers);
+        teamMembers.remove(userId);
+        this.GeneralDataAccessObject.update("teams", teamId, "users", teamMembers);
         return true;
     }
 

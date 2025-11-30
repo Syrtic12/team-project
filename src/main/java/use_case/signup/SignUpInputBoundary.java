@@ -9,7 +9,7 @@ public interface SignUpInputBoundary {
      * Executes the signup use case.
      * @param signupInputData the input data
      */
-    void execute(SignUpInputData signupInputData);
+    void execute(LeaveTeamInputData signupInputData);
 
     /**
      * Executes the switch to login view use case.
