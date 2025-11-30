@@ -11,6 +11,6 @@ public interface LeaveTeamDataAccessInterface {
     public Team getTeam(String teamId);
     public User getUser(String userId);
     public List<String> getTeamMembers(Team team);
-    public User getTeamLeader(Team team);
-    public boolean removeMember(Team team, User user);
+    public String getTeamLeader(String teamid);
+    public boolean removeMember(String teamId, String userId);
 }

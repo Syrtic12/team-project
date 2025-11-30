@@ -3,12 +3,15 @@ package use_case.logged_in;
 import entity.Task;
 import entity.Team;
 import entity.TeamFactory;
+import entity.User;
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
 import use_case.login.LogInInputBoundary;
 import use_case.login.LogInInputData;
 import data_access.LoggedInDataAccessObject;
 import data_access.KandoMongoDatabase;
+import use_case.team.TaskInfo;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,18 +39,24 @@ public class LoggedInInteractor implements LoggedInInputBoundary {
         //Step 3: filter by status into map, adding the ID and Title in that order
         //Step 4: Loop repeats for each task in LoggedInOutputData tasklist
         List<Task> tasks = loggedInDataAccessObject.getTeamTasks(teamId);
-        Map<String, String> notStartedTasks = new HashMap<>();
-        Map<String, String> inProgressTasks = new HashMap<>();
-        Map<String, String> CompletedTasks = new HashMap<>();
+        Map<String, TaskInfo> notStartedTasks = new HashMap<>();
+        Map<String, TaskInfo> inProgressTasks = new HashMap<>();
+        Map<String, TaskInfo> CompletedTasks = new HashMap<>();
         for (Task task : tasks) {
+            List<String> assignedUsers = task.getAssignedUsers();
+            String names = String.join(", ", assignedUsers);
+            TaskInfo info = new TaskInfo(task.getIdx(), task.getTitle(), task.getDescription());
+            if (assignedUsers.isEmpty()) {
+                names = "no users assigned";
+            }
             if (task.getStatus()==0){
-                notStartedTasks.put(task.getIdx(),task.getTitle());
+                notStartedTasks.put(names,info);
             }
             else if (task.getStatus()==1){
-                inProgressTasks.put(task.getIdx(),task.getTitle());
+                inProgressTasks.put(names,info);
             }
             else if (task.getStatus()==2){
-                CompletedTasks.put(task.getIdx(),task.getTitle());
+                CompletedTasks.put(names,info);
             }
         }
         LoggedInOutputData outputData = new LoggedInOutputData(notStartedTasks,inProgressTasks,CompletedTasks,teamId);

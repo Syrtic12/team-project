@@ -17,4 +17,8 @@ public class EditTaskController {
     }
 
     public void switchToTeamView() {editTaskInteractor.switchToTeamView();}
+
+    public void deleteCurrentTask() {
+
+    }
 }

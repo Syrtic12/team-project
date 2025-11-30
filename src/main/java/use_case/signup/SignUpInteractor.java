@@ -19,7 +19,7 @@ public class SignUpInteractor implements SignUpInputBoundary{
     }
 
     @Override
-    public void execute(SignUpInputData signupInputData){
+    public void execute(LeaveTeamInputData signupInputData){
         String name = signupInputData.getName();
         String email = signupInputData.getEmail();
         String password = signupInputData.getPassword();
@@ -49,7 +49,7 @@ public class SignUpInteractor implements SignUpInputBoundary{
 
     public static void main(String[] args) {
         SignUpInteractor interac = new SignUpInteractor(new SignUpDataAccessObject( new KandoMongoDatabase()), null, new UserFactory());
-        SignUpInputData data = new SignUpInputData("sushaanpatel@gmail.com", "Sushaan Patel", "password", "password");
+        LeaveTeamInputData data = new LeaveTeamInputData("sushaanpatel@gmail.com", "Sushaan Patel", "password", "password");
         interac.execute(data);
     }
 

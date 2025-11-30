@@ -99,12 +99,10 @@ public class TeammateManagementDataAccessObject implements TeammateManagementDat
     public boolean removeUser(Team team, User user) {
         List<String> teamMembers = getTeamMembers(team);
         if ((user.getIdx() == null) || !teamMembers.contains(user.getIdx())) {
-            System.out.println("False");
             return false;
         }
         teamMembers.remove(user.getIdx());
         this.GeneralDataAccessObject.update(TEAMS_COLLECTION, team.getIdx(), USERS_COLLECTION, teamMembers);
-        System.out.println("True");
         return true;
     }
 

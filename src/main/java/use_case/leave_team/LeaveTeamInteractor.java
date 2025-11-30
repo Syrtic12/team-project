@@ -26,12 +26,8 @@ public class LeaveTeamInteractor implements LeaveTeamInputBoundary{
             LeaveTeamOutputData outputData = new LeaveTeamOutputData(false, team.getIdx(), user.getIdx(), "User is not in the team");
             leaveTeamPresenter.prepareFailView(outputData);
         }
-        else if (Objects.equals(dataAccessObject.getTeamLeader(team).getIdx(), user.getIdx())) {
-            LeaveTeamOutputData outputData = new LeaveTeamOutputData(false, team.getIdx(), user.getIdx(), "Team leader cannot leave the team");
-            leaveTeamPresenter.prepareFailView(outputData);
-        }
         else {
-            boolean success = dataAccessObject.removeMember(team, user);
+            boolean success = dataAccessObject.removeMember(team.getIdx(), user.getIdx());
             if (!success) {
                 LeaveTeamOutputData outputData = new LeaveTeamOutputData(false, team.getIdx(), user.getIdx(), "An error has occured");
                 leaveTeamPresenter.prepareFailView(outputData);

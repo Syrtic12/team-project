@@ -12,7 +12,7 @@ class SignUpInteractorTest {
 
     @Test
     void successTest() {
-        SignUpInputData inputData = new SignUpInputData("test@gmail.com", "test", "password", "password");
+        LeaveTeamInputData inputData = new LeaveTeamInputData("test@gmail.com", "test", "password", "password");
         SignUpDataAccessInterface userRepository = new SignUpDataAccessObject(new KandoMongoDatabase());
 
         // This creates a successPresenter that tests whether the test case is as we expect.
@@ -41,7 +41,7 @@ class SignUpInteractorTest {
 
     @Test
     void failurePasswordMismatchTest() {
-        SignUpInputData inputData = new SignUpInputData("test@gmail.com", "test", "password", "password2");
+        LeaveTeamInputData inputData = new LeaveTeamInputData("test@gmail.com", "test", "password", "password2");
         SignUpDataAccessInterface userRepository = new SignUpDataAccessObject(new KandoMongoDatabase());
 
         // This creates a presenter that tests whether the test case is as we expect.
@@ -69,7 +69,7 @@ class SignUpInteractorTest {
 
     @Test
     void failureUserExistsTest() {
-        SignUpInputData inputData = new SignUpInputData("test@gmail.com", "test", "password", "password");
+        LeaveTeamInputData inputData = new LeaveTeamInputData("test@gmail.com", "test", "password", "password");
         SignUpDataAccessInterface userRepository = new SignUpDataAccessObject(new KandoMongoDatabase());
 
         UserFactory factory = new UserFactory();
