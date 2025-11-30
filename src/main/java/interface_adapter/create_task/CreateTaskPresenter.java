@@ -20,7 +20,7 @@ public class CreateTaskPresenter implements CreateTaskOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView(CreateTaskOutputData response) {
+    public void prepareSuccessView(CreateTaskOutputData outputData) {
 
         // Reset state
         CreateTaskState cleared = new CreateTaskState();
@@ -32,13 +32,14 @@ public class CreateTaskPresenter implements CreateTaskOutputBoundary {
     }
 
     @Override
-    public void prepareFailView(CreateTaskOutputData response) {
+    public void prepareFailView(CreateTaskOutputData outputData) {
         CreateTaskState state = createTaskViewModel.getState();
-        state.setError(response.getMessage());
+        state.setError(outputData.getMessage());
         createTaskViewModel.setState(state);
         createTaskViewModel.firePropertyChange();
     }
 
+    @Override
     public void switchToTeamView() {
         viewManagerModel.setState(teamViewModel.getViewName());
         viewManagerModel.firePropertyChange();

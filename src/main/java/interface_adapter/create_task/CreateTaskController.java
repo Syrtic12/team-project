@@ -5,19 +5,19 @@ import use_case.create_task.CreateTaskInputData;
 
 public class CreateTaskController {
 
-    private final CreateTaskInputBoundary interactor;
+    private final CreateTaskInputBoundary createTaskInteractor;
 
-    public CreateTaskController(CreateTaskInputBoundary interactor) {
-        this.interactor = interactor;
+    public CreateTaskController(CreateTaskInputBoundary createTaskInteractor) {
+        this.createTaskInteractor = createTaskInteractor;
     }
 
     public void execute(String teamId, String invokedBy, String description, String title) {
         CreateTaskInputData createTaskInputData =
                 new CreateTaskInputData(teamId, invokedBy, 0, description, title);
-        interactor.execute(createTaskInputData);
+        createTaskInteractor.execute(createTaskInputData);
     }
 
     public void switchToTeamView() {
-        interactor.switchToTeamView();
+        createTaskInteractor.switchToTeamView();
     }
 }

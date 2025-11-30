@@ -4,7 +4,7 @@ public class CreateTaskState {
 
     private String title = "";
     private String description = "";
-    private String error = "";
+    private String error;
     private String teamId;
     public String invokedBy;
 
@@ -18,6 +18,10 @@ public class CreateTaskState {
 
     public String getInvokedBy() {
         return this.invokedBy;
+    }
+
+    public void setInvokedBy(String invokedBy) { 
+        this.invokedBy = invokedBy; 
     }
 
     public String getDescription() {

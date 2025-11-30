@@ -52,7 +52,7 @@ public class CreateTaskView extends JPanel implements ActionListener, PropertyCh
 
             final CreateTaskState state = createTaskViewModel.getState();
 
-            createTaskController.execute(state.getTeamID(), state.getInvokedBy(), title, description);
+            createTaskController.execute(state.getTeamID(), state.getInvokedBy(), description, title);
         });
 
         backButton.addActionListener(e -> createTaskController.switchToTeamView());
