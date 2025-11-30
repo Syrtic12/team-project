@@ -1,4 +1,4 @@
-package use_case.teammateManagement;
+package use_case.teammate_management;
 
 public class TeammateManagementInputData {
     private final String email;
