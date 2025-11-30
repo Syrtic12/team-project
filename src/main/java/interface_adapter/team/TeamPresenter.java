@@ -2,6 +2,7 @@
 package interface_adapter.team;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.create_task.CreateTaskState;
 import interface_adapter.create_task.CreateTaskViewModel;
 import interface_adapter.edit_task.EditTaskState;
 import interface_adapter.edit_task.EditTaskViewModel;
@@ -27,12 +28,13 @@ public class TeamPresenter implements TeamOutputBoundary {
     private final EditTaskViewModel editTaskViewModel;
 
     public TeamPresenter(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel,
-                         ManageTeamViewModel manageTeamViewModel, TeamViewModel teamViewModel, EditTaskViewModel editTaskViewModel) {
+                         ManageTeamViewModel manageTeamViewModel, TeamViewModel teamViewModel,
+                         CreateTaskViewModel createTaskViewModel, EditTaskViewModel editTaskViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
         this.manageTeamViewModel = manageTeamViewModel;
         this.teamViewModel = teamViewModel;
-        this.createTaskViewModel = new CreateTaskViewModel();
+        this.createTaskViewModel = createTaskViewModel;
         this.editTaskViewModel = editTaskViewModel;
     }
 
@@ -64,7 +66,12 @@ public class TeamPresenter implements TeamOutputBoundary {
     }
 
     @Override
-    public void switchToCreateTaskView() {
+    public void switchToCreateTaskView(String teamId, String invokedBy) {
+        CreateTaskState state = createTaskViewModel.getState();
+        state.setTeamId(teamId);
+        state.setInvokedBy(invokedBy);
+        createTaskViewModel.firePropertyChange();
+
         viewManagerModel.setState(createTaskViewModel.getViewName());
         viewManagerModel.firePropertyChange();
     }

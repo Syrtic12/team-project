@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class TeamState {
     private String teamID;
+    private String userId;
     private Map<String, TaskInfo> notStartedTasks;
     private Map<String, TaskInfo> inProgressTasks;
     private Map<String, TaskInfo> CompletedTasks;
@@ -22,6 +23,19 @@ public class TeamState {
      */
     public void setTeamName(String teamName) {this.teamID = teamName;}
 
+    // the map is the ID and description of the task
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    /**
+     * @param notStartedTasks the not started tasks to set
+     */
     public void setNotStartedTasks(Map<String, TaskInfo> notStartedTasks) {
         this.notStartedTasks = notStartedTasks;
     }

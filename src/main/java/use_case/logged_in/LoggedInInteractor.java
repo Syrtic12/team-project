@@ -1,6 +1,8 @@
 package use_case.logged_in;
 
 import entity.Task;
+import interface_adapter.logged_in.LoggedInState;
+
 import entity.Team;
 import entity.TeamFactory;
 import entity.User;
@@ -18,26 +20,28 @@ import java.util.List;
 import java.util.Map;
 
 public class LoggedInInteractor implements LoggedInInputBoundary {
+
     private final LoggedInDataAccessInterface loggedInDataAccessObject;
     private final LoggedInOutputBoundary loggedInPresenter;
-    public LoggedInInteractor(LoggedInDataAccessInterface loggedInDataAccessObject, LoggedInOutputBoundary loggedInPresenter) {
+    private final LoggedInState loggedInState;
+
+    public LoggedInInteractor(LoggedInDataAccessInterface loggedInDataAccessObject,
+                              LoggedInOutputBoundary loggedInPresenter,
+                              LoggedInState loggedInState) {
         this.loggedInDataAccessObject = loggedInDataAccessObject;
         this.loggedInPresenter = loggedInPresenter;
-
+        this.loggedInState = loggedInState;
     }
 
     @Override
     public void execute(LoggedInInputData loggedInInputData) {
-
+        // not used
     }
-
 
     @Override
     public void switchToTeamView(String teamId) {
-        //Step 1: Use ID to get task data from DB
-        //Step 2: Get Task title and status
-        //Step 3: filter by status into map, adding the ID and Title in that order
-        //Step 4: Loop repeats for each task in LoggedInOutputData tasklist
+
+        // 1. Get tasks
         List<Task> tasks = loggedInDataAccessObject.getTeamTasks(teamId);
         Map<String, TaskInfo> notStartedTasks = new HashMap<>();
         Map<String, TaskInfo> inProgressTasks = new HashMap<>();
@@ -59,14 +63,25 @@ public class LoggedInInteractor implements LoggedInInputBoundary {
                 CompletedTasks.put(names,info);
             }
         }
-        LoggedInOutputData outputData = new LoggedInOutputData(notStartedTasks,inProgressTasks,CompletedTasks,teamId);
+
+        // 2. Read the current logged-in user's ID
+        String userId = loggedInState.getUserId();
+
+        // 3. Pass userId into output data
+        LoggedInOutputData outputData =
+                new LoggedInOutputData(
+                        notStartedTasks,
+                        inProgressTasks,
+                        CompletedTasks,
+                        teamId,
+                        userId
+                );
+
         loggedInPresenter.switchToTeamView(outputData);
     }
-
 
     @Override
     public void switchToLoginView() {
         loggedInPresenter.switchToLoginView();
     }
 }
-

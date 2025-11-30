@@ -17,10 +17,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
 
-/**
- * Fully corrected DAO for Create / Delete / Edit Task.
- * All task lookups support both _id and idx fields.
- */
+
 public class TaskDataAccessObject implements
         CreateTaskDataAccessInterface,
         DeleteTaskDataAccessInterface,
@@ -103,7 +100,7 @@ public class TaskDataAccessObject implements
     }
 
     // ============================================================
-    // EDIT TASK — FIXED
+    // EDIT TASK
     // ============================================================
     @Override
     public Optional<Task> getTaskByIdx(String taskId) {
