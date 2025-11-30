@@ -20,7 +20,6 @@ import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.team.TeamViewModel;
-import use_case.edit_task.EditTaskDataAccessInterface;
 import use_case.edit_task.EditTaskInputBoundary;
 import use_case.edit_task.EditTaskInteractor;
 import use_case.edit_task.EditTaskOutputBoundary;

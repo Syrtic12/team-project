@@ -10,12 +10,17 @@ public class TeamState {
     private Map<String, TaskInfo> inProgressTasks;
     private Map<String, TaskInfo> CompletedTasks;
 
-    // or get teamid whichever one were using idk
+    /**
+     * @return the team name
+     */
     public String getTeamName() {
         return teamID;
     }
 
-    // the map is the ID and description of the task
+    /**
+     * @param teamName the team name to set
+     */
+    public void setTeamName(String teamName) {this.teamID = teamName;}
 
     public void setNotStartedTasks(Map<String, TaskInfo> notStartedTasks) {
         this.notStartedTasks = notStartedTasks;

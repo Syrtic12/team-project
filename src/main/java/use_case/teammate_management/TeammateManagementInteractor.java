@@ -1,7 +1,10 @@
-package use_case.teammateManagement;
+package use_case.teammate_management;
 
 import entity.User;
 import entity.Team;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -18,18 +21,24 @@ public class TeammateManagementInteractor implements TeammateManagementInputBoun
 
     @Override
     public void execute(TeammateManagementInputData TeammateManagementInputData) {
-        User user = dataAccessObject.getUser(TeammateManagementInputData.getEmail());
+        User user = null;
+        try {
+            user = dataAccessObject.getUser(TeammateManagementInputData.getEmail());
+        }
+        catch (NullPointerException e) {
+            user = null;
+        }
         Team team = dataAccessObject.getTeam(TeammateManagementInputData.getTeamID());
         String action = TeammateManagementInputData.getAction();
         //Checks if team or user exists
-        if ((team.getIdx() == null) || (user.getIdx() == null)) {
+        if ((team == null) || (user == null)) {
             teammateManagementPresenter.prepareFailView("Team/User not found.");
             return;
         } else if (action.isEmpty()){
             teammateManagementPresenter.prepareFailView("No action has been specified.");
             return;
         } else if ((Objects.equals(dataAccessObject.getTeamLeader(team).getIdx(), user.getIdx()))&&(action.equals("remove"))) {
-            teammateManagementPresenter.prepareFailView("You cannot "+ action+ "remove yourself.");
+            teammateManagementPresenter.prepareFailView("You cannot remove yourself.");
             return;
         } else if ((!dataAccessObject.getTeamMembers(team).contains(user.getIdx()) && (action.equals("remove")))) {
             teammateManagementPresenter.prepareFailView("This User is not in this team");
@@ -44,10 +53,16 @@ public class TeammateManagementInteractor implements TeammateManagementInputBoun
                         (this.dataAccessObject.removeTeam(team, user));
             }
             if (!result){
-                teammateManagementPresenter.prepareFailView("An error has occured");
+                teammateManagementPresenter.prepareFailView("An error has occurred");
+            }
+            List<String> teamMembers = dataAccessObject.getTeamMembers(team);
+            List<String> teamEmails = new ArrayList<>();
+            for (String userId : teamMembers){
+                User member = dataAccessObject.getUserFromId(userId);
+                teamEmails.add(member.getEmail());
             }
             TeammateManagementOutputData outputData = new TeammateManagementOutputData(true, team.getIdx(),
-                    user.getIdx(), dataAccessObject.getTeamMembers(team));
+                    user.getIdx(), teamEmails);
             teammateManagementPresenter.prepareSuccessView(outputData);
         }
     }

@@ -1,6 +1,6 @@
 package use_case.team;
 
-import use_case.teammateManagement.TeammateManagementOutputData;
+import java.util.List;
 
 public interface TeamOutputBoundary {
     /**
@@ -17,7 +17,7 @@ public interface TeamOutputBoundary {
 
     void switchToLoggedInView();
 
-    void switchToManageTeamView();
+    void switchToManageTeamView(List<String> teamMembers, String teamID);
 
     void switchToCreateTaskView();
 

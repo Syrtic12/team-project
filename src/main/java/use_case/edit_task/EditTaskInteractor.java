@@ -24,16 +24,18 @@ public class EditTaskInteractor implements EditTaskInputBoundary {
         Optional<Task> taskOpt = dataAccess.getTaskByIdx(inputData.getTaskIdx());
         if (!taskOpt.isPresent()) {
             presenter.prepareFailView(
-                    new EditTaskOutputData(false, "Task not found"));
+                    new EditTaskOutputData(false, "Task not found", null, null));
             return;
         }
         Task task = taskOpt.get();
+
+        Integer oldStatus = task.getStatus();
 
         // 2. User check
         Optional<User> userOpt = dataAccess.getUser(inputData.getInvokedBy());
         if (!userOpt.isPresent()) {
             presenter.prepareFailView(
-                    new EditTaskOutputData(false, "User not found"));
+                    new EditTaskOutputData(false, "User not found", null, null));
             return;
         }
         User user = userOpt.get();
@@ -42,7 +44,7 @@ public class EditTaskInteractor implements EditTaskInputBoundary {
         Optional<Team> teamOpt = dataAccess.getTeam(inputData.getTeamId());
         if (!teamOpt.isPresent()) {
             presenter.prepareFailView(
-                    new EditTaskOutputData(false, "Team not found"));
+                    new EditTaskOutputData(false, "Team not found", null, null));
             return;
         }
         Team team = teamOpt.get();
@@ -54,7 +56,7 @@ public class EditTaskInteractor implements EditTaskInputBoundary {
         if (!isAssigned && !isLeader) {
             presenter.prepareFailView(
                     new EditTaskOutputData(false,
-                            "Only an assigned user or team leader may edit the task."));
+                            "Only an assigned user or team leader may edit the task.", null, null));
             return;
         }
 
@@ -72,7 +74,7 @@ public class EditTaskInteractor implements EditTaskInputBoundary {
         dataAccess.saveTask(task);
 
         presenter.prepareSuccessView(
-                new EditTaskOutputData(true, "Task updated"));
+                new EditTaskOutputData(true, "Task updated", task, oldStatus));
     }
 
     @Override

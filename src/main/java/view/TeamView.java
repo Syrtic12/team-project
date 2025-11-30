@@ -70,7 +70,7 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
         manageTeamButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (teamController == null) return;
-                teamController.openManageTeam();
+                teamController.openManageTeam(teamId);
             }
         });
         createTaskButton.addActionListener(new ActionListener() {

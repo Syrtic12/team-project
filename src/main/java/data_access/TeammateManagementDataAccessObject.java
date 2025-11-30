@@ -7,7 +7,7 @@ import entity.User;
 import entity.UserFactory;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-import use_case.teammateManagement.TeammateManagementDataAccessInterface;
+import use_case.teammate_management.TeammateManagementDataAccessInterface;
 
 public class TeammateManagementDataAccessObject implements TeammateManagementDataAccessInterface {
     private KandoMongoDatabase GeneralDataAccessObject;
@@ -26,9 +26,19 @@ public class TeammateManagementDataAccessObject implements TeammateManagementDat
         out.setIdx(idx.toString());
         return out;
     }
+
     @Override
     public User getUser(String email) {
         Document user = this.GeneralDataAccessObject.getOne(USERS_COLLECTION, "email", email);
+        User out = this.userFactory.createFromDocument(user);
+        ObjectId idx = user.getObjectId("_id");
+        out.setIdx(idx.toString());
+        return out;
+    }
+
+    @Override
+    public User getUserFromId(String userId) {
+        Document user = this.GeneralDataAccessObject.getOne("users", "_id", userId);
         User out = this.userFactory.createFromDocument(user);
         ObjectId idx = user.getObjectId("_id");
         out.setIdx(idx.toString());
