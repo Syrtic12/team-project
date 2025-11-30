@@ -183,7 +183,10 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
     private void fillModel(DefaultListModel<String> model, Map<String, TaskInfo> tasks) {
         model.clear();
         for (Map.Entry<String, TaskInfo> entry : tasks.entrySet()) {
-            model.addElement(entry.getValue() + " (" + entry.getKey() + ")");
+            TaskInfo info = entry.getValue();
+            model.addElement(info.getTitle() + " | "
+                    + info.getAssignedUsers()
+                    + " (" + info.getId() + ")");
         }
     }
 
