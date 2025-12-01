@@ -53,7 +53,8 @@ public class AssignTaskInteractor implements AssignTaskInputBoundary {
             presenter.prepareFailView("Team member already assigned to this task");
         } else {
             dataAccessObject.assignUserToTask(taskIdx, teamMemberIdx);
-            AssignTaskOutputData outputData = new AssignTaskOutputData(taskIdx, teamMemberIdx, false, "success");
+            Task updatedTask = dataAccessObject.getTask(taskIdx);
+            AssignTaskOutputData outputData = new AssignTaskOutputData(taskIdx, teamMemberIdx, false, "success", updatedTask);
             presenter.prepareSuccessView(outputData);
         }
     }

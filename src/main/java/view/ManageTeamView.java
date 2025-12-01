@@ -5,6 +5,8 @@ import adapters.manage_team.ManageTeamState;
 import adapters.manage_team.ManageTeamViewModel;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -81,6 +83,30 @@ public class ManageTeamView extends JPanel implements PropertyChangeListener {
         disbandButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 manageTeamController.disbandTeam();
+            }
+        });
+
+        newMemberField.getDocument().addDocumentListener(new DocumentListener() {
+            public void documentListenerHelper() {
+                final ManageTeamState currentState = manageTeamViewModel.getState();
+                final ManageTeamState newState = new ManageTeamState(currentState);
+                newState.setNewMemberEmail(newMemberField.getText());
+                manageTeamViewModel.setState(newState);
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                documentListenerHelper();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                documentListenerHelper();
             }
         });
 
