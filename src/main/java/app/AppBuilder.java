@@ -59,6 +59,12 @@ import adapters.team.*;
 import usecase.teammate_management.TeammateManagementInputBoundary;
 import usecase.teammate_management.TeammateManagementInteractor;
 import usecase.teammate_management.TeammateManagementOutputBoundary;
+import adapters.assign_task.AssignTaskController;
+import adapters.assign_task.AssignTaskPresenter;
+import adapters.assign_task.AssignTaskViewModel;
+import usecase.assign_task.AssignTaskInputBoundary;
+import usecase.assign_task.AssignTaskInteractor;
+import usecase.assign_task.AssignTaskOutputBoundary;
 import view.*;
 
 import javax.swing.*;

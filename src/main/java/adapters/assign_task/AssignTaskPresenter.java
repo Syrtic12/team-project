@@ -15,7 +15,7 @@ public class AssignTaskPresenter implements AssignTaskOutputBoundary{
 
     @Override
     public void prepareSuccessView(AssignTaskOutputData outputData) {
-        AssignTaskState state = new AssignTaskState();
+        AssignTaskState state = assignTaskViewModel.getState();
         state.setError(null);
         state.setSuccess("Task assigned successfully");
         assignTaskViewModel.setState(state);
