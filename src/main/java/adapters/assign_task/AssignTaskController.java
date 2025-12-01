@@ -1,8 +1,8 @@
 package adapters.assign_task;
 
-import interface_adapter.team.TeamViewModel;
-import use_case.assign_task.AssignTaskInputBoundary;
-import use_case.assign_task.AssignTaskInputData;
+import adapters.team.TeamViewModel;
+import usecase.assign_task.AssignTaskInputBoundary;
+import usecase.assign_task.AssignTaskInputData;
 import java.util.Map;
 
 public class AssignTaskController {

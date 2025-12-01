@@ -2,7 +2,7 @@ package app;
 
 import javax.swing.*;
 
-public class    Main {
+public class Main {
     public static void main(String[] args) {
         AppBuilder appBuilder = new AppBuilder();
         JFrame application = appBuilder
@@ -20,6 +20,7 @@ public class    Main {
                 .addManageTeamView()
                 .addManageTeamUseCase()
                 .addAssignTaskUseCase()
+                .addLeaveTeamUseCase()
                 .build();
 
         application.pack();

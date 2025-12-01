@@ -1,6 +1,7 @@
 package app;
 
 import dataaccess.*;
+import dataaccess.KandoMongoDatabase;
 import entity.UserFactory;
 import adapters.ViewManagerModel;
 import adapters.edit_task.EditTaskController;
@@ -9,6 +10,10 @@ import adapters.edit_task.EditTaskViewModel;
 import adapters.create_task.CreateTaskController;
 import adapters.create_task.CreateTaskPresenter;
 import adapters.create_task.CreateTaskViewModel;
+import adapters.leave_team.LeaveTeamController;
+import adapters.leave_team.LeaveTeamPresenter;
+import adapters.leave_team.LeaveTeamState;
+import adapters.leave_team.LeaveTeamViewModel;
 import adapters.logged_in.LoggedInController;
 import adapters.logged_in.LoggedInPresenter;
 import adapters.logged_in.LoggedInState;
@@ -22,13 +27,24 @@ import adapters.manage_team.ManageTeamViewModel;
 import adapters.signup.SignupController;
 import adapters.signup.SignupPresenter;
 import adapters.signup.SignupViewModel;
+import adapters.assign_task.AssignTaskController;
+import adapters.assign_task.AssignTaskPresenter;
+import adapters.assign_task.AssignTaskViewModel;
+import usecase.assign_task.AssignTaskInputBoundary;
+import usecase.assign_task.AssignTaskInteractor;
+import usecase.assign_task.AssignTaskOutputBoundary;
+import usecase.edit_task.EditTaskDataAccessInterface;
 import adapters.team.TeamViewModel;
 import usecase.edit_task.EditTaskInputBoundary;
 import usecase.edit_task.EditTaskInteractor;
 import usecase.edit_task.EditTaskOutputBoundary;
+import usecase.create_task.CreateTaskDataAccessInterface;
 import usecase.create_task.CreateTaskInputBoundary;
 import usecase.create_task.CreateTaskInteractor;
 import usecase.create_task.CreateTaskOutputBoundary;
+import usecase.leave_team.LeaveTeamInputBoundary;
+import usecase.leave_team.LeaveTeamInteractor;
+import usecase.leave_team.LeaveTeamOutputBoundary;
 import usecase.logged_in.LoggedInInputBoundary;
 import usecase.logged_in.LoggedInInteractor;
 import usecase.logged_in.LoggedInOutputBoundary;
@@ -71,6 +87,8 @@ public class AppBuilder {
     private CreateTaskView createTaskView;
     private ManageTeamViewModel manageTeamViewModel;
     private ManageTeamView manageTeamView;
+    private AssignTaskViewModel assignTaskViewModel;
+    private LeaveTeamViewModel leaveTeamViewModel;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -211,6 +229,29 @@ public class AppBuilder {
                 new TaskDataAccessObject(DataAccessObject), createTaskOutputBoundary);
         CreateTaskController createTaskController = new CreateTaskController(createTaskInteractor);
         createTaskView.setCreateTaskController(createTaskController);
+        return this;
+    }
+
+    public AppBuilder addAssignTaskUseCase() {
+        this.assignTaskViewModel = new AssignTaskViewModel();
+
+        final AssignTaskOutputBoundary assignTaskOutputBoundary = new AssignTaskPresenter(assignTaskViewModel, teamViewModel);
+        final AssignTaskInputBoundary assignTaskInteractor = new AssignTaskInteractor(
+                new AssignTaskDataAccessObject(DataAccessObject), assignTaskOutputBoundary);
+        AssignTaskController assignTaskController = new AssignTaskController(assignTaskInteractor, teamViewModel);
+
+        teamView.setAssignTaskController(assignTaskController);
+        teamView.setAssignTaskViewModel(assignTaskViewModel);
+        return this;
+    }
+
+    public AppBuilder addLeaveTeamUseCase() {
+        LeaveTeamState leaveTeamState = new LeaveTeamState();
+        this.leaveTeamViewModel = new LeaveTeamViewModel(leaveTeamState);
+        final LeaveTeamOutputBoundary leaveTeamOutputBoundary = new LeaveTeamPresenter(leaveTeamViewModel, viewManagerModel, loggedInViewModel);
+        final LeaveTeamInputBoundary leaveTeamInteractor = new LeaveTeamInteractor(new  LeaveTeamDataAccessObject(DataAccessObject), leaveTeamOutputBoundary);
+        LeaveTeamController leaveTeamController = new LeaveTeamController(leaveTeamInteractor);
+        teamView.setLeaveTeamController(leaveTeamController);
         return this;
     }
 
