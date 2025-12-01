@@ -4,6 +4,7 @@ package view;
 import interface_adapter.assign_task.AssignTaskController;
 import interface_adapter.assign_task.AssignTaskState;
 import interface_adapter.assign_task.AssignTaskViewModel;
+import interface_adapter.leave_team.LeaveTeamController;
 import interface_adapter.team.TeamController;
 import interface_adapter.team.TeamState;
 import interface_adapter.team.TeamViewModel;
@@ -24,6 +25,7 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
 
     private TeamController teamController;
     private AssignTaskController assignTaskController;
+    private LeaveTeamController leaveTeamController;
 
     private final JLabel teamNameLabel = new JLabel("");
     private String teamId;
@@ -38,6 +40,7 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
     private final JButton manageTeamButton = new JButton("Manage Team");
     private final JButton createTaskButton = new JButton("Create Task");
     private final JButton assignTaskButton = new JButton("Assign Task");
+    private final JButton leaveTeamButton = new JButton("Leave Team");
     private final JButton backButton = new JButton("Back");
     private String userId;
     private String leaderId;
@@ -69,6 +72,7 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
         buttons.add(manageTeamButton);
         buttons.add(createTaskButton);
         buttons.add(assignTaskButton);
+        buttons.add(leaveTeamButton);
         buttons.add(backButton);
 
         this.add(buttons);
@@ -109,6 +113,21 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
                     return;
                 }
                 openAssignTaskDialog();
+            }
+        });
+
+        leaveTeamButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (leaveTeamController == null) return;
+                int confirm = JOptionPane.showConfirmDialog(
+                        TeamView.this,
+                        "Are you sure you want to leave this team?",
+                        "Confirm Leave Team",
+                        JOptionPane.YES_NO_OPTION
+                );
+                if (confirm != JOptionPane.YES_OPTION) return;
+                leaveTeamController.execute(teamId, userId);
             }
         });
 
@@ -333,5 +352,8 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
 
     public void setAssignTaskViewModel(AssignTaskViewModel viewModel) {
         this.assignTaskViewModel = viewModel;
+    }
+    public void setLeaveTeamController(LeaveTeamController controller) {
+        this.leaveTeamController = controller;
     }
 }

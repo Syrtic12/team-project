@@ -3,17 +3,21 @@ package use_case.leave_team;
 import entity.Team;
 import entity.User;
 
+import java.util.List;
+
 public class LeaveTeamOutputData {
     private final boolean success;
     private final String teamId;
     private final String userId;
     private final String message;
+    private final List<String> updatedTeams;
 
-    public LeaveTeamOutputData(boolean success, String teamId, String userId, String message) {
+    public LeaveTeamOutputData(boolean success, String teamId, String userId, String message, List<String> updatedTeams) {
         this.success = success;
         this.teamId = teamId;
         this.userId = userId;
         this.message = message;
+        this.updatedTeams = updatedTeams;
     }
 
     public boolean isSuccess() { return success; }
@@ -23,4 +27,6 @@ public class LeaveTeamOutputData {
     public String getUserId() { return userId; }
 
     public String getTeamId() { return teamId; }
+
+    public List<String> getUpdatedTeams() { return updatedTeams; }
 }

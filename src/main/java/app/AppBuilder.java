@@ -9,6 +9,10 @@ import interface_adapter.edit_task.EditTaskViewModel;
 import interface_adapter.create_task.CreateTaskController;
 import interface_adapter.create_task.CreateTaskPresenter;
 import interface_adapter.create_task.CreateTaskViewModel;
+import interface_adapter.leave_team.LeaveTeamController;
+import interface_adapter.leave_team.LeaveTeamPresenter;
+import interface_adapter.leave_team.LeaveTeamState;
+import interface_adapter.leave_team.LeaveTeamViewModel;
 import interface_adapter.logged_in.LoggedInController;
 import interface_adapter.logged_in.LoggedInPresenter;
 import interface_adapter.logged_in.LoggedInState;
@@ -37,6 +41,9 @@ import use_case.create_task.CreateTaskDataAccessInterface;
 import use_case.create_task.CreateTaskInputBoundary;
 import use_case.create_task.CreateTaskInteractor;
 import use_case.create_task.CreateTaskOutputBoundary;
+import use_case.leave_team.LeaveTeamInputBoundary;
+import use_case.leave_team.LeaveTeamInteractor;
+import use_case.leave_team.LeaveTeamOutputBoundary;
 import use_case.logged_in.LoggedInInputBoundary;
 import use_case.logged_in.LoggedInInteractor;
 import use_case.logged_in.LoggedInOutputBoundary;
@@ -80,6 +87,7 @@ public class AppBuilder {
     private ManageTeamViewModel manageTeamViewModel;
     private ManageTeamView manageTeamView;
     private AssignTaskViewModel assignTaskViewModel;
+    private LeaveTeamViewModel leaveTeamViewModel;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -233,6 +241,16 @@ public class AppBuilder {
 
         teamView.setAssignTaskController(assignTaskController);
         teamView.setAssignTaskViewModel(assignTaskViewModel);
+        return this;
+    }
+
+    public AppBuilder addLeaveTeamUseCase() {
+        LeaveTeamState leaveTeamState = new LeaveTeamState();
+        this.leaveTeamViewModel = new LeaveTeamViewModel(leaveTeamState);
+        final LeaveTeamOutputBoundary leaveTeamOutputBoundary = new LeaveTeamPresenter(leaveTeamViewModel, viewManagerModel, loggedInViewModel);
+        final LeaveTeamInputBoundary leaveTeamInteractor = new LeaveTeamInteractor(new  LeaveTeamDataAccessObject(DataAccessObject), leaveTeamOutputBoundary);
+        LeaveTeamController leaveTeamController = new LeaveTeamController(leaveTeamInteractor);
+        teamView.setLeaveTeamController(leaveTeamController);
         return this;
     }
 

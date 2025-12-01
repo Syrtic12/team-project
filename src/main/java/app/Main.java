@@ -20,6 +20,7 @@ public class    Main {
                 .addManageTeamView()
                 .addManageTeamUseCase()
                 .addAssignTaskUseCase()
+                .addLeaveTeamUseCase()
                 .build();
 
         application.pack();
