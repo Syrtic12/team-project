@@ -64,7 +64,7 @@ public class LoggedInDataAccessObject implements LoggedInDataAccessInterface {
                 Document userDoc = GeneralDataAccessObject.getOne("users", "_id", userId);
                 if (userDoc != null) {
                     User user = userFactory.createFromDocument(userDoc);
-                    members.put(userId, user.getName());
+                    members.put(userId, user.getEmail());
                 }
             }}
         return members;
