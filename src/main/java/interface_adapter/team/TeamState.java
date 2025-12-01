@@ -2,14 +2,17 @@ package interface_adapter.team;
 
 import use_case.team.TaskInfo;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class TeamState {
     private String teamID;
     private String userId;
+    private String leaderId;
     private Map<String, TaskInfo> notStartedTasks;
     private Map<String, TaskInfo> inProgressTasks;
     private Map<String, TaskInfo> CompletedTasks;
+    private Map<String, String> teamMembers = new HashMap<>();
 
     /**
      * @return the team name
@@ -48,6 +51,10 @@ public class TeamState {
         this.CompletedTasks = CompletedTasks;
     }
 
+    public void setTeamMembers(Map<String, String> teamMembers) {this.teamMembers = teamMembers;}
+
+    public void setLeaderId(String leaderId) {this.leaderId = leaderId;}
+
     public Map<String, TaskInfo> getNotStartedTasks() {
         return notStartedTasks;
     }
@@ -59,5 +66,9 @@ public class TeamState {
     public Map<String, TaskInfo> getCompletedTasks() {
         return CompletedTasks;
     }
+
+    public Map<String, String> getTeamMembers() {return teamMembers; }
+
+    public String getLeaderId() {return leaderId;}
 
 }

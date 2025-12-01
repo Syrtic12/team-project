@@ -46,10 +46,14 @@ public class LoggedInInteractor implements LoggedInInputBoundary {
         Map<String, TaskInfo> notStartedTasks = new HashMap<>();
         Map<String, TaskInfo> inProgressTasks = new HashMap<>();
         Map<String, TaskInfo> CompletedTasks = new HashMap<>();
-
+        Map<String, String> membersnNames = loggedInDataAccessObject.getTeamMembers(teamId);
         for (Task task : tasks) {
             List<String> assignedUsers = task.getAssignedUsers();
-            String names = String.join(", ", assignedUsers);
+            List<String> assignedNames = new ArrayList<>();
+            for (String userId : assignedUsers) {
+                assignedNames.add(membersnNames.get(userId));
+                    }
+            String names = String.join(", ", assignedNames);
             if (assignedUsers.isEmpty()) {
                 names = "no users assigned";
             }
@@ -69,6 +73,9 @@ public class LoggedInInteractor implements LoggedInInputBoundary {
         // 2. Read the current logged-in user's ID
         String userId = loggedInState.getUserId();
 
+        Map<String, String> teamMembers = loggedInDataAccessObject.getTeamMembers(teamId);
+        String leaderId = loggedInDataAccessObject.getTeamLeaderId(teamId);
+
         // 3. Pass userId into output data
         LoggedInOutputData outputData =
                 new LoggedInOutputData(
@@ -76,7 +83,9 @@ public class LoggedInInteractor implements LoggedInInputBoundary {
                         inProgressTasks,
                         CompletedTasks,
                         teamId,
-                        userId
+                        userId,
+                        leaderId,
+                        teamMembers
                 );
 
         loggedInPresenter.switchToTeamView(outputData);
