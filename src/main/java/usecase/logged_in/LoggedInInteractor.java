@@ -5,6 +5,7 @@ import adapters.logged_in.LoggedInState;
 
 import usecase.team.TaskInfo;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +43,7 @@ public class LoggedInInteractor implements LoggedInInputBoundary {
             List<String> assignedNames = new ArrayList<>();
             for (String userId : assignedUsers) {
                 assignedNames.add(membersnNames.get(userId));
-                    }
+            }
             String names = String.join(", ", assignedNames);
             if (assignedUsers.isEmpty()) {
                 names = "no users assigned";
