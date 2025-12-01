@@ -69,6 +69,9 @@ public class LoggedInInteractor implements LoggedInInputBoundary {
         // 2. Read the current logged-in user's ID
         String userId = loggedInState.getUserId();
 
+        Map<String, String> teamMembers = loggedInDataAccessObject.getTeamMembers(teamId);
+        String leaderId = loggedInDataAccessObject.getTeamLeaderId(teamId);
+
         // 3. Pass userId into output data
         LoggedInOutputData outputData =
                 new LoggedInOutputData(
@@ -76,7 +79,9 @@ public class LoggedInInteractor implements LoggedInInputBoundary {
                         inProgressTasks,
                         CompletedTasks,
                         teamId,
-                        userId
+                        userId,
+                        leaderId,
+                        teamMembers
                 );
 
         loggedInPresenter.switchToTeamView(outputData);

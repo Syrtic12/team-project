@@ -22,6 +22,12 @@ import interface_adapter.manage_team.ManageTeamViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
+import interface_adapter.assign_task.AssignTaskController;
+import interface_adapter.assign_task.AssignTaskPresenter;
+import interface_adapter.assign_task.AssignTaskViewModel;
+import use_case.assign_task.AssignTaskInputBoundary;
+import use_case.assign_task.AssignTaskInteractor;
+import use_case.assign_task.AssignTaskOutputBoundary;
 import use_case.edit_task.EditTaskDataAccessInterface;
 import interface_adapter.team.TeamViewModel;
 import use_case.edit_task.EditTaskInputBoundary;
@@ -73,6 +79,7 @@ public class AppBuilder {
     private CreateTaskView createTaskView;
     private ManageTeamViewModel manageTeamViewModel;
     private ManageTeamView manageTeamView;
+    private AssignTaskViewModel assignTaskViewModel;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -213,6 +220,19 @@ public class AppBuilder {
                 new TaskDataAccessObject(DataAccessObject), createTaskOutputBoundary);
         CreateTaskController createTaskController = new CreateTaskController(createTaskInteractor);
         createTaskView.setCreateTaskController(createTaskController);
+        return this;
+    }
+
+    public AppBuilder addAssignTaskUseCase() {
+        this.assignTaskViewModel = new AssignTaskViewModel();
+
+        final AssignTaskOutputBoundary assignTaskOutputBoundary = new AssignTaskPresenter(assignTaskViewModel, teamViewModel);
+        final AssignTaskInputBoundary assignTaskInteractor = new AssignTaskInteractor(
+                new AssignTaskDataAccessObject(DataAccessObject), assignTaskOutputBoundary);
+        AssignTaskController assignTaskController = new AssignTaskController(assignTaskInteractor, teamViewModel);
+
+        teamView.setAssignTaskController(assignTaskController);
+        teamView.setAssignTaskViewModel(assignTaskViewModel);
         return this;
     }
 
