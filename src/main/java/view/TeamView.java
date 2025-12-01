@@ -1,10 +1,10 @@
 
 package view;
 
-import interface_adapter.team.TeamController;
-import interface_adapter.team.TeamState;
-import interface_adapter.team.TeamViewModel;
-import use_case.team.TaskInfo;
+import adapters.team.TeamController;
+import adapters.team.TeamState;
+import adapters.team.TeamViewModel;
+import usecase.team.TaskInfo;
 
 import javax.swing.*;
 import java.awt.*;

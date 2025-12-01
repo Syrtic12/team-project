@@ -1,8 +1,8 @@
 package view;
 
-import interface_adapter.create_task.CreateTaskController;
-import interface_adapter.create_task.CreateTaskState;
-import interface_adapter.create_task.CreateTaskViewModel;
+import adapters.create_task.CreateTaskController;
+import adapters.create_task.CreateTaskState;
+import adapters.create_task.CreateTaskViewModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

@@ -1,13 +1,10 @@
 package view;
 
-import interface_adapter.login.LoginState;
-import interface_adapter.manage_team.ManageTeamController;
-import interface_adapter.manage_team.ManageTeamState;
-import interface_adapter.manage_team.ManageTeamViewModel;
+import adapters.manage_team.ManageTeamController;
+import adapters.manage_team.ManageTeamState;
+import adapters.manage_team.ManageTeamViewModel;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;

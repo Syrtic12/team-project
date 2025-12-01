@@ -1,8 +1,8 @@
 package view;
 
-import interface_adapter.edit_task.EditTaskController;
-import interface_adapter.edit_task.EditTaskState;
-import interface_adapter.edit_task.EditTaskViewModel;
+import adapters.edit_task.EditTaskController;
+import adapters.edit_task.EditTaskState;
+import adapters.edit_task.EditTaskViewModel;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;

@@ -1,0 +1,49 @@
+package adapters.signup;
+
+import adapters.ViewManagerModel;
+import adapters.login.LoginState;
+import adapters.login.LoginViewModel;
+import usecase.signup.SignUpOutputBoundary;
+import usecase.signup.SignUpOutputData;
+
+/**
+ * The Presenter for the Signup Use Case.
+ */
+public class SignupPresenter implements SignUpOutputBoundary {
+
+    private final SignupViewModel signupViewModel;
+    private final LoginViewModel loginViewModel;
+    private final ViewManagerModel viewManagerModel;
+
+    public SignupPresenter(ViewManagerModel viewManagerModel,
+                           SignupViewModel signupViewModel,
+                           LoginViewModel loginViewModel) {
+        this.viewManagerModel = viewManagerModel;
+        this.signupViewModel = signupViewModel;
+        this.loginViewModel = loginViewModel;
+    }
+
+    @Override
+    public void prepareSuccessView(SignUpOutputData response) {
+        // On success, switch to the login view.
+        final LoginState loginState = loginViewModel.getState();
+        loginState.setEmail(response.getEmail());
+        loginViewModel.firePropertyChange();
+
+        viewManagerModel.setState(loginViewModel.getViewName());
+        viewManagerModel.firePropertyChange();
+    }
+
+    @Override
+    public void prepareFailView(String error) {
+        final SignupState signupState = signupViewModel.getState();
+        signupState.setError(error);
+        signupViewModel.firePropertyChange();
+    }
+
+    @Override
+    public void switchToLoginView() {
+        viewManagerModel.setState(loginViewModel.getViewName());
+        viewManagerModel.firePropertyChange();
+    }
+}

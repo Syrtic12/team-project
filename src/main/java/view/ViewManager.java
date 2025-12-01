@@ -1,6 +1,6 @@
 package view;
 
-import interface_adapter.ViewManagerModel;
+import adapters.ViewManagerModel;
 
 import javax.swing.*;
 import java.awt.*;
