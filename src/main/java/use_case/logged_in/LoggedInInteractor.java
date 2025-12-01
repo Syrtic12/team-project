@@ -46,11 +46,14 @@ public class LoggedInInteractor implements LoggedInInputBoundary {
         Map<String, TaskInfo> notStartedTasks = new HashMap<>();
         Map<String, TaskInfo> inProgressTasks = new HashMap<>();
         Map<String, TaskInfo> CompletedTasks = new HashMap<>();
-
+        Map<String, String> membersnNames = loggedInDataAccessObject.getTeamMembers(teamId);
         for (Task task : tasks) {
             List<String> assignedUsers = task.getAssignedUsers();
-            List<String> namesList = new ArrayList<>(loggedInDataAccessObject.getTeamMembers(teamId).values());
-            String names = String.join(", ", namesList);
+            List<String> assignedNames = new ArrayList<>();
+            for (String userId : assignedUsers) {
+                assignedNames.add(membersnNames.get(userId));
+                    }
+            String names = String.join(", ", assignedNames);
             if (assignedUsers.isEmpty()) {
                 names = "no users assigned";
             }
