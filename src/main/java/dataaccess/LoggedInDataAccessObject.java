@@ -1,5 +1,7 @@
 package dataaccess;
 
+import entity.User;
+import entity.UserFactory;
 import entity.Task;
 import entity.TaskFactory;
 import org.bson.Document;
@@ -7,11 +9,14 @@ import org.bson.types.ObjectId;
 import usecase.logged_in.LoggedInDataAccessInterface;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LoggedInDataAccessObject implements LoggedInDataAccessInterface {
     private KandoMongoDatabase GeneralDataAccessObject;
     private final TaskFactory taskFactory = new TaskFactory();
+    private final UserFactory userFactory = new UserFactory();
 
     public LoggedInDataAccessObject(KandoMongoDatabase dao) {
         GeneralDataAccessObject = dao;
@@ -42,5 +47,34 @@ public class LoggedInDataAccessObject implements LoggedInDataAccessInterface {
         ObjectId idx = taskDoc.getObjectId("_id");
         out.setIdx(idx.toString());
         return out;
+    }
+
+    @Override
+    public Map<String, String> getTeamMembers(String teamId) {
+        Map<String, String> members = new HashMap<>();
+        Document teamDoc = GeneralDataAccessObject.getOne("teams", "_id", teamId);
+        if (teamDoc == null) {
+            return members;
+        }
+
+        List<String> userIds = teamDoc.getList("users", String.class);
+        if (userIds != null) {
+            for (String userId : userIds) {
+                Document userDoc = GeneralDataAccessObject.getOne("users", "_id", userId);
+                if (userDoc != null) {
+                    User user = userFactory.createFromDocument(userDoc);
+                    members.put(userId, user.getEmail());
+                }
+            }}
+        return members;
+    }
+
+    @Override
+    public String getTeamLeaderId(String teamId) {
+        Document teamDoc = GeneralDataAccessObject.getOne("teams", "_id", teamId);
+        if (teamDoc == null) {
+            return null;
+        }
+        return teamDoc.getString("leader");
     }
 }

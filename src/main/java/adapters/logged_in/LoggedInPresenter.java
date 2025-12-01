@@ -44,6 +44,8 @@ public class LoggedInPresenter implements LoggedInOutputBoundary {
         teamState.setCompletedTasks(outputData.getCompletedTasks());
         teamState.setTeamName(outputData.getTeamId());
         teamState.setUserId(outputData.getUserId());
+        teamState.setTeamMembers(outputData.getTeamMembers());
+        teamState.setLeaderId(outputData.getLeaderId());
         this.teamViewModel.firePropertyChange();
         this.viewManagerModel.setState(teamViewModel.getViewName());
         this.viewManagerModel.firePropertyChange();
