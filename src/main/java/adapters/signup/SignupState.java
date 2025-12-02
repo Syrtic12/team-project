@@ -1,8 +1,11 @@
 package adapters.signup;
 
+/**
+ * The state class for managing signup data.
+ */
 public class SignupState {
     private String username = "";
-    private String processError = null;
+    private String processError;
     private String password = "";
     private String role = "";
     private String repeatPassword = "";

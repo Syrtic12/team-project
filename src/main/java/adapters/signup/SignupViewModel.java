@@ -2,6 +2,9 @@ package adapters.signup;
 
 import adapters.ViewModel;
 
+/**
+ * The view model for signup functionality.
+ */
 public class SignupViewModel extends ViewModel<SignupState> {
     public static final String TITLE_LABEL = "Signup";
     public static final String USERNAME_LABEL = "Username";
@@ -13,7 +16,7 @@ public class SignupViewModel extends ViewModel<SignupState> {
     public static final String CANCEL_BUTTON_LABEL = "Cancel";
     private SignupState signupState;
 
-    public SignupViewModel(){
+    public SignupViewModel() {
         super("sign up");
         setState(new SignupState());
     }

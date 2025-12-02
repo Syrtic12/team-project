@@ -9,7 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class LogInInteractor implements LogInInputBoundary {
     private final LogInDataAccessInterface dataAccessObject;
     private final LogInOutputBoundary loginPresenter;
-    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public LogInInteractor(LogInDataAccessInterface dataAccessInterface,
                            LogInOutputBoundary loginOutputBoundary) {
@@ -19,32 +19,33 @@ public class LogInInteractor implements LogInInputBoundary {
 
     @Override
     public void execute(LogInInputData loginInputData) {
-        String email = loginInputData.getEmail();
-        String password = loginInputData.getPassword();
+        final String email = loginInputData.getEmail();
+        final String password = loginInputData.getPassword();
         if (email.isEmpty() || password.isEmpty()) {
             loginPresenter.prepareFailView("Email or password cannot be empty.");
-        } else if (!(dataAccessObject.emailExists(email))){
+        }
+        else if (!(dataAccessObject.emailExists(email))) {
             loginPresenter.prepareFailView("Account does not exist.");
-        } else {
-            User user = dataAccessObject.getUser(email);
+        }
+        else {
+            final User user = dataAccessObject.getUser(email);
             if (encoder.matches(password, user.getPassword())) {
-                LogInOutputData outputData = new LogInOutputData(user.getIdx(), user.getEmail(), dataAccessObject.getTeams(user.getIdx()));
+                final LogInOutputData outputData = new LogInOutputData(user.getIdx(), user.getEmail(),
+                        dataAccessObject.getTeams(user.getIdx()));
                 System.out.println("DEBUG LogInInteractor: user.getIdx() = " + user.getIdx());
                 loginPresenter.prepareSuccessView(outputData);
-            } else {
+            }
+            else {
                 loginPresenter.prepareFailView("Incorrect password.");
             }
         }
     }
 
-    public void switchToSignupView(){
+    /**
+     * Switches to the signup view.
+     */
+    public void switchToSignupView() {
         loginPresenter.switchToSignupView();
     }
-/*
-    public static void main(String[] args) {
-        LogInInteractor interac = new LogInInteractor(new LogInDataAccessObject(new KandoMongoDatabase()), null);
-        interac.execute(new LogInInputData("sushaanpatel@gmail.com","password"));
-    }
-*/
 }
 
