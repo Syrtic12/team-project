@@ -20,6 +20,7 @@ import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Filter;
 
 
 public class KandoMongoDatabase {
@@ -116,7 +117,12 @@ public class KandoMongoDatabase {
     public Document getOne(String collectionName, String key, String value){
         Bson filter;
         if (key.equals("_id")) {
-            filter = Filters.eq(key, new ObjectId(value));
+            try {
+                filter = Filters.eq(key, new ObjectId(value));
+            } catch (IllegalArgumentException e) {
+            System.err.println("Invalid Object format: " + value);
+            return null;
+            }
         } else {
             filter = Filters.eq(key, value);
         }
@@ -146,7 +152,12 @@ public class KandoMongoDatabase {
     public List<Document> getMany(String collectionName, String key, String value){
         Bson filter;
         if (key.equals("_id")) {
-            filter = Filters.eq(key, new ObjectId(value));
+            try {
+                filter = Filters.eq(key, new ObjectId(value));
+            } catch (IllegalArgumentException e) {
+                System.err.println("Invalid ObjectId format: " + value);
+                return new ArrayList<>();
+            }
         } else {
             filter = Filters.eq(key, value);
         }
@@ -165,7 +176,11 @@ public class KandoMongoDatabase {
      * Updates a document's key to the specified value in the given collection
      */
     public void update(String collectionName, String idx, String key, String value){
-        this.database.getCollection(collectionName).updateOne(Filters.eq("_id", new ObjectId(idx)), Updates.set(key, value));
+        try {
+            this.database.getCollection(collectionName).updateOne(Filters.eq("_id", new ObjectId(idx)), Updates.set(key, value));
+        } catch (IllegalArgumentException e) {
+            System.err.println("Invalid Object format: " + idx);
+        }
     }
     
     /**
@@ -176,7 +191,11 @@ public class KandoMongoDatabase {
      * Updates a document's key to the specified value in the given collection
      */
     public void update(String collectionName, String idx, String key, List<?> value){
-        this.database.getCollection(collectionName).updateOne(Filters.eq("_id", new ObjectId(idx)), Updates.set(key, value));
+        try {
+            this.database.getCollection(collectionName).updateOne(Filters.eq("_id", new ObjectId(idx)), Updates.set(key, value));
+        } catch (IllegalArgumentException e) {
+            System.err.println("Invalid Object format: " + idx);
+        }
     }
 
     /**
@@ -186,7 +205,10 @@ public class KandoMongoDatabase {
      * Updates a document's status to the specified value in the given collection
      */
     public void updateStatus(String collectionName, String idx, Integer status){
-        this.database.getCollection(collectionName).updateOne(Filters.eq("_id", new ObjectId(idx)), Updates.set("status", status));
+        try {
+            this.database.getCollection(collectionName).updateOne(Filters.eq("_id", new ObjectId(idx)), Updates.set("status", status));
+        } catch (IllegalArgumentException e) {
+        System.err.println("Invalid Object format: " + idx);}
     }
 
     /**

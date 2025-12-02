@@ -58,8 +58,13 @@ public class ManageTeamView extends JPanel implements PropertyChangeListener {
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 final ManageTeamState currentState = manageTeamViewModel.getState();
-                manageTeamController.execute(currentState.getNewMemberEmail(), currentState.getTeamId(),"add");
-                newMemberField.setText("");
+                String email = currentState.getNewMemberEmail().trim();
+                if (!email.isEmpty()) {
+                    manageTeamController.execute(currentState.getNewMemberEmail(), currentState.getTeamId(), "add");
+                    newMemberField.setText("");
+                } else {
+                    JOptionPane.showMessageDialog(ManageTeamView.this, "Please enter a valid email address", "Empty email", JOptionPane.WARNING_MESSAGE);
+                }
             }
         });
 

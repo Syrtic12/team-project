@@ -94,6 +94,7 @@ public class AppBuilder {
     private ManageTeamViewModel manageTeamViewModel;
     private ManageTeamView manageTeamView;
     private AssignTaskViewModel assignTaskViewModel;
+    private LoggedInInputBoundary loggedInInputBoundary;
     private LeaveTeamViewModel leaveTeamViewModel;
 
     public AppBuilder() {
@@ -148,13 +149,13 @@ public class AppBuilder {
         );
 
         // 3. Pass sharedState into interactor
-        LoggedInInputBoundary interactor = new LoggedInInteractor(
+        this.loggedInInputBoundary = new LoggedInInteractor(
                 dao,
                 outputBoundary,
                 sharedState
         );
 
-        LoggedInController controller = new LoggedInController(interactor);
+        LoggedInController controller = new LoggedInController(loggedInInputBoundary);
 
         loggedInView = new LoggedInView(loggedInViewModel);
         loggedInView.setLoggedInController(controller);
@@ -241,7 +242,7 @@ public class AppBuilder {
     public AppBuilder addAssignTaskUseCase() {
         this.assignTaskViewModel = new AssignTaskViewModel();
 
-        final AssignTaskOutputBoundary assignTaskOutputBoundary = new AssignTaskPresenter(assignTaskViewModel, teamViewModel);
+        final AssignTaskOutputBoundary assignTaskOutputBoundary = new AssignTaskPresenter(assignTaskViewModel, teamViewModel, loggedInInputBoundary);
         final AssignTaskInputBoundary assignTaskInteractor = new AssignTaskInteractor(
                 new AssignTaskDataAccessObject(DataAccessObject), assignTaskOutputBoundary);
         AssignTaskController assignTaskController = new AssignTaskController(assignTaskInteractor, teamViewModel);
