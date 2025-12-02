@@ -231,7 +231,7 @@ public class AppBuilder {
 
     public AppBuilder addCreateTaskUseCase() {
         final CreateTaskOutputBoundary createTaskOutputBoundary = new CreateTaskPresenter(createTaskViewModel,
-                viewManagerModel, teamViewModel);
+                viewManagerModel, teamViewModel, loggedInInputBoundary);
         final CreateTaskInputBoundary createTaskInteractor = new CreateTaskInteractor(
                 new TaskDataAccessObject(DataAccessObject), createTaskOutputBoundary);
         CreateTaskController createTaskController = new CreateTaskController(createTaskInteractor);

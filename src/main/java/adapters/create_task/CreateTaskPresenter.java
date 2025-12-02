@@ -5,19 +5,23 @@ import adapters.team.TeamState;
 import adapters.team.TeamViewModel;
 import usecase.create_task.CreateTaskOutputBoundary;
 import usecase.create_task.CreateTaskOutputData;
+import usecase.logged_in.LoggedInInputBoundary;
 
 public class CreateTaskPresenter implements CreateTaskOutputBoundary {
 
     private final CreateTaskViewModel createTaskViewModel;
     private final ViewManagerModel viewManagerModel;
     private final TeamViewModel teamViewModel;
+    private final LoggedInInputBoundary loggedInInputBoundary;
 
     public CreateTaskPresenter(CreateTaskViewModel createTaskViewModel,
                                ViewManagerModel viewManagerModel,
-                               TeamViewModel teamViewModel) {
+                               TeamViewModel teamViewModel,
+                               LoggedInInputBoundary loggedInInputBoundary) {
         this.createTaskViewModel = createTaskViewModel;
         this.viewManagerModel = viewManagerModel;
         this.teamViewModel = teamViewModel;
+        this.loggedInInputBoundary = loggedInInputBoundary;
     }
 
     @Override
@@ -27,15 +31,8 @@ public class CreateTaskPresenter implements CreateTaskOutputBoundary {
         CreateTaskState cleared = new CreateTaskState();
         createTaskViewModel.setState(cleared);
 
-        // Set new team variables
-        final TeamState teamState = teamViewModel.getState();
-        teamState.setNotStartedTasks(outputData.getNotStartedTasks());
-        teamState.setInProgressTasks(outputData.getInProgressTasks());
-        teamState.setCompletedTasks(outputData.getCompletedTasks());
-        this.teamViewModel.firePropertyChange();
-        // Switch to team view
-        viewManagerModel.setState(teamViewModel.getViewName());
-        viewManagerModel.firePropertyChange();
+        String teamId = teamViewModel.getState().getTeamName();
+        loggedInInputBoundary.switchToTeamView(teamId);
     }
 
     @Override
