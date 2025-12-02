@@ -45,9 +45,18 @@ public class AssignTaskDataAccessObject implements AssignTaskDataAccessInterface
         List<Document> allTeams = GeneralDataAccessObject.getAll("teams");
 
         for (Document teamDocument : allTeams) {
-            List<String> tasks = teamDocument.getList("tasks", String.class);
-            if (tasks != null  && tasks.contains(taskIdx)){
-                return teamFactory.createFromDocument(teamDocument);
+            try {
+                Object tasksObj = teamDocument.get("tasks");
+                if (tasksObj instanceof List) {
+                    List<String> tasks = (List<String>) tasksObj;
+                    if (tasks.contains(taskIdx)){
+                        return teamFactory.createFromDocument(teamDocument);
+                    }
+                } else if (tasksObj instanceof String && tasksObj.equals(taskIdx)) {
+                    return teamFactory.createFromDocument(teamDocument);
+                }
+            } catch (Exception e) {
+                continue;
             }
         }
         return null;
