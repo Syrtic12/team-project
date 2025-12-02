@@ -23,8 +23,6 @@ import java.beans.PropertyChangeListener;
  * SignupView is the panel that displays the sign-up form.
  * It handles user input for username, email, password, and repeat password,
  * and communicates with the SignupController.
- *
- * @null This class does not accept null arguments in its constructor.
  */
 public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
     private final String viewName = "sign up";

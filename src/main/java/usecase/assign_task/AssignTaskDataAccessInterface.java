@@ -8,8 +8,6 @@ import entity.User;
  * Interface defining the data access operations required for the Assign Task use case.
  * Implementations provide persistence-layer interactions for retrieving tasks, users,
  * teams, and assigning users to tasks.
- *
- * @null This interface does not accept null values for method parameters.
  */
 public interface AssignTaskDataAccessInterface {
 

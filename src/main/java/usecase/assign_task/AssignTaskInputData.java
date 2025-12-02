@@ -1,9 +1,14 @@
 package usecase.assign_task;
 
+/**
+ * Data class representing the input information required to assign a user
+ * to a task within a team.
+ * Contains the task ID, the team member's ID, and the team leader's ID.
+ */
 public class AssignTaskInputData {
     private final String taskIdx;
     private final String teamMemberIdx;
-    public final String teamLeaderIdx;
+    private final String teamLeaderIdx;
 
     public AssignTaskInputData(String taskIdx, String teamMemberIdx, String teamLeaderIdx) {
         this.taskIdx = taskIdx;
@@ -19,8 +24,8 @@ public class AssignTaskInputData {
         return teamMemberIdx;
     }
 
-    public String getTeamLeaderIdx() {return teamLeaderIdx;}
+    public String getTeamLeaderIdx() {
+        return teamLeaderIdx;
+    }
 }
-
-
 
