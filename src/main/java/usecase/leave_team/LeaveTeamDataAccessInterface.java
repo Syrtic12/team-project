@@ -2,7 +2,6 @@ package usecase.leave_team;
 
 import entity.Team;
 import entity.User;
-
 import java.util.List;
 
 public interface LeaveTeamDataAccessInterface {

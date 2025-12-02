@@ -19,7 +19,8 @@ public class LeaveTeamInteractor implements LeaveTeamInputBoundary {
      * @param dataAccessObject  the data access interface used to retrieve and modify team data
      * @param leaveTeamPresenter the presenter responsible for preparing output views
      */
-    public LeaveTeamInteractor(LeaveTeamDataAccessInterface dataAccessObject, LeaveTeamOutputBoundary leaveTeamPresenter) {
+    public LeaveTeamInteractor(LeaveTeamDataAccessInterface dataAccessObject,
+                               LeaveTeamOutputBoundary leaveTeamPresenter) {
         this.dataAccessObject = dataAccessObject;
         this.leaveTeamPresenter = leaveTeamPresenter;
     }
@@ -35,25 +36,30 @@ public class LeaveTeamInteractor implements LeaveTeamInputBoundary {
         final Team team = dataAccessObject.getTeam(leaveTeamInputData.getTeamId());
         final User user = dataAccessObject.getUser(leaveTeamInputData.getUserId());
         if (team.getIdx() == null) {
-            final LeaveTeamOutputData outputData = new LeaveTeamOutputData(false, null, null, "Team/User not found.", dataAccessObject.getTeamMembers(team));
+            final LeaveTeamOutputData outputData = new LeaveTeamOutputData(false, null,
+                    null, "Team/User not found.", dataAccessObject.getTeamMembers(team));
             leaveTeamPresenter.prepareFailView(outputData);
         }
         else if (user.getIdx() == null) {
-            final LeaveTeamOutputData outputData = new LeaveTeamOutputData(false, null, null, "Team/User not found.", dataAccessObject.getTeamMembers(team));
+            final LeaveTeamOutputData outputData = new LeaveTeamOutputData(false, null,
+                    null, "Team/User not found.", dataAccessObject.getTeamMembers(team));
             leaveTeamPresenter.prepareFailView(outputData);
         }
         else {
             if (!dataAccessObject.getTeamMembers(team).contains(leaveTeamInputData.getUserId())) {
-                final LeaveTeamOutputData outputData = new LeaveTeamOutputData(false, team.getIdx(), user.getIdx(), "User is not in the team", dataAccessObject.getTeamMembers(team));
+                final LeaveTeamOutputData outputData = new LeaveTeamOutputData(false, team.getIdx(),
+                        user.getIdx(), "User is not in the team", dataAccessObject.getTeamMembers(team));
                 leaveTeamPresenter.prepareFailView(outputData);
             }
             else {
                 final boolean success = dataAccessObject.removeMember(team.getIdx(), user.getIdx());
                 if (!success) {
-                    final LeaveTeamOutputData outputData = new LeaveTeamOutputData(false, team.getIdx(), user.getIdx(), "An error has occured", dataAccessObject.getTeamMembers(team));
+                    final LeaveTeamOutputData outputData = new LeaveTeamOutputData(false, team.getIdx(),
+                            user.getIdx(), "An error has occurred", dataAccessObject.getTeamMembers(team));
                     leaveTeamPresenter.prepareFailView(outputData);
                 }
-                final LeaveTeamOutputData outputData = new LeaveTeamOutputData(success, team.getIdx(), user.getIdx(), "Success", dataAccessObject.getTeamMembers(team));
+                final LeaveTeamOutputData outputData = new LeaveTeamOutputData(success, team.getIdx(), user.getIdx(),
+                        "Success", dataAccessObject.getTeamMembers(team));
                 leaveTeamPresenter.prepareSuccessView(outputData);
 
             }
