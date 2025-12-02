@@ -7,7 +7,10 @@ import adapters.signup.SignupViewModel;
 import usecase.login.LogInOutputBoundary;
 import usecase.login.LogInOutputData;
 
-public class LoginPresenter implements LogInOutputBoundary{
+/**
+ * The presenter for the login use case.
+ */
+public class LoginPresenter implements LogInOutputBoundary {
     private final LoginViewModel loginViewModel;
     private final LoggedInViewModel loggedInViewModel;
     private final ViewManagerModel viewManagerModel;
@@ -46,7 +49,7 @@ public class LoginPresenter implements LogInOutputBoundary{
     }
 
     @Override
-    public void switchToSignupView(){
+    public void switchToSignupView() {
         viewManagerModel.setState(sigupViewModel.getViewName());
         viewManagerModel.firePropertyChange();
     }

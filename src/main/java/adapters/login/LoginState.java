@@ -1,6 +1,9 @@
 package adapters.login;
 
-public class    LoginState {
+/**
+ * The state class for managing login information.
+ */
+public class LoginState {
     private String email = "";
     private String processError;
     private String password = "";
