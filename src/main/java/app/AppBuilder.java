@@ -170,6 +170,8 @@ public class AppBuilder {
                 sharedState
         );
 
+        this.loggedInInputBoundary = interactor;
+
         final LoggedInController controller = new LoggedInController(interactor);
 
         loggedInView = new LoggedInView(loggedInViewModel);
@@ -294,7 +296,7 @@ public class AppBuilder {
         this.assignTaskViewModel = new AssignTaskViewModel();
 
         final AssignTaskOutputBoundary assignTaskOutputBoundary = new AssignTaskPresenter(assignTaskViewModel,
-                teamViewModel);
+                teamViewModel, loggedInInputBoundary);
         final AssignTaskInputBoundary assignTaskInteractor = new AssignTaskInteractor(
                 new AssignTaskDataAccessObject(dataAccessObject), assignTaskOutputBoundary);
         final AssignTaskController assignTaskController = new AssignTaskController(assignTaskInteractor, teamViewModel);
