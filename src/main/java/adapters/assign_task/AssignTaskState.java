@@ -5,8 +5,8 @@ package adapters.assign_task;
  * Contains information about the success or failure of a task assignment operation.
  */
 public class AssignTaskState {
-    private String error;
-    private String success;
+    private String error = "";
+    private String success = "";
 
     public AssignTaskState() {
     }

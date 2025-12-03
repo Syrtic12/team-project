@@ -16,11 +16,17 @@ public class TaskFactory {
         Task task = new Task(title, description, status);
 
         ObjectId objectId = taskDoc.getObjectId("_id");
+        if (objectId != null) {
+            task.setIdx(objectId.toString());
+        }
 
-        List<String> users =  taskDoc.getList("users", String.class);
-        if (users != null) {
-            for (String user : users) {
-                task.assignUser(user);
+        Object usersObj = taskDoc.get("users");
+        if (usersObj instanceof List) {
+            List<?> usersList = (List<?>) usersObj;
+            for (Object user : usersList) {
+                if (user != null) {
+                    task.assignUser(user.toString());
+                }
             }
         }
         return task;

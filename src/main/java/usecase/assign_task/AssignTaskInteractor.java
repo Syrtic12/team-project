@@ -27,22 +27,35 @@ public class AssignTaskInteractor implements AssignTaskInputBoundary {
         final String teamLeaderIdx = inputData.getTeamLeaderIdx();
 
         final Task task = getTaskOrFail(taskIdx);
-        final User teamMember = getUserOrFail(teamMemberIdx, "Team member not found");
-        final User teamLeader = getUserOrFail(teamLeaderIdx, "Team leader not found");
-        final Team team = getTeamOrFail(taskIdx);
+        if (task == null) {
+            return;
+        }
 
-        if (task != null && teamMember != null && teamLeader != null && team != null) {
-            if (!team.getLeaderIdx().equals(teamLeaderIdx)) {
-                prepareFail("Only the team leader can assign task members");
-            }
-            else if (dataAccessObject.isUserAssignedToTask(taskIdx, teamMemberIdx)) {
-                prepareFail("Team member already assigned to this task");
-            }
-            else {
-                dataAccessObject.assignUserToTask(taskIdx, teamMemberIdx);
-                final Task updatedTask = dataAccessObject.getTask(taskIdx);
-                prepareSuccess(taskIdx, teamMemberIdx, updatedTask);
-            }
+        final User teamMember = getUserOrFail(teamMemberIdx, "Team member not found");
+        if (teamMember == null) {
+            return;
+        }
+
+        final User teamLeader = getUserOrFail(teamLeaderIdx, "Team leader not found");
+        if (teamLeader == null) {
+            return;
+        }
+
+        final Team team = getTeamOrFail(taskIdx);
+        if (team == null) {
+            return;
+        }
+
+        if (!team.getLeaderIdx().equals(teamLeaderIdx)) {
+            prepareFail("Only the team leader can assign task members");
+        }
+        else if (dataAccessObject.isUserAssignedToTask(taskIdx, teamMemberIdx)) {
+            prepareFail("Team member already assigned to this task");
+        }
+        else {
+            dataAccessObject.assignUserToTask(taskIdx, teamMemberIdx);
+            final Task updatedTask = dataAccessObject.getTask(taskIdx);
+            prepareSuccess(taskIdx, teamMemberIdx, updatedTask);
         }
     }
 
@@ -84,5 +97,4 @@ public class AssignTaskInteractor implements AssignTaskInputBoundary {
         );
         presenter.prepareSuccessView(outputData);
     }
-
 }
