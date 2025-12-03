@@ -97,6 +97,33 @@ class TeammateManagementInteractorTest {
         interactor.execute(inputData);
     }
 
+    @Test
+    void addFailTest() {
+        TeammateManagementInputData inputData = new TeammateManagementInputData("eeee", "691e33af54f5b339af39ebde", "add");
+        TeammateManagementDataAccessInterface dataRepository = new TeammateManagementDataAccessObject(new KandoMongoDatabase());
+
+        // This creates a successPresenter that tests whether the test case is as we expect.
+        TeammateManagementOutputBoundary successPresenter = new TeammateManagementOutputBoundary() {
+            @Override
+            public void prepareSuccessView(TeammateManagementOutputData user) {
+                fail("Use case failure is unexpected.");
+            }
+
+            @Override
+            public void prepareFailView(String error) {
+                assertEquals("Team/User not found.", error);
+            }
+
+            @Override
+            public void switchToTeamView() {
+                //This doesn't do anything
+            }
+        };
+
+        TeammateManagementInputBoundary interactor = new TeammateManagementInteractor(dataRepository, successPresenter);
+        interactor.execute(inputData);
+    }
+
 }
 
 
