@@ -4,7 +4,14 @@ import adapters.signup.SignupController;
 import adapters.signup.SignupState;
 import adapters.signup.SignupViewModel;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
+import javax.swing.JComponent;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.event.ActionEvent;
@@ -12,6 +19,11 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+/**
+ * SignupView is the panel that displays the sign-up form.
+ * It handles user input for username, email, password, and repeat password,
+ * and communicates with the SignupController.
+ */
 public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
     private final String viewName = "sign up";
     private final SignupViewModel signupViewModel;
@@ -21,11 +33,10 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final JPasswordField repeatPasswordField = new JPasswordField(20);
     private final JLabel invalidEmailField = new JLabel();
     private final JLabel invalidPasswordField = new JLabel();
-    private SignupController signupController = null;
+    private SignupController signupController;
     private final JButton signupButton;
     private final JButton cancelButton;
     private final JButton toLoginButton;
-
 
     public SignupView(SignupViewModel signupViewModel) {
         this.signupViewModel = signupViewModel;
@@ -88,122 +99,72 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         this.add(buttons);
     }
 
-
-    private void addUsernameListener(){
-        usernameField.getDocument().addDocumentListener(new DocumentListener() {
-
-            private void documentListenerHelper() {
-                final SignupState currentState = signupViewModel.getState();
-                currentState.setUsername(usernameField.getText());
-                signupViewModel.setState(currentState);
-            }
-
+    private DocumentListener createListener(Runnable update) {
+        return new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                documentListenerHelper();
+                update.run();
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                documentListenerHelper();
+                update.run();
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                documentListenerHelper();
+                update.run();
             }
-        });
-
+        };
     }
 
-    private void addEmailListener(){
-        emailField.getDocument().addDocumentListener(new DocumentListener() {
-
-            private void documentListenerHelper() {
-                final SignupState currentState = signupViewModel.getState();
-                currentState.setEmail(emailField.getText());
-                signupViewModel.setState(currentState);
-            }
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-        });
-
+    private void addUsernameListener() {
+        usernameField.getDocument().addDocumentListener(
+                createListener(() -> {
+                    final SignupState state = signupViewModel.getState();
+                    state.setUsername(usernameField.getText());
+                    signupViewModel.setState(state);
+                })
+        );
     }
 
-    private void addPasswordListener(){
-        passwordField.getDocument().addDocumentListener(new DocumentListener() {
-
-            private void documentListenerHelper() {
-                final SignupState currentState = signupViewModel.getState();
-                currentState.setPassword(new String(passwordField.getPassword()));
-                signupViewModel.setState(currentState);
-            }
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-        });
-
+    private void addEmailListener() {
+        emailField.getDocument().addDocumentListener(
+                createListener(() -> {
+                    final SignupState state = signupViewModel.getState();
+                    state.setEmail(emailField.getText());
+                    signupViewModel.setState(state);
+                })
+        );
     }
 
-    private void addRepeatPasswordListener(){
-        repeatPasswordField.getDocument().addDocumentListener(new DocumentListener() {
-
-            private void documentListenerHelper() {
-                final SignupState currentState = signupViewModel.getState();
-                currentState.setRepeatPassword(new String(repeatPasswordField.getPassword()));
-                signupViewModel.setState(currentState);
-            }
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                documentListenerHelper();
-            }
-        });
+    private void addPasswordListener() {
+        passwordField.getDocument().addDocumentListener(
+                createListener(() -> {
+                    final SignupState state = signupViewModel.getState();
+                    state.setPassword(new String(passwordField.getPassword()));
+                    signupViewModel.setState(state);
+                })
+        );
     }
 
+    private void addRepeatPasswordListener() {
+        repeatPasswordField.getDocument().addDocumentListener(
+                createListener(() -> {
+                    final SignupState state = signupViewModel.getState();
+                    state.setRepeatPassword(new String(repeatPasswordField.getPassword()));
+                    signupViewModel.setState(state);
+                })
+        );
+    }
 
     @Override
-    public void actionPerformed(ActionEvent evt){
+    public void actionPerformed(ActionEvent evt) {
         signupController.switchToLoginView();
     }
 
     @Override
-    public void propertyChange(PropertyChangeEvent evt){
+    public void propertyChange(PropertyChangeEvent evt) {
         final SignupState state = (SignupState) evt.getNewValue();
         if (state.getError() != null) {
             JOptionPane.showMessageDialog(this, state.getError());
@@ -214,7 +175,7 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         return viewName;
     }
 
-    public void setSignupController(SignupController controller){
+    public void setSignupController(SignupController controller) {
         this.signupController = controller;
     }
 

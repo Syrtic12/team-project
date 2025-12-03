@@ -1,5 +1,8 @@
 package usecase.leave_team;
 
+/**
+ * Input data needed for the leave team use case.
+ */
 public class LeaveTeamInputData {
     private final String teamId;
     private final String userId;
