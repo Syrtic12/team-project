@@ -18,14 +18,17 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Map;
 
+/**
+ * Team view for displaying all team related information.
+ */
 public class TeamView extends JPanel implements ActionListener, PropertyChangeListener {
     private final String viewName = "team view";
-    private final TeamViewModel teamViewModel;
-    private AssignTaskViewModel assignTaskViewModel;
+    private final transient TeamViewModel teamViewModel;
+    private transient AssignTaskViewModel assignTaskViewModel;
 
-    private TeamController teamController;
-    private AssignTaskController assignTaskController;
-    private LeaveTeamController leaveTeamController;
+    private transient TeamController teamController;
+    private transient AssignTaskController assignTaskController;
+    private transient LeaveTeamController leaveTeamController;
 
     private final JLabel teamNameLabel = new JLabel("");
     private String teamId;
@@ -45,102 +48,32 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
     private String userId;
     private String leaderId;
 
-    private String selectedTaskId = null;
-    private String selectedTaskTitle = null;
-
+    private String selectedTaskId;
+    private String selectedTaskTitle;
 
     public TeamView(TeamViewModel viewModel) {
+
         this.teamViewModel = viewModel;
         this.teamViewModel.addPropertyChangeListener(this);
-
-
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        teamNameLabel.setAlignmentX(CENTER_ALIGNMENT);
-        this.add(teamNameLabel);
-
-        JPanel listsPanel = new JPanel();
-        listsPanel.setLayout(new GridLayout(1, 3, 10, 10));
-
-        listsPanel.add(createTaskPanel("Not Started", notStartedList));
-        listsPanel.add(createTaskPanel("In Progress", inProgressList));
-        listsPanel.add(createTaskPanel("Completed", completedList));
-
-        this.add(listsPanel);
-
-        JPanel buttons = new JPanel();
-        buttons.add(manageTeamButton);
-        buttons.add(createTaskButton);
-        buttons.add(assignTaskButton);
-        buttons.add(leaveTeamButton);
-        buttons.add(backButton);
-
-        this.add(buttons);
-
-        backButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                if (teamController == null) return;
-                teamController.openLoggedInView();
-            }
-        });
-        manageTeamButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (teamController == null) return;
-                teamController.openManageTeam(teamId);
-            }
-        });
-        createTaskButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String invokedBy = userId;
-
-                if (invokedBy == null) {
-                    System.out.println("ERROR: invokedBy/userId is NULL");
-                    return;
-                }
-
-                if (teamId != null) {
-                    teamController.createTask(teamId, invokedBy);
-                }
-            }
-        });
-        assignTaskButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (selectedTaskId == null) {
-                    JOptionPane.showMessageDialog(TeamView.this,
-                            "Please select a task first by clicking on it",
-                            "No task selected",
-                            JOptionPane.WARNING_MESSAGE);
-                    return;
-                }
-                openAssignTaskDialog();
-            }
-        });
-
-        leaveTeamButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (leaveTeamController == null) return;
-                int confirm = JOptionPane.showConfirmDialog(
-                        TeamView.this,
-                        "Are you sure you want to leave this team?",
-                        "Confirm Leave Team",
-                        JOptionPane.YES_NO_OPTION
-                );
-                if (confirm != JOptionPane.YES_OPTION) return;
-                leaveTeamController.execute(teamId, userId);
-            }
-        });
-
+        initLayout();
+        initLists();
+        initButtons();
+        initButtonListeners();
 
         notStartedList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             @Override
             public void valueChanged(javax.swing.event.ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
-                    String taskId = getSelectedTask(notStartedList);
-                    TaskInfo info = teamViewModel.getState().getNotStartedTasks().get(taskId);
+                    final String taskId = getSelectedTask(notStartedList);
+                    final TaskInfo info = teamViewModel.getState().getNotStartedTasks().get(taskId);
                     if (taskId != null) {
                         selectedTaskId = taskId;
-                        selectedTaskTitle = info != null ? info.getTitle() : "";
+                        if (info != null) {
+                            selectedTaskTitle = info.getTitle();
+                        }
+                        else {
+                            selectedTaskTitle = "";
+                        }
                         teamController.editTask(taskId, teamId, 0, info.getTitle(), info.getDescription());
 
                     }
@@ -152,11 +85,16 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
             @Override
             public void valueChanged(javax.swing.event.ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
-                    String taskId = getSelectedTask(inProgressList);
-                    TaskInfo info = teamViewModel.getState().getInProgressTasks().get(taskId);
+                    final String taskId = getSelectedTask(inProgressList);
+                    final TaskInfo info = teamViewModel.getState().getInProgressTasks().get(taskId);
                     if (taskId != null) {
                         selectedTaskId = taskId;
-                        selectedTaskTitle = info != null ? info.getTitle() : "";
+                        if (info != null) {
+                            selectedTaskTitle = info.getTitle();
+                        }
+                        else {
+                            selectedTaskTitle = "";
+                        }
                         teamController.editTask(taskId, teamId, 1, info.getTitle(), info.getDescription());
                     }
                 }
@@ -167,11 +105,16 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
             @Override
             public void valueChanged(javax.swing.event.ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
-                    String taskId = getSelectedTask(completedList);
-                    TaskInfo info = teamViewModel.getState().getCompletedTasks().get(taskId);
+                    final String taskId = getSelectedTask(completedList);
+                    final TaskInfo info = teamViewModel.getState().getCompletedTasks().get(taskId);
                     if (taskId != null) {
                         selectedTaskId = taskId;
-                        selectedTaskTitle = info != null ? info.getTitle() : "";
+                        if (info != null) {
+                            selectedTaskTitle = info.getTitle();
+                        }
+                        else {
+                            selectedTaskTitle = "";
+                        }
                         teamController.editTask(taskId, teamId, 2, info.getTitle(), info.getDescription());
                     }
                 }
@@ -179,6 +122,79 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
         });
     }
 
+    private void initLayout() {
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        teamNameLabel.setAlignmentX(CENTER_ALIGNMENT);
+        this.add(teamNameLabel);
+    }
+
+    private void initLists() {
+        final JPanel listsPanel = new JPanel(new GridLayout(1, 3, 10, 10));
+        listsPanel.add(createTaskPanel("Not Started", notStartedList));
+        listsPanel.add(createTaskPanel("In Progress", inProgressList));
+        listsPanel.add(createTaskPanel("Completed", completedList));
+        this.add(listsPanel);
+    }
+
+    private void initButtons() {
+        final JPanel buttons = new JPanel();
+        buttons.add(manageTeamButton);
+        buttons.add(createTaskButton);
+        buttons.add(assignTaskButton);
+        buttons.add(leaveTeamButton);
+        buttons.add(backButton);
+        this.add(buttons);
+    }
+
+    private void initButtonListeners() {
+
+        backButton.addActionListener(evt -> {
+            if (teamController != null) {
+                teamController.openLoggedInView();
+            }
+        });
+
+        manageTeamButton.addActionListener(evt -> {
+            if (teamController != null) {
+                teamController.openManageTeam(teamId);
+            }
+        });
+
+        createTaskButton.addActionListener(evt -> {
+            if (userId == null) {
+                return;
+            }
+            if (teamId != null) {
+                teamController.createTask(teamId, userId);
+            }
+        });
+
+        assignTaskButton.addActionListener(evt -> {
+            if (selectedTaskId == null) {
+                JOptionPane.showMessageDialog(this, "Please select a task first by clicking on it",
+                        "No task selected",
+                        JOptionPane.WARNING_MESSAGE
+                );
+                return;
+            }
+            openAssignTaskDialog();
+        });
+
+        leaveTeamButton.addActionListener(evt -> {
+            if (leaveTeamController != null) {
+                final int confirm = JOptionPane.showConfirmDialog(this,
+                        "Are you sure you want to leave this team?", "Confirm Leave Team", JOptionPane.YES_NO_OPTION
+                );
+                if (confirm == JOptionPane.YES_OPTION) {
+                    leaveTeamController.execute(teamId, userId);
+                }
+            }
+        });
+    }
+
+    /**
+     * Opens the assign task dialog.
+     */
     public void openAssignTaskDialog() {
         if (selectedTaskId == null) {
             JOptionPane.showMessageDialog(this,
@@ -188,43 +204,47 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
             return;
         }
 
-        TeamState state = teamViewModel.getState();
+        final TeamState state = teamViewModel.getState();
         this.leaderId = state.getLeaderId();
-
-        JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "AssignTask", true);
-        dialog.setLayout(new BorderLayout(10, 10));
-        dialog.setSize(350, 150);
+        final int gap = 10;
+        final int width = 350;
+        final int height = 150;
+        final int width2 = 300;
+        final int height2 = 25;
+        final JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "AssignTask", true);
+        dialog.setLayout(new BorderLayout(gap, gap));
+        dialog.setSize(width, height);
         dialog.setLocationRelativeTo(this);
 
-        JPanel contentPanel = new JPanel();
+        final JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-        contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        contentPanel.setBorder(BorderFactory.createEmptyBorder(gap, gap, gap, gap));
 
-        JLabel titleLabel = new JLabel("Assign Task: " + selectedTaskTitle);
+        final JLabel titleLabel = new JLabel("Assign Task: " + selectedTaskTitle);
         titleLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         contentPanel.add(titleLabel);
-        contentPanel.add(Box.createVerticalStrut(10));
+        contentPanel.add(Box.createVerticalStrut(gap));
 
-        JLabel emailLabel = new JLabel("Team Member Email: ");
+        final JLabel emailLabel = new JLabel("Team Member Email: ");
         emailLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         contentPanel.add(emailLabel);
-        contentPanel.add(Box.createVerticalStrut(5));
+        contentPanel.add(Box.createVerticalStrut(gap / 2));
 
-        JTextField emailField = new JTextField(20);
-        emailField.setMaximumSize(new Dimension(300, 25));
+        final JTextField emailField = new JTextField(20);
+        emailField.setMaximumSize(new Dimension(width2, height2));
         emailField.setAlignmentX(Component.LEFT_ALIGNMENT);
         contentPanel.add(emailField);
 
         dialog.add(contentPanel, BorderLayout.CENTER);
 
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JButton assignButton = new JButton("Assign");
-        JButton cancelButton = new JButton("Cancel");
+        final JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        final JButton assignButton = new JButton("Assign");
+        final JButton cancelButton = new JButton("Cancel");
 
         assignButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String email = emailField.getText().trim();
+                final String email = emailField.getText().trim();
                 if (email.isEmpty()) {
                     JOptionPane.showMessageDialog(dialog,
                             "Please enter a team email.",
@@ -236,13 +256,14 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
                 if (selectedTaskId != null && leaderId != null) {
                     assignTaskController.execute(selectedTaskId, email, leaderId);
 
-                    AssignTaskState resultState = assignTaskViewModel.getState();
+                    final AssignTaskState resultState = assignTaskViewModel.getState();
                     if (resultState.getError() != null) {
                         JOptionPane.showMessageDialog(dialog,
                                 "Assignment Failed",
                                 "Error",
                                 JOptionPane.ERROR_MESSAGE);
-                    } else {
+                    }
+                    else {
                         JOptionPane.showMessageDialog(dialog,
                                 "Task assigned successfully",
                                 "Success",
@@ -253,12 +274,7 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
             }
         });
 
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dialog.dispose();
-            }
-        });
+        cancelButton.addActionListener(evt -> dialog.dispose());
 
         buttonPanel.add(assignButton);
         buttonPanel.add(cancelButton);
@@ -277,13 +293,14 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
         completedList.setSelectedIndex(-1);
     }
 
-
     private String getSelectedTask(JList<String> list) {
-        String selected = list.getSelectedValue();
-        if (selected == null) return null;
+        final String selected = list.getSelectedValue();
+        if (selected == null) {
+            return null;
+        }
 
-        int start = selected.lastIndexOf("(");
-        int end = selected.lastIndexOf(")");
+        final int start = selected.lastIndexOf("(");
+        final int end = selected.lastIndexOf(")");
 
         if (start == -1 || end == -1 || end <= start) {
             return null;
@@ -293,13 +310,13 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
     }
 
     private JPanel createTaskPanel(String title, JList<String> taskList) {
-        JPanel panel = new JPanel();
+        final JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        JLabel label = new JLabel(title, SwingConstants.CENTER);
+        final JLabel label = new JLabel(title, SwingConstants.CENTER);
         panel.add(label, BorderLayout.NORTH);
 
-        JScrollPane scrollPane = new JScrollPane(taskList);
+        final JScrollPane scrollPane = new JScrollPane(taskList);
         panel.add(scrollPane, BorderLayout.CENTER);
 
         return panel;
@@ -312,14 +329,12 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        TeamState state = (TeamState) evt.getNewValue();
+        final TeamState state = (TeamState) evt.getNewValue();
         this.teamId = state.getTeamName();
         this.userId = state.getUserId();
         teamNameLabel.setText(state.getTeamName());
         clearSelections();
         setTaskLists(state);
-        System.out.println("DEBUG TeamView: userId = " + state.getUserId());
-
     }
 
     private void setTaskLists(TeamState state) {
@@ -331,7 +346,7 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
     private void fillModel(DefaultListModel<String> model, Map<String, TaskInfo> tasks) {
         model.clear();
         for (Map.Entry<String, TaskInfo> entry : tasks.entrySet()) {
-            TaskInfo info = entry.getValue();
+            final TaskInfo info = entry.getValue();
             model.addElement(info.getTitle() + " | "
                     + info.getAssignedUsers()
                     + " (" + info.getId() + ")");
@@ -353,6 +368,7 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
     public void setAssignTaskViewModel(AssignTaskViewModel viewModel) {
         this.assignTaskViewModel = viewModel;
     }
+
     public void setLeaveTeamController(LeaveTeamController controller) {
         this.leaveTeamController = controller;
     }
