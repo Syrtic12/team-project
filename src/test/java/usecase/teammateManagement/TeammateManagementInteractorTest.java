@@ -95,8 +95,8 @@ class TeammateManagementInteractorTest {
 
         TeammateManagementInputBoundary interactor = new TeammateManagementInteractor(dataRepository, successPresenter);
         interactor.execute(inputData);
-        }
-
     }
+
+}
 
 
