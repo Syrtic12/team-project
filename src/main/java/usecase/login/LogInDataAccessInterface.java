@@ -4,14 +4,28 @@ import entity.User;
 
 import java.util.List;
 
+/**
+ * The data access interface for the LogIn Use Case.
+ */
 public interface LogInDataAccessInterface {
     /**
-     * @param email
+     * Checks if an email already exists in the database.
+     * @param email the email to check
      * @return true if email already exists in the database, false otherwise
      */
-    public boolean emailExists(String email);
+    boolean emailExists(String email);
 
-    public User getUser(String email);
+    /**
+     * Retrieves the User object associated with the given email.
+     * @param email the email of the user
+     * @return the User object associated with the given email
+     */
+    User getUser(String email);
 
-    public List<String> getTeams(String userID);
+    /**
+     * Retrieves the list of teams associated with the given user ID.
+     * @param userId the ID of the user
+     * @return the list of teams associated with the given user ID
+     */
+    List<String> getTeams(String userId);
 }

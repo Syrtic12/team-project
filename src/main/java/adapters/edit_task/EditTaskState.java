@@ -1,6 +1,8 @@
-
 package adapters.edit_task;
 
+/**
+ * The state for editing a task.
+ */
 public class EditTaskState {
 
     private String taskId;
@@ -52,15 +54,15 @@ public class EditTaskState {
         return this.status;
     }
 
-    public void setTaskID(String taskId) {
-        this.taskId = taskId;
+    public void setTaskID(String taskIdx) {
+        this.taskId = taskIdx;
     }
 
     public void setStatus(Integer status) {
         this.status = status;
     }
 
-    public void setTeamID(String teamId) {
-        this.teamId = teamId;
+    public void setTeamID(String teamIdx) {
+        this.teamId = teamIdx;
     }
 }

@@ -2,6 +2,9 @@ package usecase.login;
 
 import java.util.List;
 
+/**
+ * The output data for the LogIn Use Case.
+ */
 public class LogInOutputData {
     private final String email;
     private final String idx;
@@ -21,5 +24,7 @@ public class LogInOutputData {
         return this.idx;
     }
 
-    public List<String> getTeams() {return this.teams;}
+    public List<String> getTeams() {
+        return this.teams;
+    }
 }
