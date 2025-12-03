@@ -89,6 +89,7 @@ public class AppBuilder {
     private ManageTeamViewModel manageTeamViewModel;
     private ManageTeamView manageTeamView;
     private AssignTaskViewModel assignTaskViewModel;
+    private LoggedInInputBoundary loggedInInputBoundary;
     private LeaveTeamViewModel leaveTeamViewModel;
 
     public AppBuilder() {
@@ -277,7 +278,7 @@ public class AppBuilder {
      */
     public AppBuilder addCreateTaskUseCase() {
         final CreateTaskOutputBoundary createTaskOutputBoundary = new CreateTaskPresenter(createTaskViewModel,
-                viewManagerModel, teamViewModel);
+                viewManagerModel, teamViewModel, loggedInInputBoundary);
         final CreateTaskInputBoundary createTaskInteractor = new CreateTaskInteractor(
                 new TaskDataAccessObject(dataAccessObject), createTaskOutputBoundary);
         final CreateTaskController createTaskController = new CreateTaskController(createTaskInteractor);
