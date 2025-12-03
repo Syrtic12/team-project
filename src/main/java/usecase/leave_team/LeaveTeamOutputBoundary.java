@@ -1,5 +1,8 @@
 package usecase.leave_team;
 
+/**
+ * Output boundary for leave team use case.
+ */
 public interface LeaveTeamOutputBoundary {
     /**
      * Prepares the success view.

@@ -4,6 +4,7 @@ import dataaccess.KandoMongoDatabase;
 import dataaccess.SignUpDataAccessObject;
 import entity.UserFactory;
 import entity.User;
+import org.bson.Document;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,7 +14,17 @@ class SignUpInteractorTest {
     @Test
     void successTest() {
         SignUpInputData inputData = new SignUpInputData("test@gmail.com", "test", "password", "password");
+        KandoMongoDatabase genDAO = new KandoMongoDatabase();
         SignUpDataAccessInterface userRepository = new SignUpDataAccessObject(new KandoMongoDatabase());
+
+        // check if test user already exists, and delete if so
+        if (userRepository.emailExists("test@gmail.com")) {
+            Document cuser = genDAO.getOne("users", "email", "test@gmail.com");
+            User userObj = new UserFactory().createFromDocument(cuser);
+            userObj.setIdx(cuser.getObjectId("_id").toString());
+            genDAO.remove(userObj);
+
+        }
 
         // This creates a successPresenter that tests whether the test case is as we expect.
         SignUpOutputBoundary successPresenter = new SignUpOutputBoundary() {
@@ -30,9 +41,7 @@ class SignUpInteractorTest {
             }
 
             @Override
-            public void switchToLoginView() {
-                // This is expected
-            }
+            public void switchToLoginView() {}
         };
 
         SignUpInputBoundary interactor = new SignUpInteractor(userRepository, successPresenter, new UserFactory());
@@ -43,6 +52,15 @@ class SignUpInteractorTest {
     void failurePasswordMismatchTest() {
         SignUpInputData inputData = new SignUpInputData("test@gmail.com", "test", "password", "password2");
         SignUpDataAccessInterface userRepository = new SignUpDataAccessObject(new KandoMongoDatabase());
+        KandoMongoDatabase genDAO = new KandoMongoDatabase();
+
+        if (userRepository.emailExists("test@gmail.com")) {
+            Document cuser = genDAO.getOne("users", "email", "test@gmail.com");
+            User userObj = new UserFactory().createFromDocument(cuser);
+            userObj.setIdx(cuser.getObjectId("_id").toString());
+            genDAO.remove(userObj);
+
+        }
 
         // This creates a presenter that tests whether the test case is as we expect.
         SignUpOutputBoundary failurePresenter = new SignUpOutputBoundary() {
@@ -72,9 +90,11 @@ class SignUpInteractorTest {
         SignUpInputData inputData = new SignUpInputData("test@gmail.com", "test", "password", "password");
         SignUpDataAccessInterface userRepository = new SignUpDataAccessObject(new KandoMongoDatabase());
 
-        UserFactory factory = new UserFactory();
-        User user = factory.create("test","test@gmail.com", "password", "Member");
-        userRepository.addUser(user);
+        if (!userRepository.emailExists("test@gmail.com")) {
+            UserFactory factory = new UserFactory();
+            User user = factory.create("test","test@gmail.com", "password", "Member");
+            userRepository.addUser(user);
+        }
 
         // This creates a presenter that tests whether the test case is as we expect.
         SignUpOutputBoundary failurePresenter = new SignUpOutputBoundary() {
