@@ -35,7 +35,7 @@ import java.util.Map;
  * Team view for displaying all team related information.
  */
 public class TeamView extends JPanel implements ActionListener, PropertyChangeListener {
-    private final String viewName = "team view";
+    private final String VIEW_NAME = "team view";
     private final transient TeamViewModel teamViewModel;
     private transient AssignTaskViewModel assignTaskViewModel;
 
@@ -290,7 +290,6 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
 
         buttonPanel.add(assignButton);
         buttonPanel.add(cancelButton);
-        return buttonPanel;
     }
 
     private void clearSelections() {
@@ -307,14 +306,14 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
         if (selected == null) {
             return null;
         }
-
+        String result = null;
         final int start = selected.lastIndexOf("(");
         final int end = selected.lastIndexOf(")");
 
             if (start != -1 && end != -1 && end > start) {
                 result = selected.substring(start + 1, end);
             }
-        }
+
 
         return result;
     }
