@@ -10,7 +10,20 @@ import adapters.team.TeamState;
 import adapters.team.TeamViewModel;
 import usecase.team.TaskInfo;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -252,7 +265,6 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
                             JOptionPane.WARNING_MESSAGE);
                     return;
                 }
-
                 if (selectedTaskId != null && leaderId != null) {
                     assignTaskController.execute(selectedTaskId, email, leaderId);
 
@@ -278,10 +290,7 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
 
         buttonPanel.add(assignButton);
         buttonPanel.add(cancelButton);
-        dialog.add(buttonPanel, BorderLayout.SOUTH);
-
-        dialog.setVisible(true);
-
+        return buttonPanel;
     }
 
     private void clearSelections() {
@@ -302,11 +311,12 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
         final int start = selected.lastIndexOf("(");
         final int end = selected.lastIndexOf(")");
 
-        if (start == -1 || end == -1 || end <= start) {
-            return null;
+            if (start != -1 && end != -1 && end > start) {
+                result = selected.substring(start + 1, end);
+            }
         }
 
-        return selected.substring(start + 1, end);
+        return result;
     }
 
     private JPanel createTaskPanel(String title, JList<String> taskList) {
@@ -354,7 +364,7 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
     }
 
     public String getViewName() {
-        return viewName;
+        return VIEW_NAME;
     }
 
     public void setTeamController(TeamController controller) {
