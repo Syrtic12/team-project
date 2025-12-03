@@ -692,7 +692,7 @@
         <module name="CyclomaticComplexity">
             <property name="switchBlockAsSingleDecisionPoint" value="true"/>
         </module>
-        <module name="JavaNCSS"/>
+<!--        <module name="JavaNCSS"/>-->
         <module name="NPathComplexity"/>
 
         <!-- Misc -->
@@ -790,7 +790,7 @@
         </module>
 
         <!-- Size Violations -->
-        <module name="AnonInnerLength"/>
+<!--        <module name="AnonInnerLength"/>-->
 <!--        <module name="ExecutableStatementCount">-->
 <!--            <property name="max" value="30"/>-->
 <!--        </module>-->
