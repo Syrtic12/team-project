@@ -2,6 +2,9 @@ package usecase.leave_team;
 
 import java.util.List;
 
+/**
+ * Data that the logged in view will need after exiting this use case.
+ */
 public class LeaveTeamOutputData {
     private final boolean success;
     private final String teamId;
@@ -9,7 +12,8 @@ public class LeaveTeamOutputData {
     private final String message;
     private final List<String> updatedTeams;
 
-    public LeaveTeamOutputData(boolean success, String teamId, String userId, String message, List<String> updatedTeams) {
+    public LeaveTeamOutputData(boolean success, String teamId, String userId, String message,
+                               List<String> updatedTeams) {
         this.success = success;
         this.teamId = teamId;
         this.userId = userId;
