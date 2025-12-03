@@ -12,13 +12,22 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+/**
+ * A JPanel view for managing a team. This view allows users to add, remove,
+ * or disband team members, and it listens for changes.
+ * It displays a list of current team members, input for new member email,
+ * and action buttons for team management.
+ */
 public class ManageTeamView extends JPanel implements PropertyChangeListener {
+    private static final int WIDTH = 250;
+    private static final int HEIGHT = 200;
+
     private final String viewName = "manage team";
     private final ManageTeamViewModel manageTeamViewModel;
-    private final JTextField newMemberField = new  JTextField(20);
+    private final JTextField newMemberField = new JTextField(20);
     private final JList<String> membersList;
     private final DefaultListModel<String> membersListModel;
-    private ManageTeamController manageTeamController = null;
+    private ManageTeamController manageTeamController;
     private final JButton addButton;
     private final JButton removeButton;
     private final JButton backButton;
@@ -32,12 +41,13 @@ public class ManageTeamView extends JPanel implements PropertyChangeListener {
         final JLabel titleLabel = new JLabel(ManageTeamViewModel.TITLE_LABEL);
         titleLabel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
 
-        final LabelTextPanel addMemberInfo = new LabelTextPanel(new JLabel(ManageTeamViewModel.ADD_MEMBER_LABEL), newMemberField);
+        final LabelTextPanel addMemberInfo =
+                new LabelTextPanel(new JLabel(ManageTeamViewModel.ADD_MEMBER_LABEL), newMemberField);
 
         membersListModel = new DefaultListModel<>();
         membersList = new JList<>(membersListModel);
-        JScrollPane listScrollPane = new JScrollPane(membersList);
-        listScrollPane.setPreferredSize(new java.awt.Dimension(250, 200));
+        final JScrollPane listScrollPane = new JScrollPane(membersList);
+        listScrollPane.setPreferredSize(new java.awt.Dimension(WIDTH, HEIGHT));
         final JPanel membersPanel = new JPanel();
         membersPanel.add(new JLabel(ManageTeamViewModel.MEMBERS_LABEL));
         membersPanel.add(listScrollPane);
@@ -58,12 +68,16 @@ public class ManageTeamView extends JPanel implements PropertyChangeListener {
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 final ManageTeamState currentState = manageTeamViewModel.getState();
-                String email = currentState.getNewMemberEmail().trim();
+                final String email = currentState.getNewMemberEmail().trim();
                 if (!email.isEmpty()) {
                     manageTeamController.execute(currentState.getNewMemberEmail(), currentState.getTeamId(), "add");
                     newMemberField.setText("");
-                } else {
-                    JOptionPane.showMessageDialog(ManageTeamView.this, "Please enter a valid email address", "Empty email", JOptionPane.WARNING_MESSAGE);
+                }
+                else {
+                    JOptionPane.showMessageDialog(ManageTeamView.this,
+                            "Please enter a valid email address",
+                            "Empty email",
+                            JOptionPane.WARNING_MESSAGE);
                 }
             }
         });
@@ -74,7 +88,7 @@ public class ManageTeamView extends JPanel implements PropertyChangeListener {
                 selectedMember = membersList.getSelectedValue();
                 if (selectedMember != null) {
                     final ManageTeamState currentState = manageTeamViewModel.getState();
-                    manageTeamController.execute(selectedMember, currentState.getTeamId(),"remove");
+                    manageTeamController.execute(selectedMember, currentState.getTeamId(), "remove");
                 }
             }
         });
@@ -121,7 +135,6 @@ public class ManageTeamView extends JPanel implements PropertyChangeListener {
         this.add(membersPanel);
         this.add(buttons);
     }
-
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {

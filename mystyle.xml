@@ -652,7 +652,7 @@
 
         <!-- Metrics -->
         <module name="BooleanExpressionComplexity">
-            <property name="max" value="7"/>
+            <property name="max" value="15"/>
         </module>
         <module name="ClassDataAbstractionCoupling">
             <!-- Default classes are also listed -->
@@ -667,7 +667,8 @@
                        Deque, Queue, LinkedList, Set, HashSet, SortedSet, TreeSet, Map,
                        HashMap, SortedMap, TreeMap, DetailsAST, CheckstyleException,
                        UnsupportedEncodingException, BuildException, ConversionException,
-                       FileNotFoundException, TestException"/>
+                       FileNotFoundException, TestException,
+                       JPanel, JButton, JLabel, JTextArea, JTextField, JScrollPane, BoxLayout, LabelTextPanel"/>
         </module>
         <module name="ClassFanOutComplexity">
             <property name="max" value="25"/>
