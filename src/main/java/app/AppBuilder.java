@@ -33,12 +33,10 @@ import adapters.assign_task.AssignTaskViewModel;
 import usecase.assign_task.AssignTaskInputBoundary;
 import usecase.assign_task.AssignTaskInteractor;
 import usecase.assign_task.AssignTaskOutputBoundary;
-import usecase.edit_task.EditTaskDataAccessInterface;
 import adapters.team.TeamViewModel;
 import usecase.edit_task.EditTaskInputBoundary;
 import usecase.edit_task.EditTaskInteractor;
 import usecase.edit_task.EditTaskOutputBoundary;
-import usecase.create_task.CreateTaskDataAccessInterface;
 import usecase.create_task.CreateTaskInputBoundary;
 import usecase.create_task.CreateTaskInteractor;
 import usecase.create_task.CreateTaskOutputBoundary;
@@ -59,25 +57,22 @@ import adapters.team.*;
 import usecase.teammate_management.TeammateManagementInputBoundary;
 import usecase.teammate_management.TeammateManagementInteractor;
 import usecase.teammate_management.TeammateManagementOutputBoundary;
-import adapters.assign_task.AssignTaskController;
-import adapters.assign_task.AssignTaskPresenter;
-import adapters.assign_task.AssignTaskViewModel;
-import usecase.assign_task.AssignTaskInputBoundary;
-import usecase.assign_task.AssignTaskInteractor;
-import usecase.assign_task.AssignTaskOutputBoundary;
 import view.*;
 
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Builds the application by assembling views, view models, controllers, and use cases.
+ */
 public class AppBuilder {
+    private final UserFactory userFactory = new UserFactory();
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
-    final UserFactory userFactory = new UserFactory();
-    final ViewManagerModel viewManagerModel = new ViewManagerModel();
-    ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
+    private final ViewManagerModel viewManagerModel = new ViewManagerModel();
+    private ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
-    final KandoMongoDatabase DataAccessObject = new KandoMongoDatabase();
+    private final KandoMongoDatabase dataAccessObject = new KandoMongoDatabase();
 
     private SignupView signupView;
     private SignupViewModel signupViewModel;
@@ -100,6 +95,10 @@ public class AppBuilder {
         cardPanel.setLayout(cardLayout);
     }
 
+    /**
+     * Adds the signup view to the application.
+     * @return the AppBuilder instance for method chaining
+     */
     public AppBuilder addSignupView() {
         signupViewModel = new SignupViewModel();
         signupView = new SignupView(signupViewModel);
@@ -107,6 +106,10 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the login view to the application.
+     * @return the AppBuilder instance for method chaining
+     */
     public AppBuilder addLoginView() {
         loginViewModel = new LoginViewModel();
         loginView = new LoginView(loginViewModel);
@@ -114,6 +117,10 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the edit task view to the application.
+     * @return the AppBuilder instance for method chaining
+     */
     public AppBuilder addEditTaskView() {
         editTaskViewModel = new EditTaskViewModel();
         editTaskView = new EditTaskView(editTaskViewModel);
@@ -121,6 +128,10 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the create task view to the application.
+     * @return the AppBuilder instance for method chaining
+     */
     public AppBuilder addCreateTaskView() {
         createTaskViewModel = new CreateTaskViewModel();
         createTaskView = new CreateTaskView(createTaskViewModel);
@@ -128,17 +139,21 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the logged-in view and its associated use case to the application.
+     * @return the AppBuilder instance for method chaining
+     */
     public AppBuilder addLoggedInViewAndUseCase() {
 
         // 1. Create shared state ONCE
-        LoggedInState sharedState = new LoggedInState();
+        final LoggedInState sharedState = new LoggedInState();
         this.loggedInViewModel = new LoggedInViewModel(sharedState);
 
-        LoggedInDataAccessObject dao = new LoggedInDataAccessObject(DataAccessObject);
+        final LoggedInDataAccessObject dao = new LoggedInDataAccessObject(dataAccessObject);
         this.teamViewModel = new TeamViewModel();
 
         // 2. Pass sharedState into presenter
-        LoggedInOutputBoundary outputBoundary = new LoggedInPresenter(
+        final LoggedInOutputBoundary outputBoundary = new LoggedInPresenter(
                 loggedInViewModel,
                 sharedState,
                 viewManagerModel,
@@ -148,13 +163,13 @@ public class AppBuilder {
         );
 
         // 3. Pass sharedState into interactor
-        LoggedInInputBoundary interactor = new LoggedInInteractor(
+        final LoggedInInputBoundary interactor = new LoggedInInteractor(
                 dao,
                 outputBoundary,
                 sharedState
         );
 
-        LoggedInController controller = new LoggedInController(interactor);
+        final LoggedInController controller = new LoggedInController(interactor);
 
         loggedInView = new LoggedInView(loggedInViewModel);
         loggedInView.setLoggedInController(controller);
@@ -163,104 +178,151 @@ public class AppBuilder {
         return this;
     }
 
-
+    /**
+     * Adds the signup use case to the application.
+     * @return the AppBuilder instance for method chaining
+     */
     public AppBuilder addSignupUseCase() {
         final SignUpOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel,
                 signupViewModel, loginViewModel);
         final SignUpInputBoundary userSignupInteractor = new SignUpInteractor(
-                new SignUpDataAccessObject(DataAccessObject), signupOutputBoundary, userFactory);
+                new SignUpDataAccessObject(dataAccessObject), signupOutputBoundary, userFactory);
 
-        SignupController controller = new SignupController(userSignupInteractor);
+        final SignupController controller = new SignupController(userSignupInteractor);
         signupView.setSignupController(controller);
         return this;
     }
 
+    /**
+     * Adds the team view to the application.
+     * @return the AppBuilder instance for method chaining
+     */
     public AppBuilder addTeamView() {
         teamView = new TeamView(teamViewModel);
         cardPanel.add(teamView, teamView.getViewName());
         return this;
     }
 
+    /**
+     * Adds the team use case to the application.
+     * @return the AppBuilder instance for method chaining
+     */
     public AppBuilder addTeamUseCase() {
         this.manageTeamViewModel = new ManageTeamViewModel();
         final TeamOutputBoundary teamOutputBoundary = new TeamPresenter(viewManagerModel, loggedInViewModel,
                 manageTeamViewModel, teamViewModel, createTaskViewModel, editTaskViewModel);
-        final TeamInputBoundary teamInteractor = new TeamInteractor(new TeamDataAccessObject(DataAccessObject), teamOutputBoundary);
-        TeamController teamController = new TeamController(teamInteractor);
+        final TeamInputBoundary teamInteractor = new TeamInteractor(new TeamDataAccessObject(dataAccessObject),
+                teamOutputBoundary);
+        final TeamController teamController = new TeamController(teamInteractor);
         teamView.setTeamController(teamController);
         return this;
     }
 
+    /**
+     * Adds the manage team view to the application.
+     * @return the AppBuilder instance for method chaining
+     */
     public AppBuilder addManageTeamView() {
         manageTeamView = new ManageTeamView(manageTeamViewModel);
         cardPanel.add(manageTeamView, manageTeamView.getViewName());
         return this;
     }
 
+    /**
+     * Adds the manage team use case to the application.
+     * @return the AppBuilder instance for method chaining
+     */
     public AppBuilder addManageTeamUseCase() {
         final TeammateManagementOutputBoundary teammateManagementOutputBoundary = new ManageTeamPresenter(
                 viewManagerModel, loggedInViewModel, manageTeamViewModel, teamViewModel);
         final TeammateManagementInputBoundary teammateManagementInteractor = new TeammateManagementInteractor(
-                new TeammateManagementDataAccessObject(DataAccessObject), teammateManagementOutputBoundary);
-        ManageTeamController manageTeamController = new ManageTeamController(teammateManagementInteractor);
+                new TeammateManagementDataAccessObject(dataAccessObject), teammateManagementOutputBoundary);
+        final ManageTeamController manageTeamController = new ManageTeamController(teammateManagementInteractor);
         manageTeamView.setManageTeamController(manageTeamController);
         return this;
     }
 
+    /**
+     * Adds the login use case to the application.
+     * @return the AppBuilder instance for method chaining
+     */
     public AppBuilder addLoginUseCase() {
         final LogInOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
                 loggedInViewModel, loginViewModel, signupViewModel);
         final LogInInputBoundary loginInteractor = new LogInInteractor(
-                new LogInDataAccessObject(DataAccessObject), loginOutputBoundary);
+                new LogInDataAccessObject(dataAccessObject), loginOutputBoundary);
 
-        LoginController loginController = new LoginController(loginInteractor);
+        final LoginController loginController = new LoginController(loginInteractor);
         loginView.setLoginController(loginController);
         return this;
     }
 
+    /**
+     * Adds the edit task use case to the application.
+     * @return the AppBuilder instance for method chaining
+     */
     public AppBuilder addEditTaskUseCase() {
         final EditTaskOutputBoundary editTaskOutputBoundary = new EditTaskPresenter(editTaskViewModel,
                 viewManagerModel, teamViewModel);
         final EditTaskInputBoundary editTaskInteractor = new EditTaskInteractor(
-                new TaskDataAccessObject(DataAccessObject), editTaskOutputBoundary);
-        EditTaskController editTaskController = new EditTaskController(editTaskInteractor);
+                new TaskDataAccessObject(dataAccessObject), editTaskOutputBoundary);
+        final EditTaskController editTaskController = new EditTaskController(editTaskInteractor);
         editTaskView.setEditTaskController(editTaskController);
         return this;
     }
 
+    /**
+     * Adds the create task use case to the application.
+     * @return the AppBuilder instance for method chaining
+     */
     public AppBuilder addCreateTaskUseCase() {
         final CreateTaskOutputBoundary createTaskOutputBoundary = new CreateTaskPresenter(createTaskViewModel,
                 viewManagerModel, teamViewModel);
         final CreateTaskInputBoundary createTaskInteractor = new CreateTaskInteractor(
-                new TaskDataAccessObject(DataAccessObject), createTaskOutputBoundary);
-        CreateTaskController createTaskController = new CreateTaskController(createTaskInteractor);
+                new TaskDataAccessObject(dataAccessObject), createTaskOutputBoundary);
+        final CreateTaskController createTaskController = new CreateTaskController(createTaskInteractor);
         createTaskView.setCreateTaskController(createTaskController);
         return this;
     }
 
+    /**
+     * Adds the assign task use case to the application.
+     * @return the AppBuilder instance for method chaining
+     */
     public AppBuilder addAssignTaskUseCase() {
         this.assignTaskViewModel = new AssignTaskViewModel();
 
-        final AssignTaskOutputBoundary assignTaskOutputBoundary = new AssignTaskPresenter(assignTaskViewModel, teamViewModel);
+        final AssignTaskOutputBoundary assignTaskOutputBoundary = new AssignTaskPresenter(assignTaskViewModel,
+                teamViewModel);
         final AssignTaskInputBoundary assignTaskInteractor = new AssignTaskInteractor(
-                new AssignTaskDataAccessObject(DataAccessObject), assignTaskOutputBoundary);
-        AssignTaskController assignTaskController = new AssignTaskController(assignTaskInteractor, teamViewModel);
+                new AssignTaskDataAccessObject(dataAccessObject), assignTaskOutputBoundary);
+        final AssignTaskController assignTaskController = new AssignTaskController(assignTaskInteractor, teamViewModel);
 
         teamView.setAssignTaskController(assignTaskController);
         teamView.setAssignTaskViewModel(assignTaskViewModel);
         return this;
     }
 
+    /**
+     * Adds the leave team use case to the application.
+     * @return the AppBuilder instance for method chaining
+     */
     public AppBuilder addLeaveTeamUseCase() {
-        LeaveTeamState leaveTeamState = new LeaveTeamState();
+        final LeaveTeamState leaveTeamState = new LeaveTeamState();
         this.leaveTeamViewModel = new LeaveTeamViewModel(leaveTeamState);
-        final LeaveTeamOutputBoundary leaveTeamOutputBoundary = new LeaveTeamPresenter(leaveTeamViewModel, viewManagerModel, loggedInViewModel);
-        final LeaveTeamInputBoundary leaveTeamInteractor = new LeaveTeamInteractor(new  LeaveTeamDataAccessObject(DataAccessObject), leaveTeamOutputBoundary);
-        LeaveTeamController leaveTeamController = new LeaveTeamController(leaveTeamInteractor);
+        final LeaveTeamOutputBoundary leaveTeamOutputBoundary = new LeaveTeamPresenter(leaveTeamViewModel,
+                viewManagerModel, loggedInViewModel);
+        final LeaveTeamInputBoundary leaveTeamInteractor = new LeaveTeamInteractor(
+                new LeaveTeamDataAccessObject(dataAccessObject), leaveTeamOutputBoundary);
+        final LeaveTeamController leaveTeamController = new LeaveTeamController(leaveTeamInteractor);
         teamView.setLeaveTeamController(leaveTeamController);
         return this;
     }
 
+    /**
+     * Builds the application by assembling all components.
+     * @return the constructed JFrame application
+     */
     public JFrame build() {
         final JFrame application = new JFrame("User Login Example");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
