@@ -290,6 +290,9 @@ public class TeamView extends JPanel implements ActionListener, PropertyChangeLi
 
         buttonPanel.add(assignButton);
         buttonPanel.add(cancelButton);
+
+        dialog.add(buttonPanel, BorderLayout.SOUTH);
+        dialog.setVisible(true);
     }
 
     private void clearSelections() {

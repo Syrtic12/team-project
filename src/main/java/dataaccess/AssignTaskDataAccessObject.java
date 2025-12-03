@@ -93,13 +93,13 @@ public class AssignTaskDataAccessObject implements AssignTaskDataAccessInterface
 
     @Override
     public boolean isUserAssignedToTask(String taskIdx, String userIdx) {
-        final Task task = getTask(taskIdx);
-        boolean assigned = false;
-
-        if (task == null) {
-            assigned = task.isUserAssigned(userIdx);
+        final Document taskDocument = generalDataAccessObject.getOne(TASKS, ID, taskIdx);
+        if (taskDocument == null) {
+            return false;
         }
-        return assigned;
+
+        final List<String> users = getUsersFromDocument(taskDocument);
+        return users.contains(userIdx);
     }
 
     @Override
@@ -107,16 +107,28 @@ public class AssignTaskDataAccessObject implements AssignTaskDataAccessInterface
         final Document taskDocument = generalDataAccessObject.getOne(TASKS, ID, taskIdx);
 
         if (taskDocument == null) {
-            List<String> users = taskDocument.getList(USERS, String.class);
-            if (users == null) {
-                users = new ArrayList<>();
-            }
+            return;
+        }
 
-            if (!users.contains(userIdx)) {
-                users.add(userIdx);
-                generalDataAccessObject.update(TASKS, taskIdx, USERS, users);
+        final List<String> users = getUsersFromDocument(taskDocument);
+
+        if (!users.contains(userIdx)) {
+            users.add(userIdx);
+            generalDataAccessObject.update(TASKS, taskIdx, USERS, users);
+        }
+    }
+
+    private List<String> getUsersFromDocument(Document taskDocument) {
+        final List<String> users = new ArrayList<>();
+        final Object usersObj = taskDocument.get(USERS);
+        if (usersObj instanceof List) {
+            for (Object user : (List<?>) usersObj) {
+                if (user != null) {
+                    users.add(user.toString());
+                }
             }
         }
+        return users;
     }
 }
 
